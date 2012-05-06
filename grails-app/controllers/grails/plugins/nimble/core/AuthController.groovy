@@ -47,7 +47,7 @@ class AuthController {
 
     def index = { redirect(action: 'login', params: params) }
 
-    def login() {
+    def login = {
         def local = grailsApplication.config.nimble.localusers.authentication.enabled
         def registration = grailsApplication.config.nimble.localusers.registration.enabled
         def facebook = grailsApplication.config.nimble.facebook.federationprovider.enabled

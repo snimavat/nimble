@@ -85,9 +85,12 @@ class NimbleService {
          * TODO: remove this ugly ugly piece of crud when 1.1.2 or 1.2 comes out
          * BUG: http://jira.codehaus.org/browse/GRAILS-4580
          */
+		/*
+		 * we no loger need this now
         def domains = grailsApplication.getArtefacts("Domain")
         for (domain in domains) {
             domain.clazz.count()
         }
+        */
     }
 }

@@ -4,4 +4,6 @@
 	<span class="icon icon_bullet_green">&nbsp;</span>
 </g:if>
 
-<span id="${id}status" class="icon">&nbsp;</span>
+<span id="${id}status">
+<i class="icon-ok"></i>
+</span>

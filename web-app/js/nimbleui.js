@@ -50,46 +50,21 @@ function verifyUnique(elem, elemstatus, endpoint, success, failure) {
 	});
 }
 
-// Dialog support
-$(function() {
-	$("#confirmationdialog").dialog({
-		bgiframe: true,
-		resizable: false,
-		modal: true,
-		autoOpen: false,
-		width: 400,
-		overlay: {
-			backgroundColor: '#000',
-			opacity: 0.5
-		}
-	});
-});
 
 function wasConfirmed(title, msg, accept, cancel) {
+	
 	$("#confirmationtitle").html(title);
 	$("#confirmationcontent").html(msg); 
 	$("#confirmaccept").html(accept);
 	$("#confirmcancel").html(cancel);
 	
-	$("#confirmationdialog").dialog('option', 'title', title);
-	$("#confirmationdialog").dialog('open');		
+	$("#confirmationdialog").modal('show');		
 }
 
 // Login
 $(function() {
-	$("#accountcreationpolicydialog").dialog({
-		bgiframe: true,
-		resizable: false,
-		modal: true,
-		autoOpen: false,
-		height: "auto",
-		width: "auto",
-		overlay: {
-			backgroundColor: '#000',
-			opacity: 0.5
-		}
-	});
 	
+	/*@TODO - upgrade to use bootstrap dialog
 	$("#accountcreationpolicybtn").click(function() {
 		$("#accountcreationpolicydialog").dialog('open');
 	});
@@ -97,6 +72,7 @@ $(function() {
 	$("#accountcreationpolicycancelbtn").click(function() {
 		$("#accountcreationpolicydialog").dialog('close');
 	});
+	*/
 });
 
 function changeLogin(ident) {
@@ -117,21 +93,9 @@ function disableFacebookContinue() {
 
 // Session Termination
 $(function() {
-	$("#sessionterminateddialog").dialog({
-		bgiframe: true,
-		resizable: false,
-		modal: true,
-		autoOpen: false,
-		title: 'Session Terminated',
-		overlay: {
-			backgroundColor: '#000',
-			opacity: 0.5
-		}
-	});
-
-	$().ajaxError(function (event, xhr, ajaxOptions, thrownError) {
+	$(document).ajaxError(function (event, xhr, ajaxOptions, thrownError) {	
 	  if ((xhr.status == 403) && (xhr.getResponseHeader("X-Nim-Session-Invalid") != null)) {
-	    $("#sessionterminateddialog").dialog('open');
+	    $("#sessionterminateddialog").modal('show');
 	  }
 	});
 });

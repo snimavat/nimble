@@ -17,25 +17,28 @@
 
 <body>
 
-  <h2><g:message code="nimble.view.admins.heading" /></h2>
   <p>
     <g:message code="nimble.view.admins.descriptive" />
   </p>
 
-  <div id="admins">
-  </div>
+  <div id="admins"> </div>
 
   <h3><g:message code="nimble.view.admins.addadmin.heading" /></h3>
   <p>
     <g:message code="nimble.view.admins.addadmin.descriptive" />
   </p>
 
-  <div class="searchbox">
-    <g:textField name="q" class="easyinput"/>
-    <button onClick="searchAdministrators();" class="button icon icon_magnifier"><g:message code="nimble.link.search" /></button>
-  </div>
+	<div class="row">
+		<div class="span9">
+			<form class="form-inline well error">
+				<g:textField name="q" class="span3" />
+				<a onClick="searchAdministrators();" href="javascript:return false;" class="btn btn-success">
+				    <i class="icon-search icon-white"></i>
+				    <g:message code="nimble.link.search" />
+				</a>
+			</form>
+		</div>
+	</div>
 
-  <div id="searchresponse" class="clear">
-  </div>
-
+	<div id="searchresponse" class="clear"> </div>
 </body>

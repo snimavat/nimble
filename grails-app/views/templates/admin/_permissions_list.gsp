@@ -1,5 +1,5 @@
 <g:if test="${permissions?.size() > 0}">
-  <table class="details">
+  <table class="table no-border table-striped">
     <thead>
     <tr>
       <th class="first"><g:message code="nimble.label.type" /></th>
@@ -11,7 +11,7 @@
     <tbody>
 
     <g:each in="${permissions}" status="i" var="perm">
-      <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+      <tr>
         <td>${perm.type.tokenize('.').last().encodeAsHTML()}</td>
         <td>${perm.target.encodeAsHTML()}</td>
         <td>
@@ -20,7 +20,10 @@
         </td>
         <td>
           <g:if test="${!perm.managed}">
-			<a href="#" onClick="removePermission('${parent.id.encodeAsHTML()}', '${g.fieldValue(bean:perm, field:'id')}');" class="button icon icon_delete"><g:message code="nimble.link.remove" /></a>
+			<a href="#" onClick="removePermission('${parent.id.encodeAsHTML()}', '${g.fieldValue(bean:perm, field:'id')}');" class="btn btn-danger">
+			     <i class="icon-remove icon-white"></i>
+			     <g:message code="nimble.link.remove" />
+		    </a>
 		  </g:if>
           <g:else>&nbsp;</g:else>
         </td>

@@ -12,7 +12,27 @@
   </p>
 
   <n:errors bean="${group}"/>
+  
+    <g:form method="post" action="save" class="form-horizontal">
+        <f:with bean="group">
+            <f:field property="name" label="nimble.label.name" />
+            <f:field property="description" required="true" label="nimble.label.description" />            
+        </f:with>
 
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="icon-ok icon-white"></i>
+                <g:message code="nimble.link.creategroup" />
+            </button>
+            <g:link action="list" class="btn btn-warning">
+                <i class="icon-arrow-left icon-white"></i>
+                <g:message code="nimble.link.cancel" />
+            </g:link>
+        </div>
+    </g:form>
+
+
+   <%-- 
   <g:form name="createGroup" action="save" method="post">
       <table>
         <tbody>
@@ -47,6 +67,6 @@
         </tbody>
       </table>
   </g:form>
-
+ --%>
 </body>
 </html>

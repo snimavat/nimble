@@ -1,20 +1,26 @@
 <g:if test="${groups?.size() > 0}">
-  <table class="details">
+  <table class="table table-striped">
     <thead>
-    <tr>
-      <th class="first"><g:message code="nimble.label.name" /></th>
-      <th class=""><g:message code="nimble.label.description" /></th>
-      <th class="last"></th>
-    </tr>
+	    <tr>
+	      <th><g:message code="nimble.label.name" /></th>
+	      <th><g:message code="nimble.label.description" /></th>
+	      <th></th>
+	    </tr>
     </thead>
     <tbody>
     <g:each in="${groups}" status="i" var="group">
-      <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+      <tr>
         <td>${group.name?.encodeAsHTML()}</td>
         <td>${group.description?.encodeAsHTML()}</td>
         <td>
-          <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="button icon icon_group_go"><g:message code="nimble.link.view" /></g:link>
-          <a onClick="grantGroup('${ownerID.encodeAsHTML()}', '${group.id.encodeAsHTML()}');" class="button icon icon_add"><g:message code="nimble.link.assign" /></a>
+          <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-info">
+            <i class="icon-user icon-white"></i>
+            <g:message code="nimble.link.view" />
+          </g:link>
+          <a onClick="grantGroup('${ownerID.encodeAsHTML()}', '${group.id.encodeAsHTML()}');" class="btn btn-warning">
+            <i class="icon-plus icon-white"></i>
+            <g:message code="nimble.link.assign" />
+          </a>
         </td>
       </tr>
     </g:each>

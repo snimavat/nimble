@@ -1,15 +1,15 @@
 <g:if test="${users != null && users.size() > 0}">
-  <table class="details">
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th class="first"><g:message code="nimble.label.username" /></th>
-      <th class=""><g:message code="nimble.label.fullname" /></th>
-      <th class="last"></th>
+      <th><g:message code="nimble.label.username" /></th>
+      <th><g:message code="nimble.label.fullname" /></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <g:each in="${users}" status="i" var="user">
-      <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+      <tr>
         <g:if test="${user.username.length() > 30}">
         	<td>${user.username?.substring(0,30).encodeAsHTML()}...</td>
 		</g:if>
@@ -18,8 +18,13 @@
 		</g:else>
         <td>${user?.profile?.fullName.encodeAsHTML()}</td>
         <td>
-          <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="button icon icon_user_go"><g:message code="nimble.link.view" /></g:link>
-          <a onClick="addMember('${parent.id.encodeAsHTML()}', '${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="button icon icon_add"><g:message code="nimble.link.grant" /></a>
+          <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="btn btn-info">
+            <i class="icon-user icon-white"></i>
+            <g:message code="nimble.link.view" />
+          </g:link>
+          <a onClick="addMember('${parent.id.encodeAsHTML()}', '${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="btn btn-warning">
+            <g:message code="nimble.link.grant" />
+          </a>
         </td>
       </tr>
     </g:each>

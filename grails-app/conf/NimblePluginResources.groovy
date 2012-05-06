@@ -1,10 +1,15 @@
 
 modules = {
-    'nimble-core' {
-		dependsOn "jquery, jquery-ui"
-		resource id:'base-css', url:[plugin:'nimble', dir:'css', file:'nimble.css'], disposition:'head'
-		resource id:'famfam', url:[plugin:'nimble', dir:'css', file:'famfamfam.css'], disposition:'head'
-		resource id:'core-js', url:[plugin:'nomble', dir:'js', file:'nimblecore.js'], disposition:'head'
+	overrides {
+		//Hack for issue https://github.com/groovydev/twitter-bootstrap-grails-plugin/issues/32
+		'bootstrap-fixtaglib' {
+			defaultBundle 'fixtaglib'
+		}
+	}
+	
+    'nimble-core' {		
+		resource id:'core-css', url:[plugin:'nimble', dir:'css', file:'nimble-core.css'], disposition:'head'		
+		resource id:'core-js', url:[plugin:'nimble', dir:'js', file:'nimblecore.js'], disposition:'head'
     }
 	'nimble-ui' {
 		dependsOn "nimble-core"
@@ -26,14 +31,20 @@ modules = {
 		dependsOn 'jquery'
 		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.bt.js'], disposition:'head'
 	}
+					
+	'jquery-pstrength' {
+		dependsOn 'jquery'
+		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.pstrength.js']
+	}
 	
 	'nimble-admin' {
-		dependsOn 'nimble-core, nimble-ui, jgrawl, jquery-url, jquery-bt'
-		resource id:'css', url:[plugin:'nimble', dir:'css', file:'administration.css'], disposition:'head'
-	} 
+		dependsOn 'jquery, jgrawl, jquery-url, jquery-bt, jquery-pstrength'
+		dependsOn 'nimble-core, nimble-ui'
+		dependsOn 'bootstrap-css, bootstrap-responsive-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'		
+	}
 	
 	'nimble-login' {
-		dependsOn 'nimble-admin'
-		resource id:'css', url:[plugin:'nimble', dir:'css', file:'login.css'], disposition:'head'
+		dependsOn 'nimble-core, nimble-ui, jquery, bootstrap-css, bootstrap-responsive-css, jquery-bt, jquery-url'
 	}
+
 }

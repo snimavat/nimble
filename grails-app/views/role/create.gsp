@@ -14,6 +14,26 @@
 
   <n:errors bean="${role}"/>
 
+    <g:form action="save" class="form-horizontal">
+        <f:with bean="role">
+            <f:field property="name" label="nimble.label.name" />
+            <f:field property="description" label="nimble.label.description" />            
+        </f:with>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="icon-ok icon-white"></i>
+                <g:message code="nimble.link.createrole" />
+            </button>
+            <g:link action="list" class="btn btn-warning">
+                <i class="icon-arrow-left icon-white"></i>
+                <g:message code="nimble.link.cancel" />
+            </g:link>
+        </div>
+    </g:form>
+
+
+   <%-- 
   <g:form action="save" method="post">
 
     <table>
@@ -46,6 +66,6 @@
     </table>
 
   </g:form>
-
+ --%>
 </body>
 </html>

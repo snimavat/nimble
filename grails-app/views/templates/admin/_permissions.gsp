@@ -1,11 +1,13 @@
 <div id="permissions" class="section">
 
   <h3><g:message code="nimble.template.permissions.heading" /></h3>
-  <div id="currentpermission">
-  </div>
+  <div id="currentpermission"> </div>
 
   <div id="showaddpermissions">
-    <a id="showaddpermissionsbtn" class="button icon icon_group_add"><g:message code="nimble.link.addpermission" /></a>
+    <a id="showaddpermissionsbtn" class="btn btn-success">
+        <i class="icon-plus icon-white"></i>
+        <g:message code="nimble.link.addpermission" />
+    </a>
   </div>
 
   <div id="addpermissions">
@@ -15,20 +17,16 @@
     </p>
 
     <div id="addpermissionserror"></div>
-
-    <table>
-      <tbody>
-      <tr>
-        <td>
-          <g:textField size="15" name="first_p" class="easyinput"/> <strong>:</strong>
-          <g:textField size="15" name="second_p" class="easyinput"/> <strong>:</strong>
-          <g:textField size="15" name="third_p" class="easyinput"/> <strong>:</strong>
-          <g:textField size="15" name="fourth_p" class="easyinput"/>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <button onClick="createPermission(${parent.id.encodeAsHTML()});" class="button icon icon_add"><g:message code="nimble.link.createpermission" /></button>
-    <button id="closepermissionsaddbtn" class="button icon icon_cross"><g:message code="nimble.link.close" /></button>
+    <form class="well form-inline">
+	    <g:textField size="15" name="first_p" class="span2"/> <strong>:</strong>
+	    <g:textField size="15" name="second_p" class="span2"/> <strong>:</strong>
+	    <g:textField size="15" name="third_p" class="span2"/> <strong>:</strong>
+	    <g:textField size="15" name="fourth_p" class="span2"/>
+    </form>      
+    <button type="button" onClick="createPermission(${parent.id.encodeAsHTML()});" class="btn btn-success">
+        <i class="icon-ok-sign icon-white"></i>
+        <g:message code="nimble.link.createpermission" />
+    </button>
+    <button type="button" id="closepermissionsaddbtn" class="btn btn-warning"><g:message code="nimble.link.close" /></button>
   </div>
 </div>

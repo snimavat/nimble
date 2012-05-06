@@ -1,8 +1,27 @@
-Nimble, an extensive application base for Grails.
+Nimble grails plugin
+--------------------
 
-Nimble builds on the strengths of many other open source projects including Spring, Hibernate, Grails and Shiro. Like all these projects it is licensed under the fully permissive Apache 2.0 software license. Nimble can save you from months of boring, costly development work by providing all the common internal components web applications require.
+This is fork of original nimble plugin https://github.com/bradleybeddoes/nimble
 
-For those familliar with Grails you'll be right at home with Nimble. Nimble ships as a grails plugin and is easy to install.
+What has been changed
+---------------------
+- The plugin has been upgraded to work with grails 2.x, and shiro plugin 1.1.4
+- The UI has been reworked to use twitter bootstrap, dependency on jquery ui has been removed
+- The plugin now depends on latest version of jquery plugin (1.7.1 as of now)
 
-If you'd like to use compas and sass (and there is no requirement to) once installed to jruby you can invoke as follows:
-jruby -S compass -w --sass-dir src/sass --css-dir web-app/css
+#### plugin dependencies
+- shiro 1.1.4 > *
+- mail 0.6 > *
+- twitter-bootstrap 2.0.1.22 > *
+- resources 1.1.6 > *
+- fields 1.2 > *
+
+
+## Roadmap
+- Improve test coverage
+- Add support for impersonating users
+- Upgrade existing facebook implementation to depend on shiro-oauth plugin
+- Add twitter oauth support
+
+
+Note - Its till work in progress

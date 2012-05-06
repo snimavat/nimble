@@ -1,5 +1,5 @@
-<head>
-  <meta name="layout" content="${grailsApplication.config.nimble.layout.login}"/>
+<!doctype html>
+<head>  
   <title><g:message code="nimble.template.login.title" /></title>        
    <r:script disposition='head'>
     $(function() {
@@ -230,6 +230,40 @@
   </div>
 </g:if>
 <g:else>
+
+   <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span12">
+                <div class="login-block well">
+                    <n:flashembed/>                    
+                    <g:form action="signin" name="signin" method="post" class="form-vertical">
+                     <fieldset>
+                        <legend>Login</legend>
+                        <input type="hidden" name="targetUri" value="${targetUri}"/>
+						<label for="username"><g:message code="nimble.label.username" /></label>
+						<input type="text" name="username" id="username" class="span3">
+                        <label for="password"><g:message code="nimble.label.password" /></label>
+                        <input type="password" name="password" id="password" class="span3">                         
+												  
+					  <label class="checkbox">
+					    <input type="checkbox" name="rememberme"> <g:message code="nimble.label.rememberme" />
+					  </label>
+				      <button type="submit" class="btn btn-primary"><g:message code="nimble.link.login.basic" /></button>
+				      </fieldset>                    
+                    </g:form>
+                    <div class="pull-right" id="login-options">
+			          <g:link controller="account" action="forgottenpassword" class="textlink icon icon_flag_purple"><g:message code="nimble.link.forgottenpassword" /></g:link>
+			          <g:if test="${registration}">
+			            | <g:link controller="account" action="createuser" class="textlink icon icon_user_go"><g:message code="nimble.link.newuser" /></g:link>
+			          </g:if>                        
+                    </div>
+                </div>
+          </div> 
+      </div> 
+   </div>
+  
+  
+  <%--
   <div class="container">
     <div class="login">
 
@@ -272,10 +306,11 @@
 
     </div>
   </div>
-
+ --%>
 </g:else>
-
+<%--
 <n:accountcreationpolicy/>
 <n:facebookConnect/>
-
+ --%>
 </body>
+</html>

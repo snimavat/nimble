@@ -28,12 +28,12 @@ where
     PROFILE = The name of your Profile domain class (which will be created).
 """
 
-target ( default : 'Sets up a new project with a common Nimble base environment ready for customization' ) {
+target (default : 'Sets up a new project with a common Nimble base environment ready for customization' ) {
 	
   if(new File("${basedir}/grails-app/conf/NimbleConfig.groovy").exists()) {
         println "Existing NimbleConfig.groovy located"
-	println "This script does not currently manage Nimble upgrades, please see release documentation for any required changed to NimbleConfig.groovy or other components"
-	System.exit(1)
+		println "This script does not currently manage Nimble upgrades, please see release documentation for any required changed to NimbleConfig.groovy or other components"
+		System.exit(1)
   }
 	
   def user, profile, pack, packdir
@@ -63,7 +63,7 @@ target ( default : 'Sets up a new project with a common Nimble base environment 
   new File("${basedir}/grails-app/domain/${packdir}/${profile}.groovy").write(profiletemplate.toString())
 
   // Templates
-  copy( todir: "${basedir}/grails-app/views/templates/nimble" , overwrite: false ) { fileset ( dir : "${nimblePluginDir}/grails-app/views/templates/nimble" ) }
+  copy( todir: "${basedir}/grails-app/views/templates/nimble/mail" , overwrite: false ) { fileset ( dir : "${nimblePluginDir}/grails-app/views/templates/nimble/mail" ) }
 
   // Sass
   mkdir( dir:"${basedir}/src/sass" )

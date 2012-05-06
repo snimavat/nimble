@@ -5,34 +5,36 @@
   <title><g:message code="nimble.view.group.list.title" /></title>
 </head>
 <body>
-
-  <h2><g:message code="nimble.view.group.list.heading" /></h2>
-  <p>
-    <g:message code="nimble.view.group.edit.descriptive" />
-  </p>
-
-  <div>
-    <table class="grouplist">
+    <div class="widget-header">
+        <i class="icon-list"></i>
+        <g:message code="nimble.view.group.list.heading" />
+        <div class="pull-right">
+            <g:link controller="group" action="create" class="btn btn-primary"><g:message code="nimble.link.creategroup" /></g:link>
+        </div>
+    </div>   
+  
+    <table class="table table-striped">
       <thead>
       <tr>
-        <g:sortableColumn property="name" titleKey="nimble.label.name" class="first icon icon_arrow_refresh"/>
+        <g:sortableColumn property="name" titleKey="nimble.label.name" class="icon icon_arrow_refresh"/>
         <th class=""><g:message code="nimble.label.description" /></th>
         <th class="last"/>
       </tr>
       </thead>
       <tbody>
       <g:each in="${groups}" status="i" var="group">
-        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
+        <tr>
           <td>${fieldValue(bean: group, field: 'name')}</td>
           <td>${fieldValue(bean: group, field: 'description')}</td>
-          <td><g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="button icon icon_group_go"><g:message code="nimble.link.view" /></g:link>
-
+          <td><g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-primary">
+            <i class="icon-user icon-white"></i>
+            <g:message code="nimble.link.view" />
+          </g:link>
         </tr>
       </g:each>
       </tbody>
     </table>
-  </div>
+  
   <div class="paginateButtons">
     <g:paginate total="${Group.count().encodeAsHTML()}"/>
   </div>

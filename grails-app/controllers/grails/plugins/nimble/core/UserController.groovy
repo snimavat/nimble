@@ -109,12 +109,18 @@ class UserController {
 
   def save = {
     def user = InstanceGenerator.user()
-    user.profile = InstanceGenerator.profile()
+	def profile = InstanceGenerator.profile()
+    
+	user.profile = profile
+	profile.owner = user
+		
 	def userFields = grailsApplication.config.nimble.fields.enduser.user
 	def profileFields = grailsApplication.config.nimble.fields.enduser.profile
+	
 	user.properties[userFields] = params	
 	user.profile.properties[profileFields] = params
-    user.enabled = false
+    
+	user.enabled = false
     user.external = false
 
     def savedUser = userService.createUser(user)
@@ -298,7 +304,7 @@ class UserController {
     }
 	else {
     	log.debug("Listing groups user [$user.id]$user.username is a member of")
-	    render(template: '/templates/admin/groups_list', contextPath: pluginContextPath, model: [groups: user.groups, ownerID: user.id])
+	    render(template: '/templates/admin/groups_list', model: [groups: user.groups, ownerID: user.id])
 	}
   }
 

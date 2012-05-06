@@ -30,10 +30,10 @@ class NimbleGrailsPlugin {
     def version = "0.4-SNAPSHOT"
 
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "1.1 > *"
+    def grailsVersion = "2.0.1 > *"
 
     // the other plugins this plugin depends on
-    def dependsOn = [ shiro: "1.1.4", mail: "0.6 > *"]
+    def dependsOn = [ shiro: "1.1.4 > *", mail: "0.6 > *", 'twitter-bootstrap':"2.0.1.22 > *", resources:"1.1.6 > *", fields:'1.2 > *']
     
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
@@ -133,7 +133,7 @@ class NimbleGrailsPlugin {
 			def authUser
 			
             if(application.config?.nimble?.implementation?.user)
-    			authUser = grailsApplication.classLoader.loadClass(application.config.nimble.implementation.user).get(principal)
+    			authUser = application.classLoader.loadClass(application.config.nimble.implementation.user).get(principal)
     		else
     			authUser = UserBase.get(principal)
 

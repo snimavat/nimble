@@ -1,5 +1,5 @@
 <h3><g:message code="nimble.view.user.show.federated.heading" /></h3>
-<table>
+<table class="table no-border">
 	<tbody>
 		<tr>
 			<th><g:message code="nimble.label.provider" /></th>

@@ -42,7 +42,7 @@ class UserBase {
     Date expiration
     Date dateCreated
     Date lastUpdated
-
+	
     static belongsTo = [Role, Group]
 
     static hasMany = [

@@ -1,0 +1,35 @@
+
+table.no-border { border:0 }
+table.no-border td, table.no-border th { border: none !important; }
+
+table.span4 {
+  float: none;
+  width: 284px;
+  margin-left: 0;
+}
+
+#pstrength {
+	max-width: 40% !important;
+}
+
+.widget-header {
+    background: -moz-linear-gradient(center top , #FAFAFA 0%, #E9E9E9 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #D5D5D5;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+}
+
+.widget-header [class^="icon-"], .widget-header [class*=" icon-"] {   
+    margin-left: 10px;
+    margin-right: -2px;
+}
+
+
+.login-block {
+	margin: 60px auto;
+	max-width: 320px;
+	
+}

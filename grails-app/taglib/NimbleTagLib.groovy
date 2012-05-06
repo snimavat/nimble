@@ -64,7 +64,7 @@ class NimbleTagLib {
      * Provides markup to render the default password policy
      */
     def passwordpolicy = {attrs, body ->
-        out << render(template: "/templates/nimble/help/passwordpolicy", contextPath: pluginContextPath)
+        out << render(template: "/templates/nimble/help/passwordpolicy")
     }
 
     /**
@@ -137,7 +137,7 @@ class NimbleTagLib {
 		if(attrs.action == null || attrs.title == null || attrs.msg == null || attrs.accept == null || attrs.cancel == null)
         	throwTagError("Confirm action tag requires action, title, msg, accept and cancel attributes")
 
-		out << "<a href=\"#\" class=\"${attrs.class}\" onClick=\"confirmAction = function() { ${attrs.action} }; wasConfirmed('${attrs.title}', '${attrs.msg}', '${attrs.accept}', '${attrs.cancel}');\">${body()}</a>"
+		out << "<a href=\"#\" class=\"${attrs.class}\" onClick=\"confirmAction = function() { ${attrs.action} }; wasConfirmed('${attrs.title}', '${attrs.msg}', '${attrs.accept}', '${attrs.cancel}'); return false;\">${body()}</a>"
 	}
 	
 	// Allows UI developers to request verification of contents of a field using onBlur
