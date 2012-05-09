@@ -33,7 +33,7 @@ class NimbleGrailsPlugin {
     def grailsVersion = "2.0.1 > *"
 
     // the other plugins this plugin depends on
-    def dependsOn = [ shiro: "1.1.4 > *", mail: "0.6 > *", 'twitter-bootstrap':"2.0.1.22 > *", resources:"1.1.6 > *", fields:'1.2 > *']
+    def dependsOn = [ shiro: "1.1.4 > *", mail: "0.6 > *", 'twitter-bootstrap':"2.0.1.22 > *", resources:"1.1.6 > *", fields:'1.2 > *', jquery:'1.7.1 > *']
     
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
