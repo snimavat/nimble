@@ -1,7 +1,3 @@
-<div class="widget-header">
-    <i class="icon-list"></i>
-    <g:message code="nimble.view.admins.heading" />
-</div>   
 
 <table class="table table-striped">
   <thead>

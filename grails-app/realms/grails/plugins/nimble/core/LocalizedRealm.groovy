@@ -61,11 +61,11 @@ class LocalizedRealm {
 
     def account = new SimpleAccount(user.id, user.passwordHash, "grails.plugins.nimble.realms.LocalizedRealm")
     if (!credentialMatcher.doCredentialsMatch(authToken, account)) {
-      log.warn "Supplied password for user [$user.id]$user.username is incorrect"
+      log.warn "Supplied password for user [$user.id]:$user.username is incorrect"
       throw new IncorrectCredentialsException("Invalid password for user '${username}'")
     }
 
-    log.info("Successfully logged in user [$user.id]$user.username using local repository")
+    log.info("Successfully logged in user [$user.id]:$user.username using local repository")
     return account
   }
 
@@ -78,22 +78,22 @@ class LocalizedRealm {
       def user = session.get(UserBase.class, new Long(principal))
 
       if (user) {
-        log.debug("Determining if user [$user.id]$user.username is assigned role $roleName")
+        log.debug("Determining if user [$user.id]:$user.username is assigned role $roleName")
 
         user.roles.each {
           if (it.name.equals(roleName)) {
-            log.debug("User [$user.id]$user.username is assigned role $roleName")
+            log.debug("User [$user.id]:$user.username is assigned role $roleName")
             result = true
           }
         }
 
         if (!result) {
-          log.debug("Determining if group membership for user [$user.id]$user.username is assigned role $roleName")
+          log.debug("Determining if group membership for user [$user.id]:$user.username is assigned role $roleName")
           // No match on directly assigned roles, check groups
           user.groups.each {group ->
             group.roles.each {
               if (it.name.equals(roleName)) {
-                log.debug("Group [$group.id]$group.name which user [$user.id]$user.username is a member of is assigned role the $roleName")
+                log.debug("Group [$group.id]:$group.name which user [$user.id]:$user.username is a member of is assigned role the $roleName")
                 result = true
               }
             }
@@ -101,7 +101,7 @@ class LocalizedRealm {
         }
 
         if (!result)
-          log.debug("Neither user [$user.id]$user.username nor groups this user is a member of is assigned the role $roleName")
+          log.debug("Neither user [$user.id]:$user.username nor groups this user is a member of is assigned the role $roleName")
 
         return result
       }
@@ -126,18 +126,18 @@ class LocalizedRealm {
       session = sessionFactory.openSession()
       def user = session.get(UserBase.class, new Long(principal))
 
-      log.debug("Determining if user [$user.id]$user.username is assigned multiple roles")
+      log.debug("Determining if user [$user.id]:$user.username is assigned multiple roles")
 
       if (user) {
 
         rolesearch:
         for (role in roles) {
 
-          log.debug("Determining if user [$user.id]$user.username is assigned role $role.name")
+          log.debug("Determining if user [$user.id]:$user.username is assigned role $role.name")
 
           for (ur in user.roles) {
             if (ur.name.equals(role.roleName)) {
-              log.debug("User [$user.id]$user.username is assigned role $role.name")
+              log.debug("User [$user.id]:$user.username is assigned role $role.name")
               continue rolesearch
             }
           }
@@ -145,18 +145,18 @@ class LocalizedRealm {
           // No match on directly assigned roles, check groups
           for (group in user.groups) {
             if (group.hasRole(roleName)) {
-              log.debug("Group [$group.id]$group.name which user [$user.id]$user.username is a member of is assigned role the $role.name")
+              log.debug("Group [$group.id]:$group.name which user [$user.id]:$user.username is a member of is assigned role the $role.name")
               continue rolesearch
             }
           }
 
           // No match for current role so we can return
-          log.debug("Neither user [$user.id]$user.username nor groups this user is a member of is assigned the role $role.name")
+          log.debug("Neither user [$user.id]:$user.username nor groups this user is a member of is assigned the role $role.name")
           return false
         }
 
         // Matches for all roles so we can return
-        log.debug("User [$user.id]$user.username was directly or via group membership assigned all required roles")
+        log.debug("User [$user.id]:$user.username was directly or via group membership assigned all required roles")
         return true
       }
 
@@ -194,7 +194,7 @@ class LocalizedRealm {
       session = sessionFactory.openSession()
       def user = session.get(UserBase.class, new Long(principal))
 
-      log.debug("Determining if permissions assigned to user [$user.id]$user.username contain a permission that implies $requiredPermission")
+      log.debug("Determining if permissions assigned to user [$user.id]:$user.username contain a permission that implies $requiredPermission")
       // Try all directly assigned permissions
       for (permission in user.permissions) {
         permitted = validatePermission(permission, requiredPermission)
@@ -204,7 +204,7 @@ class LocalizedRealm {
 
       // If we have no positive match try all permissions assigned to roles
       if (!permitted) {
-        log.debug("Determining if roles assigned to user [$user.id]$user.username contain a permission that implies $requiredPermission")
+        log.debug("Determining if roles assigned to user [$user.id]:$user.username contain a permission that implies $requiredPermission")
 
         rolepermsearch:
         for (role in user.roles) {
@@ -218,7 +218,7 @@ class LocalizedRealm {
 
       // If we have no positive match try all permissions assigned to member groups and to any roles associated with each group
       if (!permitted) {
-        log.debug("""Determining if groups (incl roles assigned to each group) which user [$user.id]$user.username
+        log.debug("""Determining if groups (incl roles assigned to each group) which user [$user.id]:$user.username
                      is a member of are assigned a permission that implies $requiredPermission""")
 
         grouppermsearch:
@@ -241,9 +241,9 @@ class LocalizedRealm {
       }
 
       if (permitted)
-        log.debug("User [$user.id]$user.username has a permission which implies $requiredPermission directly or via role/group memberships")
+        log.debug("User [$user.id]:$user.username has a permission which implies $requiredPermission directly or via role/group memberships")
       else
-        log.debug("User [$user.id]$user.username does not have a permission which implies $requiredPermission either directly or via role/group memberships")
+        log.debug("User [$user.id]:$user.username does not have a permission which implies $requiredPermission either directly or via role/group memberships")
 
       return permitted
     }

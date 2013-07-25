@@ -1,72 +1,35 @@
 <html>
-<head>
-  <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
-  <title><g:message code="nimble.view.group.create.title" /></title>
-</head>
-<body>
-
-  <h2><g:message code="nimble.view.group.create.heading" /></h2>
-
-  <p>
-    <g:message code="nimble.view.group.create.descriptive" />
-  </p>
-
-  <n:errors bean="${group}"/>
-  
-    <g:form method="post" action="save" class="form-horizontal">
-        <f:with bean="group">
-            <f:field property="name" label="nimble.label.name" />
-            <f:field property="description" required="true" label="nimble.label.description" />            
-        </f:with>
-
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">
-                <i class="icon-ok icon-white"></i>
-                <g:message code="nimble.link.creategroup" />
-            </button>
-            <g:link action="list" class="btn btn-warning">
-                <i class="icon-arrow-left icon-white"></i>
-                <g:message code="nimble.link.cancel" />
-            </g:link>
-        </div>
-    </g:form>
-
-
-   <%-- 
-  <g:form name="createGroup" action="save" method="post">
-      <table>
-        <tbody>
-
-        <tr>
-          <th>
-            <g:message code="nimble.label.name" />
-          </th>
-          <td valign="top" class="value">
-            <n:verifyfield id="name" class="easyinput" name="name" value="${fieldValue(bean: group, field: 'name')}" required="true" controller="group" action="validname" validmsg="valid" invalidmsg="invalid" />
-          </td>
-        </tr>
-
-        <tr>
-          <th>
-            <g:message code="nimble.label.description" />
-          </th>
-          <td valign="top" class="value">
-            <input type="text" size="30" id="description" name="description" value="${fieldValue(bean: group, field: 'description')}" class="easyinput"/><span class="icon icon_bullet_green">&nbsp;</span>
-          </td>
-        </tr>
-
-        <tr>
-          <td/>
-          <td>
-            <div class="buttons">
-              <button class="button icon icon_group_go" type="submit"><g:message code="nimble.link.creategroup" /></button>
-              <g:link action="list" class="button icon icon_cancel"><g:message code="nimble.link.cancel" /></g:link>
+   <head>
+      <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
+      <title>
+         <g:message code="nimble.view.group.create.title" />
+      </title>
+   </head>
+   <body>
+      <h3>
+         <g:message code="nimble.view.group.create.heading" />
+         <span>
+            <g:message code="nimble.view.group.create.descriptive" />
+         </span>
+      </h3>
+      <div class="box-generic">
+         <n:errors bean="${group}"/>
+         <g:form method="post" action="save" class="form-horizontal">
+            <f:with bean="group">
+               <f:field property="name" label="nimble.label.name" />
+               <f:field property="description" required="true" label="nimble.label.description" />
+            </f:with>
+            <div class="form-actions">
+               <button type="submit" class="btn btn-primary">
+                  <i class="icon-ok icon-white"></i>
+                  <g:message code="nimble.link.creategroup" />
+               </button>
+               <g:link action="list" class="btn btn-warning">
+                  <i class="icon-arrow-left icon-white"></i>
+                  <g:message code="nimble.link.cancel" />
+               </g:link>
             </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-  </g:form>
- --%>
-</body>
+         </g:form>
+      </div>
+   </body>
 </html>

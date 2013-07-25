@@ -1,44 +1,40 @@
 <head>
-  <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
-  <title><g:message code="nimble.view.admins.title" /></title>
-
-  <r:script disposition='head'>
-    var adminListEndpoint = "${createLink(controller:'admins', action:'list')}";
-	var adminSearchEndpoint = "${createLink(action:'search')}";
-	var adminDeleteEndpoint = "${createLink(action:'delete')}";
-	var adminGrantEndpoint = "${createLink(action:'create')}";
-
-    $(function() {	  
+   <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
+   <title>
+      <g:message code="nimble.view.admins.title" />
+   </title>
+   <r:script disposition='head'>
+      var adminListEndpoint = "${createLink(controller:'admins', action:'list')}";
+      var adminSearchEndpoint = "${createLink(action:'search')}";
+      var adminDeleteEndpoint = "${createLink(action:'delete')}";
+      var adminGrantEndpoint = "${createLink(action:'create')}";
+      $(function() {      
       listAdministrators();
-    });
-  </r:script>
-
+      });
+   </r:script>
 </head>
-
 <body>
-
-  <p>
-    <g:message code="nimble.view.admins.descriptive" />
-  </p>
-
-  <div id="admins"> </div>
-
-  <h3><g:message code="nimble.view.admins.addadmin.heading" /></h3>
-  <p>
-    <g:message code="nimble.view.admins.addadmin.descriptive" />
-  </p>
-
-	<div class="row">
-		<div class="span9">
-			<form class="form-inline well error">
-				<g:textField name="q" class="span3" />
-				<a onClick="searchAdministrators();" href="javascript:return false;" class="btn btn-success">
-				    <i class="icon-search icon-white"></i>
-				    <g:message code="nimble.link.search" />
-				</a>
-			</form>
-		</div>
-	</div>
-
-	<div id="searchresponse" class="clear"> </div>
+   <h3>
+      <g:message code="nimble.view.admins.heading" />
+      <span><g:message code="nimble.view.admins.descriptive" /></span>      
+   </h3>
+   <div class="widget widget-heading-simple widget-body-white">
+      <div class="widget-body">
+         <div id="admins"></div>
+      </div>
+   </div>
+   <h3>
+      <g:message code="nimble.view.admins.addadmin.heading" />
+   </h3>
+   <p>
+      <g:message code="nimble.view.admins.addadmin.descriptive" />
+   </p>
+   <form class="form-inline well error">
+      <g:textField name="q" class="span3" />
+      <a onClick="searchAdministrators();" href="javascript:" class="btn btn-success">
+         <i class="icon-search icon-white"></i>
+         <g:message code="nimble.link.search" />
+      </a>
+   </form>
+   <div id="user-searchresponse" class=""> </div>
 </body>

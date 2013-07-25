@@ -179,10 +179,12 @@ class UserService {
         user.validate()
 
         if (!user.external) {
-            if (validatePass(user))
-            generateValidationHash(user)
-            else
-            return user
+            if (validatePass(user)) {
+                generateValidationHash(user)
+            }
+            else { 
+                return user 
+             }
         }
 
         if (!user.hasErrors()) {
@@ -337,6 +339,7 @@ class UserService {
         user.addToLoginRecords(record)
 
         record.save()
+        
         if (record.hasErrors()) {
             log.error("Unable to save login record for user [$user.id]$user.username")
             record.errors.each {
@@ -347,6 +350,7 @@ class UserService {
         }
 
         user.save()
+        
         if (record.hasErrors()) {
             log.error("Unable to update user [$user.id]$user.username with new login record")
             user.errors.each {

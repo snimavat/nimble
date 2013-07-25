@@ -50,15 +50,14 @@ class AdminsService {
             throw new RuntimeException("Unable to locate default administrative role")
         }
 
+        log.info("Trying to add user [$user.id]:$user.username as administrator")
+        
         adminRole.addToUsers(user)
         user.addToRoles(adminRole)
 
         if (!adminRole.save()) {
-            log.error "Unable to grant administration privilege to [$user.id]$user.username"
-            adminRole.errors.each {
-                log.error '[${user.username}] - ' + it
-            }
-
+            log.error "Unable to grant administration privilege to [$user.id]:$user.username"
+            adminRole.errors.each {  log.error '[${user.username}] - ' + it }
             adminRole.discard()
             user.discard()
             return false
@@ -80,7 +79,7 @@ class AdminsService {
 
             permissionService.createPermission(adminPermission, user)
 
-            log.info "Granted administration privileges to [$user.id]$user.username"
+            log.info "Granted administration privileges to [$user.id]:$user.username"
             return true
         }
     }

@@ -47,7 +47,7 @@ class Role {
         cache usage: 'read-write', include: 'all'
         table ConfigurationHolder.config.nimble.tablenames.role
 
-        users cache: true
+        users cache: false
         groups cache: true
         permissions cache: true
     }

@@ -38,10 +38,12 @@ class UserController {
     redirect action: list, params: params
   }
 
-  def list = {
-    if (!params.max) {
-      params.max = 10
-    }
+  def list = {     
+    params.max = Math.min(params.max ? params.int('max') : 10,100)
+    params.offset = params.offset ? params.offset : 0
+    params.sort = params.sort ?: "username"
+    params.order = params.order ?: "asc"
+     
     log.debug("Listing users")
     [users: UserBase.list(params)]
   }
