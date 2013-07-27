@@ -24,7 +24,7 @@ $(function() {
 
     $("#searchmemberusers").click(function() {
       $("#memberaddgroups").hide();
-      $("#memberaddusers").show();
+      $("#memberaddusers").show("blind");
     });
 
     $("#closeaddmembersbtn").click(function() {

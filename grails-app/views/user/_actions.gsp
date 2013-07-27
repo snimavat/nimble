@@ -1,23 +1,4 @@
 <ul class="dropdown-menu">
-   <li>
-      <g:link controller="user" action="edit" id="${user.id}">
-         <g:message code="nimble.link.edit" />
-      </g:link>
-   </li>
-   <g:if test="${user.external}">
-      <li>
-         <g:link controller="user" action="changelocalpassword" id="${user.id}">
-            <g:message code="nimble.link.changelocalpassword" />
-         </g:link>
-      </li>
-   </g:if>
-   <g:else>
-      <li>
-         <g:link controller="user" action="changepassword" id="${user.id}">
-            <g:message code="nimble.link.changepassword" />
-         </g:link>
-      </li>
-   </g:else>
    <li id="disableuser">
       <a onClick="disableUser('${user.id}'); return false;" href="#">
          <g:message code="nimble.link.disableaccount" />

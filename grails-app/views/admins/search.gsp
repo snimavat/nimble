@@ -23,11 +23,11 @@
                   </g:else>
                   <td>${user?.profile?.fullName.encodeAsHTML()}</td>
                   <td>
-                     <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="btn btn-info">
+                     <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="btn btn-info btn-mini">
                         <i class="icon-user icon-white"></i>
                         <g:message code="nimble.link.view" />
                      </g:link>
-                     <a onClick="grantAdministrator('${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="btn btn-warning">
+                     <a onClick="grantAdministrator('${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="btn btn-warning btn-mini">
                         <i class=" icon-ok icon-white"></i>
                         <g:message code="nimble.link.grant" />
                      </a>

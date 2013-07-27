@@ -474,7 +474,7 @@ class UserController {
       response.status = 500
     }
 	else {
-    	def roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q, false)
+    	def roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q, false, [sort:"name"])
 	    def respRoles = []
 	    roles.each {
 	      if (!user.roles.contains(it) && !it.protect) {

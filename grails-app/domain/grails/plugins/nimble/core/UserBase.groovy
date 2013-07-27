@@ -36,14 +36,14 @@ class UserBase {
     boolean federated
     boolean remoteapi = false
 
-    FederationProvider federationProvider
-    ProfileBase profile
+    FederationProvider federationProvider    
 
     Date expiration
     Date dateCreated
     Date lastUpdated
 	
     static belongsTo = [Role, Group]
+	static hasOne = [profile:ProfileBase]
 
     static hasMany = [
         passwdHistory: String,
@@ -55,8 +55,7 @@ class UserBase {
         permissions: Permission
     ]
 
-    static fetchMode = [
-        roles: 'eager',
+    static fetchMode = [        
         groups: 'eager'
     ]
 
@@ -66,11 +65,11 @@ class UserBase {
         cache usage: 'read-write', include: 'all'
         table ConfigurationHolder.config.nimble.tablenames.user
 
-		profile lazy: false
+		profile fetch: 'join'
 
-        roles cache: true, cascade: 'none'
+        //roles cache: true, cascade: 'none'
         groups cache: true, cascade: 'none'
-        permissions cache: true
+        permissions cache: true, sort:'target'
     }
 
     static constraints = {

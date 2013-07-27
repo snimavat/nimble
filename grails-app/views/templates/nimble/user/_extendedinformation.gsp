@@ -1,18 +1,13 @@
-<h3><g:message code="nimble.view.user.show.extendedinformation.heading" /></h3>
-
-<div class="row-fluid">
-    <div class="span6">
-        <table class="table no-border">
-            <tbody>
-                <tr>
-                    <th><g:message code="nimble.label.fullname" /></th>
-                    <td>${user.profile?.fullName?.encodeAsHTML()}</td>
-                </tr>
-                <tr>
-                    <th><g:message code="nimble.label.email" /></th>
-                    <td>${user.profile?.email?.encodeAsHTML()}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<h3>
+   <g:message code="nimble.view.user.show.extendedinformation.heading" />
+</h3>
+<dl>
+   <dt>
+      <g:message code="nimble.label.fullname" />
+   </dt>
+   <dd>${user.profile?.fullName?.encodeAsHTML()}</dd>
+   <dt>
+      <g:message code="nimble.label.email" />
+   </dt>
+   <dd>${user.profile?.email?.encodeAsHTML()}</dd>
+</dl>

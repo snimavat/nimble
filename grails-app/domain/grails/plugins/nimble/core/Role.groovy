@@ -44,6 +44,7 @@ class Role {
     static belongsTo = [Group]
 
     static mapping = {
+        sort "name"
         cache usage: 'read-write', include: 'all'
         table ConfigurationHolder.config.nimble.tablenames.role
 

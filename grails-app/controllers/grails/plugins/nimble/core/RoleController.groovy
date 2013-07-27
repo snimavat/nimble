@@ -321,7 +321,7 @@ class RoleController {
     def q = "%" + params.q + "%"
     log.debug("Performing search for users matching $q")
 
-    def users = UserBase.findAllByUsernameIlike(q)
+    def users = UserBase.findAllByUsernameIlike(q, [sort:'username'])
     def profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q)
     def nonMembers = []
 

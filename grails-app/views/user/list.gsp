@@ -13,7 +13,7 @@
       <div class="widget-body">
          <div class="row-fluid">
             <div class="span8">
-               <g:link controller="user" action="create" class="btn btn-primary">
+               <g:link controller="user" action="create" class="btn btn-primary btn-small">
                   <g:message code="nimble.link.createuser" />
                </g:link>
             </div>
@@ -27,14 +27,14 @@
          <table class="table table-striped table-bordered table-white">
             <thead>
                <tr>
-                  <g:sortableColumn property="id" titleKey="nimble.label.id" class="center icon_arrow_refresh" />
-                  <g:sortableColumn property="username" titleKey="nimble.label.username" class="icon_arrow_refresh" />
+                  <g:sortableColumn property="id" titleKey="nimble.label.id" class="center" />
+                  <g:sortableColumn property="username" titleKey="nimble.label.username"/>
                   <th>
                      <g:message code="nimble.label.fullname" />
                   </th>
-                  <g:sortableColumn property="enabled" titleKey="nimble.label.state" class="icon_arrow_refresh" />
-                  <g:sortableColumn property="dateCreated" titleKey="nimble.label.created" class="icon_arrow_refresh" />
-                  <g:sortableColumn property="lastUpdated" titleKey="nimble.label.lastupdated" class="icon_arrow_refresh" />
+                  <g:sortableColumn property="enabled" titleKey="nimble.label.state" />
+                  <g:sortableColumn property="dateCreated" titleKey="nimble.label.created" />
+                  <g:sortableColumn property="lastUpdated" titleKey="nimble.label.lastupdated" />
                   <th class="center">Actions</th>
                </tr>
             </thead>
@@ -74,7 +74,7 @@
                      </td>                     
                      <td class="center actionButtons">
                         <span class="actionButton">
-                           <g:link action="show" id="${user.id}" class="btn btn-primary">
+                           <g:link action="show" id="${user.id}" class="btn btn-primary btn-mini">
                               <i class="icon-user icon-white"></i>
                               <g:message code="nimble.link.view" />
                            </g:link>
