@@ -63,8 +63,9 @@ class AuthController {
     def signin = {
         def authToken = new UsernamePasswordToken(params.username, params.password)
 
-        if (params.rememberme)
+        if (params.rememberme) {
             authToken.rememberMe = true
+        }
 
         log.info("Attempting to authenticate user, $params.username. RememberMe is $authToken.rememberMe")
 

@@ -20,8 +20,8 @@ function searchAdministrators() {
     url: adminSearchEndpoint,
     data: dataString,
     success: function(res) {
-      $("#searchresponse").empty();
-      $("#searchresponse").append(res);
+      $("#user-searchresponse").empty();      
+      $("#user-searchresponse").append(res);
     },
     error: function (xhr, ajaxOptions, thrownError) {
       growl('error', xhr.responseText);
