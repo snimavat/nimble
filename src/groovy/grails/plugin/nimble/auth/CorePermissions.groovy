@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.auth
+package grails.plugin.nimble.auth
 
 /**
  * Provides a set of permission strings that multiple piece of Nimble functionality reference
@@ -22,8 +22,7 @@ package grails.plugins.nimble.auth
  * @author Bradley Beddoes
  */
 class CorePermissions {
-	
+
 	public static String editPermission = "profile:edit"
-	
 }
 

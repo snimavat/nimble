@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.auth
+package grails.plugin.nimble.auth
 
 import org.apache.shiro.authc.AuthenticationException
 
@@ -23,8 +23,7 @@ import org.apache.shiro.authc.AuthenticationException
  *
  * @author Bradley Beddoes
  */
-public class AccountCreatedException extends AuthenticationException{
+public class AccountCreatedException extends AuthenticationException {
 
-  String newUserId
-
+	String newUserId
 }

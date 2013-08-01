@@ -14,12 +14,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble
+package grails.plugin.nimble
+
+import grails.plugin.nimble.core.ProfileBase
+import grails.plugin.nimble.core.UserBase
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
-
-import grails.plugins.nimble.core.UserBase
-import grails.plugins.nimble.core.ProfileBase
 
 /**
  * Determines correct version of class to load for classes commonly overloaded by host applications
@@ -28,22 +28,26 @@ import grails.plugins.nimble.core.ProfileBase
  */
 class InstanceGenerator {
 
-    static user = { 
-    	try { 
-    		if(ConfigurationHolder.config?.nimble?.implementation?.user)
-    			InstanceGenerator.class.classLoader.loadClass(ConfigurationHolder.config.nimble.implementation.user).newInstance()
-    		else
-    			UserBase.newInstance()
-    	} catch(ClassNotFoundException e){ UserBase.newInstance() } 
-    }
-    
-    static profile = { 
-    	try { 
-    		if(ConfigurationHolder.config?.nimble?.implementation?.profile)
-    			InstanceGenerator.class.classLoader.loadClass(ConfigurationHolder.config.nimble.implementation.profile).newInstance()
-    		else
-    			ProfileBase.newInstance()
-    	} catch(ClassNotFoundException e){ ProfileBase.newInstance() } 
-    }
+	static user = {
+		try {
+			if(ConfigurationHolder.config?.nimble?.implementation?.user)
+				InstanceGenerator.class.classLoader.loadClass(ConfigurationHolder.config.nimble.implementation.user).newInstance()
+			else
+				UserBase.newInstance()
+		} catch(ClassNotFoundException e){
+			UserBase.newInstance()
+		}
+	}
+
+	static profile = {
+		try {
+			if(ConfigurationHolder.config?.nimble?.implementation?.profile)
+				InstanceGenerator.class.classLoader.loadClass(ConfigurationHolder.config.nimble.implementation.profile).newInstance()
+			else
+				ProfileBase.newInstance()
+		} catch(ClassNotFoundException e){
+			ProfileBase.newInstance()
+		}
+	}
 }
 

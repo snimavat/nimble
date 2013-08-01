@@ -24,3 +24,4 @@ plugin.xml
 src/docs
 
 grails-app/i18n/shiro.properties
+/.settings

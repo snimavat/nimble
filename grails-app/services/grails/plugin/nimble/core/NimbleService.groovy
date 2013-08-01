@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.apache.shiro.SecurityUtils
 
@@ -26,71 +26,67 @@ import org.apache.shiro.SecurityUtils
  */
 class NimbleService {
 
-    def grailsApplication
-    
-    boolean transactional = true
+	def grailsApplication
 
-    /**
-     * Integrates with extended Nimble bootstrap process, sets up basic Nimble environment
-     * once all domain objects etc ave dynamic methods available to them.
-     */
-    public void init() {
+	boolean transactional = true
 
-        // Perform all base Nimble setup
-        def userRole = Role.findByName(UserService.USER_ROLE)
-        if (!userRole) {
-            userRole = new Role()
-            userRole.description = 'Issued to all users'
-            userRole.name = UserService.USER_ROLE
-            userRole.protect = true
-            userRole.save()
+	/**
+	 * Integrates with extended Nimble bootstrap process, sets up basic Nimble environment
+	 * once all domain objects etc ave dynamic methods available to them.
+	 */
+	public void init() {
 
-            if (userRole.hasErrors()) {
-                userRole.errors.each {
-                    log.error(it)
-                }
-                throw new RuntimeException("Unable to create valid users role")
-            }
-        }
+		// Perform all base Nimble setup
+		def userRole = Role.findByName(UserService.USER_ROLE)
+		if (!userRole) {
+			userRole = new Role()
+			userRole.description = 'Issued to all users'
+			userRole.name = UserService.USER_ROLE
+			userRole.protect = true
+			userRole.save()
 
-        def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
-        if (!adminRole) {
-            adminRole = new Role()
-            adminRole.description = 'Assigned to users who are considered to be system wide administrators'
-            adminRole.name = AdminsService.ADMIN_ROLE
-            adminRole.protect = true
-            adminRole.save()
+			if (userRole.hasErrors()) {
+				userRole.errors.each { log.error(it) }
+				throw new RuntimeException("Unable to create valid users role")
+			}
+		}
 
-            if (adminRole.hasErrors()) {
-                adminRole.errors.each {
-                    log.error(it)
-                }
-                throw new RuntimeException("Unable to create valid administrative role")
-            }
-        }
+		def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
+		if (!adminRole) {
+			adminRole = new Role()
+			adminRole.description = 'Assigned to users who are considered to be system wide administrators'
+			adminRole.name = AdminsService.ADMIN_ROLE
+			adminRole.protect = true
+			adminRole.save()
 
-        // Execute all service init that relies on base Nimble environment
-        def services = grailsApplication.getArtefacts("Service")
-        for (service in services) {
-            if(service.clazz.methods.find{it.name == 'nimbleInit'} != null) {
-                def serviceBean = grailsApplication.mainContext.getBean(service.propertyName)
-                serviceBean.nimbleInit()
-            }
-        }
+			if (adminRole.hasErrors()) {
+				adminRole.errors.each { log.error(it) }
+				throw new RuntimeException("Unable to create valid administrative role")
+			}
+		}
 
-        /**
-         * This is some terribly hacky shit to fix a major problem once Nimble
-         * was upgraded to use 1.1.1 (possibly groovy not grails specific)
-         *
-         * TODO: remove this ugly ugly piece of crud when 1.1.2 or 1.2 comes out
-         * BUG: http://jira.codehaus.org/browse/GRAILS-4580
-         */
+		// Execute all service init that relies on base Nimble environment
+		def services = grailsApplication.getArtefacts("Service")
+		for (service in services) {
+			if(service.clazz.methods.find{it.name == 'nimbleInit'} != null) {
+				def serviceBean = grailsApplication.mainContext.getBean(service.propertyName)
+				serviceBean.nimbleInit()
+			}
+		}
+
+		/**
+		 * This is some terribly hacky shit to fix a major problem once Nimble
+		 * was upgraded to use 1.1.1 (possibly groovy not grails specific)
+		 *
+		 * TODO: remove this ugly ugly piece of crud when 1.1.2 or 1.2 comes out
+		 * BUG: http://jira.codehaus.org/browse/GRAILS-4580
+		 */
 		/*
 		 * we no loger need this now
-        def domains = grailsApplication.getArtefacts("Domain")
-        for (domain in domains) {
-            domain.clazz.count()
-        }
-        */
-    }
+		 def domains = grailsApplication.getArtefacts("Domain")
+		 for (domain in domains) {
+		 domain.clazz.count()
+		 }
+		 */
+	}
 }

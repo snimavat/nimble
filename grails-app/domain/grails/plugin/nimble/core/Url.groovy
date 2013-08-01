@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 /**
@@ -27,21 +27,21 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class Url {
 
-    String name
-    String description
+	String name
+	String description
 
-    String location
-    String altText
+	String location
+	String altText
 
-    static belongsTo = [Details, ProfileBase]
+	static belongsTo = [ProfileBase]
 
-    static mapping = {
-        table ConfigurationHolder.config.nimble.tablenames.url
-    }
-    static constraints = {
-        name(nullable: true, blank:false)
-        description(nullable: true, blank:false)
-        location(nullable: false, blank: false, url: true)
-        altText(nullable: true, blank: false)
-    }
+	static mapping = {
+		table ConfigurationHolder.config.nimble.tablenames.url
+	}
+	static constraints = {
+		name(nullable: true, blank:false)
+		description(nullable: true, blank:false)
+		location(nullable: false, blank: false, url: true)
+		altText(nullable: true, blank: false)
+	}
 }

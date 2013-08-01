@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.auth
+package grails.plugin.nimble.auth
 
 /**
  * Provides a generic WildcardPermission for Nimble applications to utilize so we can provide
@@ -23,13 +23,11 @@ package grails.plugins.nimble.auth
  * @author Bradley Beddoes
  */
 public class WildcardPermission extends org.apache.shiro.authz.permission.WildcardPermission {
-    public WildcardPermission(String wildcardString)
-    {
-        super(wildcardString)
-    }
+	public WildcardPermission(String wildcardString) {
+		super(wildcardString)
+	}
 
-    public WildcardPermission(String wildcardString, boolean caseSensitive)
-    {
-        super(wildcardString, caseSensitive)
-    }
+	public WildcardPermission(String wildcardString, boolean caseSensitive) {
+		super(wildcardString, caseSensitive)
+	}
 }

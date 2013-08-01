@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 /**
@@ -26,166 +26,166 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class LevelPermission extends Permission {
 
-    private final String tokenSep = ","
-    private final String levelSep = ":"
+	private final String tokenSep = ","
+	private final String levelSep = ":"
 
-    static hasMany = [
-        first: String,
-        second: String,
-        third: String,
-        fourth: String,
-        fifth: String,
-        sixth: String
-    ]
+	static hasMany = [
+		first: String,
+		second: String,
+		third: String,
+		fourth: String,
+		fifth: String,
+		sixth: String
+	]
 
-    static mapping = {
-        cache usage: 'read-write', include: 'all'
-        table ConfigurationHolder.config.nimble.tablenames.levelpermission
-    }
+	static mapping = {
+		cache usage: 'read-write', include: 'all'
+		table ConfigurationHolder.config.nimble.tablenames.levelpermission
+	}
 
-    static constraints = {
-        first(nullable: false, minSize: 1)
-        second(nullable: true)
-        third(nullable: true)
-        fourth(nullable: true)
-        fifth(nullable: true)
-        sixth(nullable: true)
-    }
+	static constraints = {
+		first(nullable: false, minSize: 1)
+		second(nullable: true)
+		third(nullable: true)
+		fourth(nullable: true)
+		fifth(nullable: true)
+		sixth(nullable: true)
+	}
 
-    def LevelPermission() {
-        type = Permission.defaultPerm
-    }
+	def LevelPermission() {
+		type = Permission.defaultPerm
+	}
 
-    def buildTarget() {
-        def target = ""
+	def buildTarget() {
+		def target = ""
 
-        first?.eachWithIndex {token, i ->
-            target = target + token
-            if (i != (first.size() - 1))
-            target = target + tokenSep   //Add level token seperator
-        }
+		first?.eachWithIndex {token, i ->
+			target = target + token
+			if (i != (first.size() - 1))
+				target = target + tokenSep   //Add level token seperator
+		}
 
-        if (second && second.size() > 0) {
-            target = target + levelSep
+		if (second && second.size() > 0) {
+			target = target + levelSep
 
-            second.eachWithIndex {token, i ->
-                target = target + token
-                if (i != (second.size() - 1))
-                target = target + tokenSep   //Add level token seperator
-            }
+			second.eachWithIndex {token, i ->
+				target = target + token
+				if (i != (second.size() - 1))
+					target = target + tokenSep   //Add level token seperator
+			}
 
-            if (third && third.size() > 0) {
-                target = target + levelSep
+			if (third && third.size() > 0) {
+				target = target + levelSep
 
-                third.eachWithIndex {token, i ->
-                    target = target + token
-                    if (i != (third.size() - 1))
-                    target = target + tokenSep   //Add level token seperator
-                }
+				third.eachWithIndex {token, i ->
+					target = target + token
+					if (i != (third.size() - 1))
+						target = target + tokenSep   //Add level token seperator
+				}
 
-                if (fourth && fourth.size() > 0) {
-                    target = target + levelSep
+				if (fourth && fourth.size() > 0) {
+					target = target + levelSep
 
-                    fourth.eachWithIndex {token, i ->
-                        target = target + token
-                        if (i != (fourth.size() - 1))
-                        target = target + tokenSep   //Add level token seperator
-                    }
+					fourth.eachWithIndex {token, i ->
+						target = target + token
+						if (i != (fourth.size() - 1))
+							target = target + tokenSep   //Add level token seperator
+					}
 
-                    if (fifth && fifth.size() > 0) {
-                        target = target + levelSep
+					if (fifth && fifth.size() > 0) {
+						target = target + levelSep
 
-                        fifth.eachWithIndex {token, i ->
-                            target = target + token
-                            if (i != (fifth.size() - 1))
-                            target = target + tokenSep   //Add level token seperator
-                        }
+						fifth.eachWithIndex {token, i ->
+							target = target + token
+							if (i != (fifth.size() - 1))
+								target = target + tokenSep   //Add level token seperator
+						}
 
-                        if (sixth && sixth.size() > 0) {
-                            target = target + levelSep
+						if (sixth && sixth.size() > 0) {
+							target = target + levelSep
 
-                            sixth.eachWithIndex {token, i ->
-                                target = target + token
-                                if (i != (sixth.size() - 1))
-                                target = target + tokenSep   //Add level token seperator
-                            }
-                        }
-                    }
-                }
-            }
-        }
+							sixth.eachWithIndex {token, i ->
+								target = target + token
+								if (i != (sixth.size() - 1))
+									target = target + tokenSep   //Add level token seperator
+							}
+						}
+					}
+				}
+			}
+		}
 
-        // Sanitize ordering so things are easy for human consumption more then anything
-        target = target.split(':').collect{ it.split(',').sort().join(',') }.join(':')
-        this.target = target
-    }
+		// Sanitize ordering so things are easy for human consumption more then anything
+		target = target.split(':').collect{ it.split(',').sort().join(',') }.join(':')
+		this.target = target
+	}
 
-    /**
-     * Populates this LevelPermission with data represented by passed in values. Removes any previously
-     * set level values in this instance. Each sector should be a individual string and NOT contain sector seperators
-     *
-     * @first First sector represented as string, may contain token seperators
-     * @second Second sector represented as string, may contain token seperators
-     * @third Third sector represented as string, may contain token seperators
-     * @fourth Fourth sector represented as string, may contain token seperators
-     * @fifth Fifth sector represented as string, may contain token seperators
-     * @sixth Sixth sector represented as string, may contain token seperators
-     *
-     * @return void - Will populate errors if problems found in any sector, does not persist object
-     */
-    public populate(first, second, third, fourth, fifth, sixth) {
+	/**
+	 * Populates this LevelPermission with data represented by passed in values. Removes any previously
+	 * set level values in this instance. Each sector should be a individual string and NOT contain sector seperators
+	 *
+	 * @first First sector represented as string, may contain token seperators
+	 * @second Second sector represented as string, may contain token seperators
+	 * @third Third sector represented as string, may contain token seperators
+	 * @fourth Fourth sector represented as string, may contain token seperators
+	 * @fifth Fifth sector represented as string, may contain token seperators
+	 * @sixth Sixth sector represented as string, may contain token seperators
+	 *
+	 * @return void - Will populate errors if problems found in any sector, does not persist object
+	 */
+	public populate(first, second, third, fourth, fifth, sixth) {
 
-        if (first == null || first == '' || first.contains(this.levelSep)) {
-            this.errors.rejectValue('target', 'nimble.levelpermission.invalid.first.sector')
-            return
-        }
-        this.first = first.split(this.tokenSep) as List
+		if (first == null || first == '' || first.contains(this.levelSep)) {
+			this.errors.rejectValue('target', 'nimble.levelpermission.invalid.first.sector')
+			return
+		}
+		this.first = first.split(this.tokenSep) as List
 
-        if (second) {
-            if (second.contains(this.levelSep)) {
-                this.errors.rejectValue('target', 'nimble.levelpermission.invalid.second.sector')
-                return
-            }
+		if (second) {
+			if (second.contains(this.levelSep)) {
+				this.errors.rejectValue('target', 'nimble.levelpermission.invalid.second.sector')
+				return
+			}
 
-            this.second = second.split(this.tokenSep) as List
+			this.second = second.split(this.tokenSep) as List
 
-            if (third) {
-                if (third.contains(this.levelSep)) {
-                    this.errors.rejectValue('target', 'nimble.levelpermission.invalid.third.sector')
-                    return
-                }
+			if (third) {
+				if (third.contains(this.levelSep)) {
+					this.errors.rejectValue('target', 'nimble.levelpermission.invalid.third.sector')
+					return
+				}
 
-                this.third = third.split(this.tokenSep) as List
+				this.third = third.split(this.tokenSep) as List
 
-                if (fourth) {
-                    if (fourth.contains(this.levelSep)) {
-                        this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fourth.sector')
-                        return
-                    }
+				if (fourth) {
+					if (fourth.contains(this.levelSep)) {
+						this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fourth.sector')
+						return
+					}
 
-                    this.fourth = fourth.split(this.tokenSep) as List
+					this.fourth = fourth.split(this.tokenSep) as List
 
-                    if (fifth) {
-                        if (fifth.contains(this.levelSep)) {
-                            this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fifth.sector')
-                            return
-                        }
+					if (fifth) {
+						if (fifth.contains(this.levelSep)) {
+							this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fifth.sector')
+							return
+						}
 
-                        this.fifth = fifth.split(this.tokenSep) as List
+						this.fifth = fifth.split(this.tokenSep) as List
 
-                        if (sixth) {
-                            if (sixth.contains(this.levelSep)) {
-                                this.errors.rejectValue('target', 'nimble.levelpermission.invalid.sixth.sector')
-                                return
-                            }
+						if (sixth) {
+							if (sixth.contains(this.levelSep)) {
+								this.errors.rejectValue('target', 'nimble.levelpermission.invalid.sixth.sector')
+								return
+							}
 
-                            this.sixth = sixth.split(this.tokenSep) as List
-                        }
-                    }
-                }
-            }
-        }
+							this.sixth = sixth.split(this.tokenSep) as List
+						}
+					}
+				}
+			}
+		}
 
-        buildTarget()
-    }
+		buildTarget()
+	}
 }

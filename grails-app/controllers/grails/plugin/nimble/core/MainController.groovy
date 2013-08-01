@@ -14,16 +14,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 class MainController {
 
-    def index = {
-	
-	  log.debug 'grails.plugins.nimble.MainController - index - executed'
-	
-      // This relies on the fact that the session is authenticated which is enforced by
-      // NimbleSecurityFilters, authenticatedUser is auto populated to controllers
-      [user:authenticatedUser]
-    }
+	def index = {
+
+		log.debug 'grails.plugin.nimble.MainController - index - executed'
+
+		// This relies on the fact that the session is authenticated which is enforced by
+		// NimbleSecurityFilters, authenticatedUser is auto populated to controllers
+		[user:authenticatedUser]
+	}
 }

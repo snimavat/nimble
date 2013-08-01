@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 /**
@@ -24,25 +24,24 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class LoginRecord {
 
-    String remoteAddr
-    String remoteHost
-    String userAgent
-  
-    Date dateCreated
-    Date lastUpdated
+	String remoteAddr
+	String remoteHost
+	String userAgent
 
-    static belongsTo = [owner: UserBase]
+	Date dateCreated
+	Date lastUpdated
 
-    static mapping = {
-        table ConfigurationHolder.config.nimble.tablenames.loginrecord
-    } 
-    static constraints = {
-        remoteAddr(nullable: false, blank: false)
-        remoteHost(nullable: false, blank: false)
-        userAgent(nullable: false, blank: false)
+	static belongsTo = [owner: UserBase]
 
-        dateCreated(nullable: true) // must be true to enable grails
-        lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
-    }
+	static mapping = {
+		table ConfigurationHolder.config.nimble.tablenames.loginrecord
+	}
+	static constraints = {
+		remoteAddr(nullable: false, blank: false)
+		remoteHost(nullable: false, blank: false)
+		userAgent(nullable: false, blank: false)
 
+		dateCreated(nullable: true) // must be true to enable grails
+		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
+	}
 }

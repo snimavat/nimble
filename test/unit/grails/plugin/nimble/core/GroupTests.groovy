@@ -14,136 +14,137 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
+import grails.plugin.nimble.core.Group
+import grails.plugin.nimble.core.Role
+import grails.plugin.nimble.core.UserBase
 import grails.test.*
 
 /**
  * @author Bradley Beddoes
  */
 class GroupTests extends GrailsUnitTestCase {
-    def name 
-    def description 
-    def protect 
+	String name
+	def description
+	def protect
 
-    def user1 
-    def user2 
+	def user1
+	def user2
 
-    def role1 
-    def role2 
+	def role1
+	def role2
 
-    def dateCreated 
-    def lastUpdated 
+	def dateCreated
+	def lastUpdated
 
-    protected void setUp() {
-        super.setUp()
-        name = 'name'
-        description = 'description'
-        protect = true
+	protected void setUp() {
+		super.setUp()
+		name = 'name'
+		description = 'description'
+		protect = true
 
-        user1 = new UserBase()
-        user2 = new UserBase()
+		user1 = new UserBase()
+		user2 = new UserBase()
 
-        role1 = new Role()
-        role2 = new Role()
+		role1 = new Role()
+		role2 = new Role()
 
-        dateCreated = new Date()
-        lastUpdated = new Date()
-    }
+		dateCreated = new Date()
+		lastUpdated = new Date()
+	}
 
-    protected void tearDown() {
-        super.tearDown()
-    }
+	protected void tearDown() {
+		super.tearDown()
+	}
 
-    Group createValidGroup() {
-        def group = new Group(name:name, description:description, protect:protect,
-            users:[user1,user2], roles:[role1,role2], dateCreated:dateCreated, lastUpdated:lastUpdated)
-    }
+	Group createValidGroup() {
+		def group = new Group(name:name, description:description, protect:protect,
+		users:[user1, user2], roles:[role1, role2], dateCreated:dateCreated, lastUpdated:lastUpdated)
+	}
 
-    void testGroupCreation() {
-        def group = createValidGroup()
+	void testGroupCreation() {
+		def group = createValidGroup()
 
-        assertEquals name, group.name
-        assertEquals description, group.description
-        assertEquals protect, group.protect
+		assertEquals name, group.name
+		assertEquals description, group.description
+		assertEquals protect, group.protect
 
-        assertTrue group.users.containsAll([user1,user2])
-        assertTrue group.roles.containsAll([role1,role2])
-    }
+		assertTrue group.users.containsAll([user1, user2])
+		assertTrue group.roles.containsAll([role1, role2])
+	}
 
-    void testNameConstraints() {
-        mockForConstraintsTests(Group)
-        def group = createValidGroup()
+	void testNameConstraints() {
+		mockForConstraintsTests(Group)
+		def group = createValidGroup()
 
-        group.validate()
-        group.errors.each {
-            println it
-        }
+		group.validate()
+		group.errors.each { println it }
 
-        assertTrue group.validate()
+		assertTrue group.validate()
 
-        group.name = ''
-        assertFalse group.validate()
+		group.name = ''
+		assertFalse group.validate()
 
-        group.name = null
-        assertFalse group.validate()
+		group.name = null
+		assertFalse group.validate()
 
-        // must be unique
-        def group2 = createValidGroup()
-        group2.name = 'name2'
-        group.name = name
-        mockForConstraintsTests(Group, [group, group2])
+		// must be unique
+		def group2 = createValidGroup()
+		group2.name = 'name2'
+		group.name = name
+		mockForConstraintsTests(Group, [group, group2])
 
-        assertTrue group.validate()
-        assertTrue group2.validate()
+		assertTrue group.validate()
+		assertTrue group2.validate()
 
-        group2.name = name
-        assertFalse group.validate()
-        assertFalse group2.validate()
+		group2.name = name
+		assertFalse group.validate()
+		assertFalse group2.validate()
 
-        group2.name = 'name2'
-        assertTrue group.validate()
-        assertTrue group2.validate()
+		group2.name = 'name2'
+		assertTrue group.validate()
+		assertTrue group2.validate()
 
-        //min size
-        group.name = '123'
-        assertFalse group.validate()
+		//min size
+		group.name = '123'
+		assertFalse group.validate()
 
-        //max size
-        group.name = 'abcd'.center(532)
-        assertFalse group.validate()
-    }
+		//max size
+		group.name = 'abcd'.center(532)
+		assertFalse group.validate()
+	}
 
-    void testDescriptionConstraint() {
-        mockForConstraintsTests(Group)
-        def group = createValidGroup()
+	void testDescriptionConstraint() {
+		mockForConstraintsTests(Group)
+		def group = createValidGroup()
 
-        assertTrue group.validate()
+		assertTrue group.validate()
 
-        group.description = ''
-        assertFalse group.validate()
+		group.description = ''
+		assertFalse group.validate()
 
-        group.description = null
-        assertTrue group.validate()
-    }
+		group.description = null
+		assertTrue group.validate()
+	}
 
-    void testDateCreatedConstraint() {
-        mockForConstraintsTests(Group)
+	void testDateCreatedConstraint() {
+		mockForConstraintsTests(Group)
 
-        def group = createValidGroup()
-        assertTrue group.validate()
+		def group = createValidGroup()
+		assertTrue group.validate()
 
-        group.dateCreated = null
-        assertTrue group.validate()
-    }
+		group.dateCreated = null
+		assertTrue group.validate()
+	}
 
-    void testLastUpdatedConstraint() {
-        mockForConstraintsTests(Group)
+	void testLastUpdatedConstraint() {
+		mockForConstraintsTests(Group)
 
-        def group = createValidGroup()
-        assertTrue group.validate()
+		def group = createValidGroup()
+		assertTrue group.validate()
 
-        group.lastUpdated = null
-        assertTrue group.validate()
-    }
+		group.lastUpdated = null
+		assertTrue group.validate()
+	}
 }

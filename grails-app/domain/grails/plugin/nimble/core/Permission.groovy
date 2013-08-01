@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
@@ -26,61 +26,61 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class Permission implements Serializable {
 
-    static public final String defaultPerm = "grails.plugins.nimble.auth.WildcardPermission"
-    static public final String wildcardPerm = "grails.plugins.nimble.auth.WildcardPermission"
-    static public final String adminPerm = "grails.plugins.nimble.auth.AllPermission"
+	static public final String defaultPerm = "grails.plugin.nimble.auth.WildcardPermission"
+	static public final String wildcardPerm = "grails.plugin.nimble.auth.WildcardPermission"
+	static public final String adminPerm = "grails.plugin.nimble.auth.AllPermission"
 
-    String type
-    String possibleActions = "*"
-    String actions = "*"
-    String target
-    boolean managed
+	String type
+	String possibleActions = "*"
+	String actions = "*"
+	String target
+	boolean managed
 
-    UserBase user
-    Role role
-    Group group
+	UserBase user
+	Role role
+	Group group
 
-    static belongsTo = [user: UserBase, role: Role, group:Group]
+	static belongsTo = [user: UserBase, role: Role, group:Group]
 
-    static transients = [ "owner" ]
+	static transients = ["owner"]
 
-    static mapping = {
-        cache usage: 'read-write', include: 'all'
-        table ConfigurationHolder.config.nimble.tablenames.permission
-    }
+	static mapping = {
+		cache usage: 'read-write', include: 'all'
+		table ConfigurationHolder.config.nimble.tablenames.permission
+	}
 
-    static constraints = {
-        type(nullable: false, blank: false)
-        possibleActions(nullable: false, blank: false)
-        actions(nullable: false, blank: false)
-        target(nullable: false, blank: false)
+	static constraints = {
+		type(nullable: false, blank: false)
+		possibleActions(nullable: false, blank: false)
+		actions(nullable: false, blank: false)
+		target(nullable: false, blank: false)
 
-        user(nullable:true)
-        role(nullable:true)
-        group(nullable:true)
-    }
+		user(nullable:true)
+		role(nullable:true)
+		group(nullable:true)
+	}
 
-    def setOwner (def owner) {
-        if (owner instanceof UserBase)
-        this.user = owner
+	def setOwner (def owner) {
+		if (owner instanceof UserBase)
+			this.user = owner
 
-        if (owner instanceof Role)
-        this.role = owner
+		if (owner instanceof Role)
+			this.role = owner
 
-        if (owner instanceof Group)
-        this.group = owner
-    }
+		if (owner instanceof Group)
+			this.group = owner
+	}
 
-    def getOwner() {
-        if(this.user != null)
-        return user
+	def getOwner() {
+		if(this.user != null)
+			return user
 
-        if(this.role != null)
-        return role
+		if(this.role != null)
+			return role
 
-        if(this.group != null)
-        return group
+		if(this.group != null)
+			return group
 
-        return null
-    }
+		return null
+	}
 }

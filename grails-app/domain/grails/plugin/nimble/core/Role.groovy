@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
@@ -25,42 +25,42 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class Role {
 
-    String name
-    String description
+	String name
+	String description
 	String realm
-	
+
 	boolean external = false
-    boolean protect = false
+	boolean protect = false
 
-    Date dateCreated
-    Date lastUpdated
+	Date dateCreated
+	Date lastUpdated
 
-    static hasMany = [
-        users: UserBase,
-        groups: Group,
-        permissions: Permission
-    ]
+	static hasMany = [
+		users: UserBase,
+		groups: Group,
+		permissions: Permission
+	]
 
-    static belongsTo = [Group]
+	static belongsTo = [Group]
 
-    static mapping = {
-        sort "name"
-        cache usage: 'read-write', include: 'all'
-        table ConfigurationHolder.config.nimble.tablenames.role
+	static mapping = {
+		sort "name"
+		cache usage: 'read-write', include: 'all'
+		table ConfigurationHolder.config.nimble.tablenames.role
 
-        users cache: false
-        groups cache: true
-        permissions cache: true
-    }
+		users cache: false
+		groups cache: true
+		permissions cache: true
+	}
 
-    static constraints = {
-        name(blank: false, unique: true, minSize:4, maxSize: 255)
-        description(nullable:true, blank:false)
+	static constraints = {
+		name(blank: false, unique: true, minSize:4, maxSize: 255)
+		description(nullable:true, blank:false)
 		realm(nullable:true, blank:false)
-        
-        dateCreated(nullable: true) // must be true to enable grails
-        lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
 
-        permissions(nullable:true)
-    }
+		dateCreated(nullable: true) // must be true to enable grails
+		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
+
+		permissions(nullable:true)
+	}
 }

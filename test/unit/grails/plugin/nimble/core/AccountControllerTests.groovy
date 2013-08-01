@@ -14,9 +14,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
+import grails.plugin.nimble.core.RecaptchaService;
+import grails.plugin.nimble.core.UserService;
+import grails.plugin.nimble.core.UserBase;
 import grails.test.*
+
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.crypto.hash.Sha256Hash

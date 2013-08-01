@@ -14,36 +14,36 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.security
+package grails.plugin.nimble.security
 
 public class NimbleFilterBase {
 
-  def onNotAuthenticated(subject, filter) {
+	def onNotAuthenticated(subject, filter) {
 
-    def request = filter.request
-    def response = filter.response
+		def request = filter.request
+		def response = filter.response
 
-    // If this is an ajax request we want to send a 403 so the UI can act accordingly (generally log the user in again)
-    if (request.getHeader('X-REQUESTED-WITH')) {
-      response.status = 403
-      response.setHeader("X-Nim-Session-Invalid", "true")
-      return false
-    }
+		// If this is an ajax request we want to send a 403 so the UI can act accordingly (generally log the user in again)
+		if (request.getHeader('X-REQUESTED-WITH')) {
+			response.status = 403
+			response.setHeader("X-Nim-Session-Invalid", "true")
+			return false
+		}
 
-    // Default behaviour is to redirect to the login page.
-    def targetUri = request.forwardURI - request.contextPath
-    def query = request.queryString
-    if (query) {
-      if (!query.startsWith('?')) {
-        query = '?' + query
-      }
-      targetUri += query
-    }
+		// Default behaviour is to redirect to the login page.
+		def targetUri = request.forwardURI - request.contextPath
+		def query = request.queryString
+		if (query) {
+			if (!query.startsWith('?')) {
+				query = '?' + query
+			}
+			targetUri += query
+		}
 
-    filter.redirect(
-            controller: 'auth',
-            action: 'login',
-            params: [targetUri: targetUri])
-  }
+		filter.redirect(
+				controller: 'auth',
+				action: 'login',
+				params: [targetUri: targetUri])
+	}
 
 }

@@ -16,14 +16,10 @@
  */
 
 
-import grails.plugins.nimble.InstanceGenerator
-
-import grails.plugins.nimble.core.LevelPermission
-import grails.plugins.nimble.core.Role
-import grails.plugins.nimble.core.Group
-import grails.plugins.nimble.core.AdminsService
-import grails.plugins.nimble.core.UserBase
-import grails.plugins.nimble.core.UserService
+import grails.plugin.nimble.InstanceGenerator
+import grails.plugin.nimble.core.AdminsService
+import grails.plugin.nimble.core.Role
+import grails.plugin.nimble.core.UserBase
 
 /*
  * Allows applications using Nimble to undertake process at BootStrap that are related to Nimbe provided objects
@@ -34,72 +30,72 @@ import grails.plugins.nimble.core.UserService
  */
 class NimbleBootStrap {
 
-    def grailsApplication
+	def grailsApplication
 
-    def nimbleService
-    def userService
-    def adminsService
+	def nimbleService
+	def userService
+	def adminsService
 
-    def init = {servletContext ->
+	def init = {servletContext ->
 
-        // The following must be executed
-        internalBootStap(servletContext)
+		// The following must be executed
+		internalBootStap(servletContext)
 
-        // Execute any custom Nimble related BootStrap for your application below
+		// Execute any custom Nimble related BootStrap for your application below
 
-        if(!UserBase.findByUsername("user")) {
-            // Create example User account
-            def user = InstanceGenerator.user()
-            user.username = "user"
-            user.pass = 'useR123!'
-            user.passConfirm = 'useR123!'
-            user.enabled = true
+		if(!UserBase.findByUsername("user")) {
+			// Create example User account
+			def user = InstanceGenerator.user()
+			user.username = "user"
+			user.pass = 'useR123!'
+			user.passConfirm = 'useR123!'
+			user.enabled = true
 
-            def userProfile = InstanceGenerator.profile()
-            userProfile.fullName = "Test User"
-            userProfile.owner = user
-            user.profile = userProfile
+			def userProfile = InstanceGenerator.profile()
+			userProfile.fullName = "Test User"
+			userProfile.owner = user
+			user.profile = userProfile
 
-            log.info("Creating default user account with username:user")
-            
-            def savedUser = userService.createUser(user)
-            if (savedUser.hasErrors()) {
-                savedUser.errors.each { log.error(it) }
-                throw new RuntimeException("Error creating example user")
-            }
-        }
+			log.info("Creating default user account with username:user")
 
-        if(!UserBase.findByUsername("admin")) {
-            // Create example Administrative account
-            def admins = Role.findByName(AdminsService.ADMIN_ROLE)
-            def admin = InstanceGenerator.user()
-            admin.username = "admin"
-            admin.pass = "admiN123!"
-            admin.passConfirm = "admiN123!"
-            admin.enabled = true
+			def savedUser = userService.createUser(user)
+			if (savedUser.hasErrors()) {
+				savedUser.errors.each { log.error(it) }
+				throw new RuntimeException("Error creating example user")
+			}
+		}
 
-            def adminProfile = InstanceGenerator.profile()
-            adminProfile.fullName = "Administrator"
-            adminProfile.owner = admin
-            admin.profile = adminProfile
+		if(!UserBase.findByUsername("admin")) {
+			// Create example Administrative account
+			def admins = Role.findByName(AdminsService.ADMIN_ROLE)
+			def admin = InstanceGenerator.user()
+			admin.username = "admin"
+			admin.pass = "admiN123!"
+			admin.passConfirm = "admiN123!"
+			admin.enabled = true
 
-            log.info("Creating default admin account with username:admin")
-            
-            def savedAdmin = userService.createUser(admin)
-            if (savedAdmin.hasErrors()) {
-                savedAdmin.errors.each { log.error(it) }
-                throw new RuntimeException("Error creating administrator")
-            }
+			def adminProfile = InstanceGenerator.profile()
+			adminProfile.fullName = "Administrator"
+			adminProfile.owner = admin
+			admin.profile = adminProfile
 
-            adminsService.add(admin)
-        }
-    }
+			log.info("Creating default admin account with username:admin")
 
-    def destroy = {
+			def savedAdmin = userService.createUser(admin)
+			if (savedAdmin.hasErrors()) {
+				savedAdmin.errors.each { log.error(it) }
+				throw new RuntimeException("Error creating administrator")
+			}
 
-    }
+			adminsService.add(admin)
+		}
+	}
 
-    private internalBootStap(def servletContext) {
-        nimbleService.init()
-    }
+	def destroy = {
+
+	}
+
+	private internalBootStap(def servletContext) {
+		nimbleService.init()
+	}
 }

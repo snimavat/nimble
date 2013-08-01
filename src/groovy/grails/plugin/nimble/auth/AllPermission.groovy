@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.auth
+package grails.plugin.nimble.auth
 
 /**
  * Provides a generic AllPermission for Nimble applications to utilize so we can provide
@@ -23,6 +23,5 @@ package grails.plugins.nimble.auth
  * @author Bradley Beddoes
  */
 class AllPermission extends org.apache.shiro.authz.permission.AllPermission {
-	
 }
 

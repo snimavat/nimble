@@ -14,8 +14,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
+import grails.plugin.nimble.core.Group
+import grails.plugin.nimble.core.LoginRecord
+import grails.plugin.nimble.core.ProfileBase
+import grails.plugin.nimble.core.Role
+import grails.plugin.nimble.core.UserBase
 import grails.test.*
 
 /**
@@ -23,223 +28,210 @@ import grails.test.*
  */
 class UserTests extends GrailsUnitTestCase {
 
-    def username 
-    def passwordHash 
-    def actionHash 
-    def enabled 
-    def external 
-    def federated 
-    def remoteapi 
-    def expiration 
-    def federationProvider 
-    def profile 
-    def role1 
-    def role2 
-    def group1 
-    def group2 
-    def pw1 
-    def pw2 
-    def login1 
-    def login2 
-    def follows1 
-    def follows2 
-    def follower1 
-    def follower2 
-    def dateCreated 
-    def lastUpdated 
-        
-    protected void setUp() {
-        super.setUp()
+	def username
+	def passwordHash
+	def actionHash
+	def enabled
+	def external
+	def federated
+	def remoteapi
+	def expiration
+	def profile
+	def role1
+	def role2
+	def group1
+	def group2
+	def pw1
+	def pw2
+	def login1
+	def login2
+	def follows1
+	def follows2
+	def follower1
+	def follower2
+	def dateCreated
+	def lastUpdated
 
-        username = 'username'
-        passwordHash = 'passwordHash'
-        actionHash = 'actionHash'
-        enabled = true
-        external = true
-        federated = true
-        remoteapi = true
-        expiration = new Date()
+	protected void setUp() {
+		super.setUp()
 
-        federationProvider = new FederationProvider()
-        profile = new ProfileBase()
+		username = 'username'
+		passwordHash = 'passwordHash'
+		actionHash = 'actionHash'
+		enabled = true
+		external = true
+		federated = true
+		remoteapi = true
+		expiration = new Date()
 
-        role1 = new Role()
-        role2 = new Role()
+		profile = new ProfileBase()
 
-        group1 = new Group()
-        group2 = new Group()
+		role1 = new Role()
+		role2 = new Role()
 
-        pw1 = 'pw1'
-        pw2 = 'pw2'
+		group1 = new Group()
+		group2 = new Group()
 
-        login1 = new LoginRecord()
-        login2 = new LoginRecord()
+		pw1 = 'pw1'
+		pw2 = 'pw2'
 
-        follows1 = new UserBase()
-        follows2 = new UserBase()
+		login1 = new LoginRecord()
+		login2 = new LoginRecord()
 
-        follower1 = new UserBase()
-        follower2 = new UserBase()
+		follows1 = new UserBase()
+		follows2 = new UserBase()
 
-        dateCreated = new Date()
-        lastUpdated = new Date()
-    }
+		follower1 = new UserBase()
+		follower2 = new UserBase()
 
-    protected void tearDown() {
-        super.tearDown()
-    }
+		dateCreated = new Date()
+		lastUpdated = new Date()
+	}
 
-    UserBase createValidUser() {
-        def user = new UserBase(username:username, passwordHash:passwordHash, actionHash:actionHash, enabled:enabled,
-            external:external, federated:federated, remoteapi:remoteapi, expiration:expiration,
-            federationProvider:federationProvider, profile:profile, roles:[role1,role2],
-            groups:[group1,group2], passwdHistory:[pw1,pw2], loginRecords:[login1,login2], 
-            follows:[follows1,follows2], followers:[follower1,follower2],
-            dateCreated:dateCreated, lastUpdated:lastUpdated)
+	protected void tearDown() {
+		super.tearDown()
+	}
 
-        return user
-    }
+	UserBase createValidUser() {
+		def user = new UserBase(username:username, passwordHash:passwordHash, actionHash:actionHash, enabled:enabled,
+		external:external, federated:federated, remoteapi:remoteapi, expiration:expiration,
+		profile:profile, roles:[role1, role2],
+		groups:[group1, group2], passwdHistory:[pw1, pw2], loginRecords:[login1, login2],
+		follows:[follows1, follows2], followers:[follower1, follower2],
+		dateCreated:dateCreated, lastUpdated:lastUpdated)
 
-    void testUserCreation() {
-        def user = createValidUser()
-        
-        assertEquals username, user.username
-        assertEquals passwordHash, user.passwordHash
-        assertEquals actionHash, user.actionHash
-        assertEquals enabled, user.enabled
-        assertEquals external, user.external
-        assertEquals federated, user.federated
-        assertEquals remoteapi, user.remoteapi
-        assertEquals expiration, user.expiration
-        assertEquals federationProvider, user.federationProvider
-        assertEquals profile, user.profile
-        assertEquals dateCreated, user.dateCreated
-        assertEquals lastUpdated, user.lastUpdated
+		return user
+	}
 
-        assertTrue user.roles.containsAll([role1,role2])
-        assertTrue user.groups.containsAll([group1,group2])
-        assertTrue user.passwdHistory.containsAll([pw1,pw2])
-        assertTrue user.loginRecords.containsAll([login1,login2])
-        assertTrue user.follows.containsAll([follows1,follows2])
-        assertTrue user.followers.containsAll([follower1,follower2])
-    }
+	void testUserCreation() {
+		def user = createValidUser()
 
-    void testUsernameConstraint() {
-        mockForConstraintsTests(UserBase)
+		assertEquals username, user.username
+		assertEquals passwordHash, user.passwordHash
+		assertEquals actionHash, user.actionHash
+		assertEquals enabled, user.enabled
+		assertEquals external, user.external
+		assertEquals federated, user.federated
+		assertEquals remoteapi, user.remoteapi
+		assertEquals expiration, user.expiration
+		assertEquals profile, user.profile
+		assertEquals dateCreated, user.dateCreated
+		assertEquals lastUpdated, user.lastUpdated
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		assertTrue user.roles.containsAll([role1, role2])
+		assertTrue user.groups.containsAll([group1, group2])
+		assertTrue user.passwdHistory.containsAll([pw1, pw2])
+		assertTrue user.loginRecords.containsAll([login1, login2])
+		assertTrue user.follows.containsAll([follows1, follows2])
+		assertTrue user.followers.containsAll([follower1, follower2])
+	}
 
-        user.username = null
-        assertFalse user.validate()
+	void testUsernameConstraint() {
+		mockForConstraintsTests(UserBase)
 
-        user.username = ''
-        assertFalse user.validate()
+		def user = createValidUser()
+		assertTrue user.validate()
 
-        // Unique usernames
-        def user2 = createValidUser()
-        user2.username = 'username2'
-        user.username = username
-        mockForConstraintsTests(UserBase, [user,user2])
+		user.username = null
+		assertFalse user.validate()
 
-        assertTrue user.validate()
-        assertTrue user2.validate()
+		user.username = ''
+		assertFalse user.validate()
 
-        user2.username = username
-        assertFalse user.validate()
-        assertFalse user2.validate()
-        assertTrue user.errors.errorCount == 1
-        assertEquals 'username', user.errors.fieldError.field
+		// Unique usernames
+		def user2 = createValidUser()
+		user2.username = 'username2'
+		user.username = username
+		mockForConstraintsTests(UserBase, [user, user2])
 
-        user2.username = 'username2'
-        assertTrue user.validate()
-        assertTrue user2.validate()
+		assertTrue user.validate()
+		assertTrue user2.validate()
 
-        // Min length
-        user.username = 'ab'
-        assertFalse user.validate()
+		user2.username = username
+		assertFalse user.validate()
+		assertFalse user2.validate()
+		assertTrue user.errors.errorCount == 1
+		assertEquals 'username', user.errors.fieldError.field
 
-        user.username = username
-        assertTrue user.validate()
+		user2.username = 'username2'
+		assertTrue user.validate()
+		assertTrue user2.validate()
 
-        // Max length
-        user.username = 'abc'.center(2256)
-        assertFalse user.validate()
-    }
+		// Min length
+		user.username = 'ab'
+		assertFalse user.validate()
 
-    void testPasswordHashConstraint() {
-        mockForConstraintsTests(UserBase)
+		user.username = username
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		// Max length
+		user.username = 'abc'.center(2256)
+		assertFalse user.validate()
+	}
 
-        user.passwordHash = null
-        assertTrue user.validate()
+	void testPasswordHashConstraint() {
+		mockForConstraintsTests(UserBase)
 
-        user.passwordHash = ''
-        assertFalse user.validate()
-    }
+		def user = createValidUser()
+		assertTrue user.validate()
 
-    void testActionHashConstraint() {
-        mockForConstraintsTests(UserBase)
+		user.passwordHash = null
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		user.passwordHash = ''
+		assertFalse user.validate()
+	}
 
-        user.actionHash = null
-        assertTrue user.validate()
+	void testActionHashConstraint() {
+		mockForConstraintsTests(UserBase)
 
-        user.actionHash = ''
-        assertFalse user.validate()
-    }
+		def user = createValidUser()
+		assertTrue user.validate()
 
-    void testFederationProviderConstraint() {
-        mockForConstraintsTests(UserBase)
+		user.actionHash = null
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		user.actionHash = ''
+		assertFalse user.validate()
+	}
 
-        user.federationProvider = null
-        assertTrue user.validate()
-    }
+	void testProfileConstraint() {
+		mockForConstraintsTests(UserBase)
 
-    void testProfileConstraint() {
-        mockForConstraintsTests(UserBase)
+		def user = createValidUser()
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		user.profile = null
+		assertFalse user.validate()
+	}
 
-        user.profile = null
-        assertFalse user.validate()
-    }
+	void testExpirationConstraint() {
+		mockForConstraintsTests(UserBase)
 
-    void testExpirationConstraint() {
-        mockForConstraintsTests(UserBase)
+		def user = createValidUser()
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		user.expiration = null
+		assertTrue user.validate()
+	}
 
-        user.expiration = null
-        assertTrue user.validate()
-    }
+	void testDateCreatedConstraint() {
+		mockForConstraintsTests(UserBase)
 
-    void testDateCreatedConstraint() {
-        mockForConstraintsTests(UserBase)
+		def user = createValidUser()
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
+		user.dateCreated = null
+		assertTrue user.validate()
+	}
 
-        user.dateCreated = null
-        assertTrue user.validate()
-    }
+	void testLastUpdatedConstraint() {
+		mockForConstraintsTests(UserBase)
 
-    void testLastUpdatedConstraint() {
-        mockForConstraintsTests(UserBase)
+		def user = createValidUser()
+		assertTrue user.validate()
 
-        def user = createValidUser()
-        assertTrue user.validate()
-
-        user.lastUpdated = null
-        assertTrue user.validate()
-    }
+		user.lastUpdated = null
+		assertTrue user.validate()
+	}
 }

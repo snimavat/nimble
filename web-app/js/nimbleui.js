@@ -82,15 +82,6 @@ function changeLogin(ident) {
   $("#" + ident).show("highlight");
 }
 
-function enableFacebookContinue() {
-  $("#loginfacebookcontinue").show();
-  $("#loginfacebookenable").hide();
-}
-
-function disableFacebookContinue() {
-  $("#loginfacebookcontinue").hide();
-}
-
 // Session Termination
 $(function() {
 	$(document).ajaxError(function (event, xhr, ajaxOptions, thrownError) {	

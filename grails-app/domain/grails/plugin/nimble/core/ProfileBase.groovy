@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.apache.shiro.crypto.hash.Md5Hash
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
@@ -26,45 +26,41 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class ProfileBase {
 
-    String fullName
-    String nickName
-    String email
-    String nonVerifiedEmail
-    String emailHash
+	String fullName
+	String nickName
+	String email
+	String nonVerifiedEmail
+	String emailHash
 
-    Date dateCreated
-    Date lastUpdated
+	Date dateCreated
+	Date lastUpdated
 
-    def beforeInsert = {
-        hashEmail()
-    }
+	def beforeInsert = { hashEmail() }
 
-    def beforeUpdate = {
-        hashEmail()
-    }
+	def beforeUpdate = { hashEmail() }
 
-    def hashEmail = {
-        // Do MD5 hash of email for Gravatar
-        if(email) {
-            def hasher = new Md5Hash(email)
-            emailHash = hasher.toHex()
-        }
-    }
-    
-    static belongsTo = [owner:UserBase]
+	def hashEmail = {
+		// Do MD5 hash of email for Gravatar
+		if(email) {
+			def hasher = new Md5Hash(email)
+			emailHash = hasher.toHex()
+		}
+	}
 
-    static mapping = {
-        cache usage: 'read-write', include: 'all'
-        table ConfigurationHolder.config.nimble.tablenames.profilebase
-    }
+	static belongsTo = [owner:UserBase]
 
-    static constraints = {
-        fullName(nullable: true, blank: false)
-        nickName(nullable: true, blank: false)
-        email(nullable:true, blank:false, email: true, unique: true)
-        nonVerifiedEmail(nullable:true, blank:false, email: true)
-        emailHash(nullable: true, blank:true)
-        dateCreated(nullable: true) // must be true to enable grails
-        lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
-    }
+	static mapping = {
+		cache usage: 'read-write', include: 'all'
+		table ConfigurationHolder.config.nimble.tablenames.profilebase
+	}
+
+	static constraints = {
+		fullName(nullable: true, blank: false)
+		nickName(nullable: true, blank: false)
+		email(nullable:true, blank:false, email: true, unique: true)
+		nonVerifiedEmail(nullable:true, blank:false, email: true)
+		emailHash(nullable: true, blank:true)
+		dateCreated(nullable: true) // must be true to enable grails
+		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
+	}
 }

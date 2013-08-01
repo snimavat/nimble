@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
@@ -26,72 +26,69 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class UserBase {
 
-    String username
+	String username
 	String realm
-    String passwordHash
-    String actionHash
+	String passwordHash
+	String actionHash
 
-    boolean enabled
-    boolean external
-    boolean federated
-    boolean remoteapi = false
+	boolean enabled
+	boolean external
+	boolean federated
+	boolean remoteapi = false
 
-    FederationProvider federationProvider    
+	Date expiration
+	Date dateCreated
+	Date lastUpdated
 
-    Date expiration
-    Date dateCreated
-    Date lastUpdated
-	
-    static belongsTo = [Role, Group]
+	static belongsTo = [Role, Group]
 	static hasOne = [profile:ProfileBase]
 
-    static hasMany = [
-        passwdHistory: String,
-        loginRecords: LoginRecord,
-        follows: UserBase,
-        followers: UserBase,
-        roles: Role,
-        groups: Group,
-        permissions: Permission
-    ]
+	static hasMany = [
+		passwdHistory: String,
+		loginRecords: LoginRecord,
+		follows: UserBase,
+		followers: UserBase,
+		roles: Role,
+		groups: Group,
+		permissions: Permission
+	]
 
-    static fetchMode = [        
-        groups: 'eager'
-    ]
+	static fetchMode = [
+		groups: 'eager'
+	]
 
-    static mapping = {
-        sort username:'desc'
-    
-        cache usage: 'read-write', include: 'all'
-        table ConfigurationHolder.config.nimble.tablenames.user
+	static mapping = {
+		sort username:'desc'
+
+		cache usage: 'read-write', include: 'all'
+		table ConfigurationHolder.config.nimble.tablenames.user
 
 		profile fetch: 'join'
 
-        //roles cache: true, cascade: 'none'
-        groups cache: true, cascade: 'none'
-        permissions cache: true, sort:'target'
-    }
+		//roles cache: true, cascade: 'none'
+		groups cache: true, cascade: 'none'
+		permissions cache: true, sort:'target'
+	}
 
-    static constraints = {
-        username(blank: false, unique: true, minSize: 4, maxSize: 255)
-        passwordHash(nullable: true, blank: false)
-        actionHash(nullable: true, blank: false)
+	static constraints = {
+		username(blank: false, unique: true, minSize: 4, maxSize: 255)
+		passwordHash(nullable: true, blank: false)
+		actionHash(nullable: true, blank: false)
 		realm(nullable: true, blank: false)
-   
-        federationProvider(nullable: true)
-        profile(nullable:false)
-        
-        expiration(nullable: true)
 
-        dateCreated(nullable: true) // must be true to enable grails
-        lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
+		profile(nullable:false)
 
-        permissions(nullable:true)
-    }
+		expiration(nullable: true)
 
-    // Transients
-    static transients = ['pass', 'passConfirm']
-    String pass
-    String passConfirm
+		dateCreated(nullable: true) // must be true to enable grails
+		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
+
+		permissions(nullable:true)
+	}
+
+	// Transients
+	static transients = ['pass', 'passConfirm']
+	String pass
+	String passConfirm
 
 }

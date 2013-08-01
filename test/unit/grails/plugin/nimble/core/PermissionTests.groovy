@@ -14,8 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
 
+import grails.plugin.nimble.core.Permission;
+import grails.plugin.nimble.core.UserBase;
 import grails.test.*
 
 /**
@@ -67,8 +69,8 @@ class PermissionTests extends GrailsUnitTestCase {
     }
 
     void testPermissionConstants() {
-        assertEquals "grails.plugins.nimble.auth.AllPermission", Permission.adminPerm
-        assertEquals "grails.plugins.nimble.auth.WildcardPermission", Permission.defaultPerm
+        assertEquals "grails.plugin.nimble.auth.AllPermission", Permission.adminPerm
+        assertEquals "grails.plugin.nimble.auth.WildcardPermission", Permission.defaultPerm
     }
 
     void testTypeConstraint() {

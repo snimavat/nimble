@@ -17,115 +17,67 @@
 
 nimble {
 
-    tablenames {
-        user =  "_user"
-        role =  "_role"
-        group =  "_group"
-        federationprovider =  "federation_provider"
-        profilebase = "profile_base"
-        loginrecord = "login_record"
-        details =  "details"
-        permission = "permission"
-        levelpermission = "level_permission"
-        url = "url"
-    }
+	tablenames {
+		user =  "_user"
+		role =  "_role"
+		group =  "_group"
+		profilebase = "profile_base"
+		loginrecord = "login_record"
+		permission = "permission"
+		levelpermission = "level_permission"
+		url = "url"
+	}
 
-    fieldnames {
-    	uid = "uid"
-    	number = "number"
-    }
+	fieldnames {
+		uid = "uid"
+		number = "number"
+	}
 
-    layout {
-        application = 'app'
-        administration = 'admin'
-        customcss = ''
-    }
+	layout {
+		application = 'app'
+		administration = 'admin'
+		customcss = ''
+	}
 
-    localusers {
-        usernames {
-            minlength = 4
-            validregex = '[a-zA-Z0-9]*'
-        }
-		provision {
-			active = false
+	localusers {
+		usernames {
+			minlength = 4
+			validregex = '[a-zA-Z0-9]*'
 		}
-    }
+		provision { active = false }
+	}
 
 	fields {
 		admin {
-			user = ['username', 'external', 'federated']
+			user = [
+				'username',
+				'external',
+				'federated'
+			]
 		}
 		enduser {
-			user = ['username', 'pass', 'passConfirm']
+			user = [
+				'username',
+				'pass',
+				'passConfirm'
+			]
 			profile = ['fullName', 'email']
 		}
 	}
 
-    passwords {
-        mustcontain {
-            lowercase = true
-            uppercase = true
-            numbers = true
-            symbols = true
-        }
-        minlength = 8
-    }
+	passwords {
+		mustcontain {
+			lowercase = true
+			uppercase = true
+			numbers = true
+			symbols = true
+		}
+		minlength = 8
+	}
 
-    facebook {
-        uid = "facebook"
-        name = "Facebook"
-        displayname = "Facebook"
-        description = "Facebook helps you connect and share with the people in your life."
-        url = "http://www.facebook.com"
-        alttext = "Facebook Homepage"
-        profileurl = "http://www.facebook.com/profile.php?id=ACCOUNTID"
-        profilealttext = "Facebook Profile"
-
-        federationprovider {
-            enabled = false
-            autoprovision = false
-        }
-    }
-
-    twitter {
-        uid = "twitter"
-        name = "Twitter"
-        displayname = "Twitter"
-        description = "Lets you keep in touch with people through the exchange of quick, frequent answers to one simple question: What are you doing?"
-        url = "http://www.twitter.com"
-        alttext = "Twitter Homepage"
-        profileurl = "http://www.twitter.com/ACCOUNTID"
-        profilealttext = "Twitter Profile"
-    }
-
-    openid {
-        name = "OpenID"
-        displayname = "OpenID"
-        description = "OpenID is an open and decentralized identity system, designed \"not to crumble if one company turns evil or goes out of business\" "
-        url = "http://openid.net/"
-        alttext = "OpenID Foundation"
-
-        federationprovider {
-            enabled = false
-            autoprovision = false
-        }
-
-        discovery {
-            google = "https://www.google.com/accounts/o8/id"
-            yahoo = "http://yahoo.com"
-            flickr = "http://flickr.com"
-        }
-    }
-
-    messaging {
-        registration {
-            subject = "Your new account is ready!"
-        }
-        passwordreset {
-            subject = "Your password has been reset"
-        }
-        changeemail {
-            subject = "Your email address has been changed"
-        }
-    }
+	messaging {
+		registration { subject = "Your new account is ready!" }
+		passwordreset { subject = "Your password has been reset" }
+		changeemail { subject = "Your email address has been changed" }
+	}
 }

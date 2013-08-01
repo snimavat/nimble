@@ -14,7 +14,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package grails.plugins.nimble.core
+package grails.plugin.nimble.core
+
+import grails.plugin.nimble.core.Permission
+import grails.plugin.nimble.core.Role
+import grails.plugin.nimble.core.UserBase
 
 import org.apache.shiro.authz.permission.AllPermission
 
@@ -25,136 +29,128 @@ import org.apache.shiro.authz.permission.AllPermission
  */
 class AdminsService {
 
-    public static String ADMIN_ROLE = "SYSTEM ADMINISTRATOR"
+	public static String ADMIN_ROLE = "SYSTEM ADMINISTRATOR"
 
-    boolean transactional = true
+	boolean transactional = true
 
-    def permissionService
+	def permissionService
 
-    /**
-     * Provides administrator capability to a user account.
-     *
-     * @param user A valid user object that should be assigned global admin rights
-     *
-     * @pre Passed user object must have been validated to ensure
-     * that hibernate does not auto persist the object to the repository prior to service invocation
-     *
-     * @throws RuntimeException When internal state requires transaction rollback
-     */
-    def add(UserBase user) {
-        // Grant administrative role
-        def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
+	/**
+	 * Provides administrator capability to a user account.
+	 *
+	 * @param user A valid user object that should be assigned global admin rights
+	 *
+	 * @pre Passed user object must have been validated to ensure
+	 * that hibernate does not auto persist the object to the repository prior to service invocation
+	 *
+	 * @throws RuntimeException When internal state requires transaction rollback
+	 */
+	def add(UserBase user) {
+		// Grant administrative role
+		def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
 
-        if (!adminRole) {
-            log.error("Unable to located default administative role")
-            throw new RuntimeException("Unable to locate default administrative role")
-        }
+		if (!adminRole) {
+			log.error("Unable to located default administative role")
+			throw new RuntimeException("Unable to locate default administrative role")
+		}
 
-        log.info("Trying to add user [$user.id]:$user.username as administrator")
-        
-        adminRole.addToUsers(user)
-        user.addToRoles(adminRole)
+		log.info("Trying to add user [$user.id]:$user.username as administrator")
 
-        if (!adminRole.save()) {
-            log.error "Unable to grant administration privilege to [$user.id]:$user.username"
-            adminRole.errors.each {  log.error '[${user.username}] - ' + it }
-            adminRole.discard()
-            user.discard()
-            return false
-        }
-        else {
-            if (!user.save()) {
-                log.error "Unable to grant administration role to [$user.id]$user.username failed to modify user account"
-                user.errors.each {
-                    log.error it
-                }
+		adminRole.addToUsers(user)
+		user.addToRoles(adminRole)
 
-                throw new RuntimeException("Unable to grant administration role to [$user.id]$user.username")
-            }
+		if (!adminRole.save()) {
+			log.error "Unable to grant administration privilege to [$user.id]:$user.username"
+			adminRole.errors.each {  log.error '[${user.username}] - ' + it }
+			adminRole.discard()
+			user.discard()
+			return false
+		}
+		else {
+			if (!user.save()) {
+				log.error "Unable to grant administration role to [$user.id]$user.username failed to modify user account"
+				user.errors.each { log.error it }
 
-            // Grant administrative 'ALL' permission
-            Permission adminPermission = new Permission(target:'*')
-            adminPermission.managed = true
-            adminPermission.type = Permission.adminPerm
+				throw new RuntimeException("Unable to grant administration role to [$user.id]$user.username")
+			}
 
-            permissionService.createPermission(adminPermission, user)
+			// Grant administrative 'ALL' permission
+			Permission adminPermission = new Permission(target:'*')
+			adminPermission.managed = true
+			adminPermission.type = Permission.adminPerm
 
-            log.info "Granted administration privileges to [$user.id]:$user.username"
-            return true
-        }
-    }
+			permissionService.createPermission(adminPermission, user)
 
-    /**
-     * Removes administrator capability from a user account.
-     *
-     * @param user A valid user object that should have global admin rights removed
-     *
-     * @pre Passed user object must have been validated to ensure
-     * that hibernate does not auto persist the object to the repository prior to service invocation
-     *
-     * @throws RuntimeException When internal state requires transaction rollback
-     */
-    def remove(UserBase user) {
-        def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
+			log.info "Granted administration privileges to [$user.id]:$user.username"
+			return true
+		}
+	}
 
-        if (!adminRole) {
-            log.error("Unable to located default administative role")
-            throw new RuntimeException("Unable to locate default administrative role")
-        }
+	/**
+	 * Removes administrator capability from a user account.
+	 *
+	 * @param user A valid user object that should have global admin rights removed
+	 *
+	 * @pre Passed user object must have been validated to ensure
+	 * that hibernate does not auto persist the object to the repository prior to service invocation
+	 *
+	 * @throws RuntimeException When internal state requires transaction rollback
+	 */
+	def remove(UserBase user) {
+		def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
 
-        if(adminRole.users.size() < 2) {
-            log.warn("Unable to remove user from administration, would leave no system administrator available")
-            return false
-        }
+		if (!adminRole) {
+			log.error("Unable to located default administative role")
+			throw new RuntimeException("Unable to locate default administrative role")
+		}
 
-        adminRole.removeFromUsers(user)
-        user.removeFromRoles(adminRole)
+		if(adminRole.users.size() < 2) {
+			log.warn("Unable to remove user from administration, would leave no system administrator available")
+			return false
+		}
 
-        if (!adminRole.save()) {
-            log.error "Unable to revoke administration privilege from [$user.id]$user.username"
-            adminRole.errors.each {
-                log.error it
-            }
+		adminRole.removeFromUsers(user)
+		user.removeFromRoles(adminRole)
 
-            adminRole.discard()
-            user.discard()
-            return false
-        }
-        else {
-            if (!user.save()) {
-                log.error "Unable to revoke administration privilege from [$user.id]$user.username failed to modify user account"
-                user.errors.each {
-                    log.error it
-                }
+		if (!adminRole.save()) {
+			log.error "Unable to revoke administration privilege from [$user.id]$user.username"
+			adminRole.errors.each { log.error it }
 
-                throw new RuntimeException("Unable to revoke administration privilege from [$user.id]$user.username failed to modify user account")
-            }
+			adminRole.discard()
+			user.discard()
+			return false
+		}
+		else {
+			if (!user.save()) {
+				log.error "Unable to revoke administration privilege from [$user.id]$user.username failed to modify user account"
+				user.errors.each { log.error it }
 
-            // Revoke administrative 'ALL' permission(s)
-            def permToRemove = []
-            user.permissions.each {
-                if (it.type.equals(AllPermission.class.name) || it.type.equals(grails.plugins.nimble.auth.AllPermission.class.name)) {
-                    permToRemove.add(it)
-                    log.debug("Found $it.type for user [$user.id]$user.username adding to remove queue")
-                }
-            }
+				throw new RuntimeException("Unable to revoke administration privilege from [$user.id]$user.username failed to modify user account")
+			}
 
-            permToRemove.each {
-                user.permissions.remove(it)
-                log.debug("Removing $it.type from user [$user.id]$user.username")
-            }
+			// Revoke administrative 'ALL' permission(s)
+			def permToRemove = []
+			user.permissions.each {
+				if (it.type.equals(AllPermission.class.name) || it.type.equals(grails.plugin.nimble.auth.AllPermission.class.name)) {
+					permToRemove.add(it)
+					log.debug("Found $it.type for user [$user.id]$user.username adding to remove queue")
+				}
+			}
 
-            if (!user.save()) {
-                log.error "Unable to revoke administration permission from [$user.id]$user.username failed to modify user account"
-                user.errors.each {
-                    log.error it
-                }
+			permToRemove.each {
+				user.permissions.remove(it)
+				log.debug("Removing $it.type from user [$user.id]$user.username")
+			}
 
-                throw new RuntimeException("Unable to revoke administration permission from [$user.id]$user.username")
-            }
+			if (!user.save()) {
+				log.error "Unable to revoke administration permission from [$user.id]$user.username failed to modify user account"
+				user.errors.each { log.error it }
 
-            log.info "Revoked administration privilege from [$user.id]$user.username"
-            return true
-        }
-    }
+				throw new RuntimeException("Unable to revoke administration permission from [$user.id]$user.username")
+			}
+
+			log.info "Revoked administration privilege from [$user.id]$user.username"
+			return true
+		}
+	}
 }
