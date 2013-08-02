@@ -1,0 +1,23 @@
+@import "http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600&subset=latin,latin-ext";
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	color: #4D4D4D;
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+
+}
+
+h2,h3 {
+	line-height: 30px;
+}
+
+h2 {
+	font-size: 26px;
+}

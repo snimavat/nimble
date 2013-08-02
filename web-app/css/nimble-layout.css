@@ -1,0 +1,119 @@
+html,body{height:100%;}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 5px;
+}
+
+#right > h1, #right > h2, #right > h3, #right > h4, #right > h5, #right > h6 {
+    margin: 18px 15px 15px 0;    
+}
+
+.navbar {
+	margin: 0;
+	padding: 0;
+}
+
+.navbar .navbar-inner {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border-top: none;
+	border-bottom: 1px solid #346D9D;		
+	border-left: none;
+	border-right: none;
+    min-height: 45px;	
+}
+
+#main-container {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: none;
+	height: 100%;
+}
+
+#main-content {
+	position: relative;
+	margin: 0;
+	margin-left: 200px;
+	padding: 0;
+	border: none;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    border-left: 1px solid;
+	
+	min-height: 100%;
+	min-width: 400px;
+	
+}
+
+#breadcrumbs {
+	position: relative;
+	display: block;
+	margin: 0;
+	padding: 0 12px 0 0;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	min-height: 40px;
+}
+
+#sidebar {
+	float: left;
+	position: absolute;
+	margin: 0;
+	padding: 0;	
+    border-top: 1px solid;                
+    width: 200px;   	
+}
+
+#sidebar .nav-list {
+	margin: 0;
+	padding: 0;
+}
+
+#sidebar .nav-list li {  
+	margin: 0;
+	margin-bottom: -1px;
+	padding: 0;   
+    border-top: 1px;
+    border-bottom: 1px solid;       
+}
+
+
+#sidebar .nav-list li a,
+ #sidebar .nav-list li a:hover {
+	margin: 0px 1px;
+  	padding: .8em 2em;
+  	border: 0;  	
+}
+
+#sidebar .nav-list li.active {
+  border-right: 0px;  
+  border-top: 1px solid;
+  border-bottom: 1px solid;   	
+}
+
+#sidebar .nav-list li.active a {
+  border: 0;
+}
+
+#sidebar .nav-list li:first-child {border-top: none;}
+#sidebar .nav-list li:last-child {border-bottom: none;}
+
+dl {
+    margin-bottom:50px;
+    padding: 0;
+}
+
+
+dl dt {
+    margin-right:10px; 
+    padding:8px;  
+    width:100px; 
+}
+
+
+dl dd {
+    margin:2px 0; 
+    padding:8px 0;
+}

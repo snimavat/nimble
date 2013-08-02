@@ -1,0 +1,113 @@
+
+
+.widget {
+    background: none repeat scroll 0 0 #FFFFFF;
+    position: relative;
+    
+    margin: 0 auto 15px;
+    padding: 0;
+        
+    border: 1px solid #DBDBDB;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 3px 0 0 #DBDBDB;    
+}
+
+
+.widget .widget-head {
+	position: relative;
+    background-color: #F9F9F9;
+    background-image: linear-gradient(to bottom, #FDFDFD, #F4F4F4);
+    background-repeat: repeat-x;
+        
+    line-height: 35px;    
+    
+    margin: 0;
+    padding: 0 15px 0 0;
+    
+    border-bottom: 1px solid #DBDBDB;
+    border-radius: 5px 5px 0 0;    
+    height: 35px;    
+    overflow: hidden;        
+}
+
+.widget .widget-body {
+    padding: 15px;
+}
+
+.widget .widget-head .heading {
+	float: left;
+    margin: 0;
+    padding: 0 15px;
+    height: 35px;
+	
+    color: #7C7C7C;
+    line-height: 35px;   
+    font-size: 14px;
+}
+
+
+.widget.widget-heading-simple {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+
+
+.widget.widget-heading-simple > .widget-head {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: none !important;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+	
+	margin: 0;
+    padding: 0 0 5px;	
+    border: medium none;    
+    height: 25px;
+    line-height: 25px;
+    filter: none !important;
+}
+
+
+.widget.widget-heading-simple > .widget-head .heading {
+	padding: 0;
+    height: 25px;
+    line-height: 25px;    
+}
+
+.widget.widget-heading-simple > .widget-body {
+    border: 1px solid #DBDBDB;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.widget.widget-body-white > .widget-body {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.widget.widget-body-gray {
+    box-shadow: 0 3px 0 0 #F6F6F6;
+}
+
+.widget.widget-body-gray > .widget-body {
+    background: none repeat scroll 0 0 #E5E5E5;
+}
+
+
+.box-generic {
+	position: relative;
+	background: none repeat scroll 0 0 #FFFFFF;
+	
+    margin: 0 0 15px;
+    padding: 15px;
+    	    
+    border: 1px solid #DBDBDB;
+    border-radius: 5px 5px 5px 5px;
+    
+    box-shadow: 0 3px 0 0 #DBDBDB;
+}
+
+.table.table-white {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
