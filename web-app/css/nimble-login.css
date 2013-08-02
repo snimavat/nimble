@@ -1,0 +1,68 @@
+
+html,body{height:100%;}
+
+.login-container {
+	background: none repeat scroll 0 0 #F9F9F9;
+	border: 15px solid #D5D5D5;
+	border-radius: 5px 5px 5px 5px;
+	display: block;
+	margin: 60px auto 0;
+	width: 380px;
+}
+
+.login-content {
+	padding: 16px 28px 23px;
+}
+
+.login-content h2 {
+	padding-bottom: 10px;
+	margin-bottom: 14px;
+}
+
+.login-input input {
+	width: 298px;
+	padding: 8px 12px;
+}
+
+.login-content .form-actions {
+	margin-left: -28px;
+	margin-right: -28px;
+	padding-left: 28px;
+	padding-right: 28px;
+}
+
+.login-content .login-actions {
+	display: block;
+	padding-bottom: 5px;
+	margin-bottom: 14px;
+}
+
+.login-options {
+	margin: 20px 0 20px;;
+}
+
+.login-content form {
+	margin-top: 14px;
+}
+
+.border-top {
+	border-top: 1px dotted #ccc;
+}
+
+.border-bottom {
+	border-bottom: 1px dotted #ccc;
+}
+
+.login-options a {
+	display: inline-block;
+}
+
+
+#bd {
+	width: 100%
+}
+
+#main-welcome {
+	margin: 20px auto;
+	width: 60%;
+}

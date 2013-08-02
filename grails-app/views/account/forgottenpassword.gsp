@@ -1,51 +1,43 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<!doctype html>
 <html>
-
-<head>
-  <meta name="layout" content="${grailsApplication.config.nimble.layout.application}"/>
-  <title><g:message code="nimble.view.account.forgottenpassword.initiate.title" /></title>
-</head>
-
-<body>
-	
-  <div class="accountinformation">
-    <h2><g:message code="nimble.view.account.forgottenpassword.initiate.heading" /></h2>
-
-	<p>
-    	<g:message code="nimble.view.account.forgottenpassword.initiate.descriptive" />
-	</p>
-	
-    <n:flashembed/>
-
-    <g:form action="forgottenpasswordprocess">
-
-      <table>
-        <tbody>
-        <tr>
-          <td valign="top" class="name"><label for="email"><g:message code="nimble.label.email" /></label></td>
-          <td valign="top" class="value">
-            <input type="text" size="30" id="email" name="email" class="easyinput"/>
-          </td>
-        </tr>
-
-        <n:recaptcharequired>
-          <tr>
-            <th><g:message code="nimble.label.captcha" /></th>
-            <td>
-              <n:recaptcha/>
-            </td>
-          </tr>
-        </n:recaptcharequired>
-
-        </tbody>
-      </table>
-
-      <div>
-        <button class="button icon icon_user_go" type="submit"><g:message code="nimble.link.resetpassword" /></button>
+   <head>
+      <title>
+         <g:message code="nimble.view.account.forgottenpassword.initiate.title" />
+      </title>
+      <r:require modules="nimble-login" />
+      <r:layoutResources />
+   </head>
+   <body>
+      <div class="login-container">
+         <div class="login-content">
+            <h2 class="border-bottom">
+               <g:message code="nimble.view.account.forgottenpassword.initiate.heading" />
+            </h2>
+            
+            <n:flashembed />
+            <div class="login-options">
+            <span>
+               <g:message code="nimble.view.account.forgottenpassword.initiate.descriptive" />
+            </span>         
+			</div>               
+            <g:form action="forgottenpasswordprocess" method="POST">
+               <div class="login-input">
+                  <div class="control-group">
+                     <div class="controls "> 
+                        <input type="text" size="30" name="email" id="email" placeholder="user@example.com">
+                     </div>
+                  </div>
+               </div>
+               <div class="login-actions">
+                  <span>
+                  <button type="submit" class="btn btn-primary">
+                     <g:message code="nimble.link.resetpassword" />
+                  </button>
+                  </span>
+               </div>
+            </g:form>
+         </div>
       </div>
-
-    </g:form>
-  </div>
-
-</body>
+      <r:layoutResources />
+   </body>
 </html>

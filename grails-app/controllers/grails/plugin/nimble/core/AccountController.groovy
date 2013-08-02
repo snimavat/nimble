@@ -129,8 +129,9 @@ class AccountController {
 		}
 
 		// Enforce email address for account registrations
-		if (user.profile.email == null || user.profile.email.length() == 0)
+		if (user.profile.email == null || user.profile.email.length() == 0) {
 			user.profile.email = 'invalid'
+		}
 
 
 		if (user.hasErrors()) {
@@ -146,7 +147,6 @@ class AccountController {
 		def human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
 
 		if (human) {
-
 			savedUser = userService.createUser(user)
 			if (savedUser.hasErrors()) {
 				log.debug("UserService returned invalid account details when attempting account creation")
@@ -164,6 +164,7 @@ class AccountController {
 		}
 
 		log.info("Sending account registration confirmation email to $user.profile.email with subject $grailsApplication.config.nimble.messaging.registration.subject")
+		
 		if(grailsApplication.config.nimble.messaging.enabled) {
 			sendMail {
 				to user.profile.email

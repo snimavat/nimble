@@ -8,10 +8,10 @@
 
 <body>
 
-    <div class="welcome cleanlist">
+    <div id="main-welcome">
 
       <g:if test="${user.profile?.fullName?.length() > 0}">
-        <h1><span class="userhighlight">${user.profile.fullName.encodeAsHTML()}</span>, Welcome to Nimble!</h1>
+        <h2><span>${user.profile.fullName.encodeAsHTML()}</span>, Welcome to Nimble!</h2>
       </g:if>
       <g:else>
         <h1>${user.username.encodeAsHTML()}, Welcome to Nimble!</h1>

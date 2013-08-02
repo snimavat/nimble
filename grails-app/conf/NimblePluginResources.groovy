@@ -1,14 +1,14 @@
 
 modules = {
-	overrides {
-		//Hack for issue https://github.com/groovydev/twitter-bootstrap-grails-plugin/issues/32
-		'bootstrap-fixtaglib' { defaultBundle 'fixtaglib' }
-	}
-
 	'nimble-core' {
 		resource id:'core-css', url:[plugin:'nimble', dir:'css', file:'nimble-core.css'], disposition:'head'
 		resource id:'core-js', url:[plugin:'nimble', dir:'js', file:'nimblecore.js'], disposition:'head'
 	}
+	
+	'nimble-login-css' {
+		resource id:'css', url:[plugin:'nimble', dir:'css', file:'nimble-login.css'], disposition:'head'
+	}
+	
 	'nimble-ui' {
 		dependsOn "nimble-core"
 		resource id:'ui-js', url:[plugin:'nimble', dir:'js', file:'nimbleui.js'], disposition:'head'
@@ -41,6 +41,6 @@ modules = {
 		dependsOn 'bootstrap-css, bootstrap-responsive-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'
 	}
 
-	'nimble-login' { dependsOn 'nimble-core, nimble-ui, jquery, bootstrap-css, bootstrap-responsive-css, jquery-bt, jquery-url' }
+	'nimble-login' { dependsOn 'nimble-login-css, jquery, bootstrap-css' }
 
 }

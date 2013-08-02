@@ -1,6 +1,6 @@
 <%@page defaultCodec="none" %>
 <g:javascript src="jquery/jquery.pstrength.js" contextPath="${pluginContextPath}"/>
-<r:script disposition='head'>
+<r:script>
 
   $(function() {
     $("#passwordpolicy").hide();
