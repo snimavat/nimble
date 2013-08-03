@@ -30,9 +30,9 @@ class AdminsController {
 
 	def adminsService
 
-	def index = { }
+	def index() { }
 
-	def list = {
+	def list() {
 		def adminAuthority = Role.findByName(AdminsService.ADMIN_ROLE)
 		def authenticatedUser = UserBase.get(SecurityUtils.getSubject()?.getPrincipal())
 
@@ -42,16 +42,16 @@ class AdminsController {
 			return
 		}
 
-		return [currentAdmin:authenticatedUser, admins: adminAuthority?.users]
+		[currentAdmin:authenticatedUser, admins: adminAuthority?.users]
 	}
 
-	def create = {
-		def user = UserBase.get(params.id)
+	def create(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id $params.id was not located")
+			log.warn("User identified by id $id was not located")
 
 			response.sendError(500)
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			return
 		}
 
@@ -61,20 +61,18 @@ class AdminsController {
 			render message(code: 'nimble.admin.grant.success', args: [user.username])
 			return
 		}
-		else {
-			log.warn("User identified as [$user.id]$user.username was unable to be made an administrator")
-			response.sendError(500)
-			render message(code: 'nimble.admin.grant.failed', args: [user.username])
-			return
-		}
+
+		log.warn("User identified as [$user.id]$user.username was unable to be made an administrator")
+		response.sendError(500)
+		render message(code: 'nimble.admin.grant.failed', args: [user.username])
 	}
 
-	def delete = {
-		def user = UserBase.get(params.id)
+	def delete(id) {
+		def user = UserBase.get(id)
 
 		if (!user) {
-			log.warn("User identified by id $params.id was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id $id was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.sendError(500)
 			return
 		}
@@ -91,16 +89,14 @@ class AdminsController {
 			render message(code: 'nimble.admin.revoke.success', args: [user.username])
 			return
 		}
-		else {
-			log.warn("User identified as [$user.id]$user.username was unable to be removed as an administrator")
-			render message(code: 'nimble.admin.revoke.error', args: [user.username])
-			response.sendError(500)
-			return
-		}
+
+		log.warn("User identified as [$user.id]$user.username was unable to be removed as an administrator")
+		render message(code: 'nimble.admin.revoke.error', args: [user.username])
+		response.sendError(500)
 	}
 
-	def search = {
-		def q = "%" + params.q + "%"
+	def search(String q) {
+		q = "%" + q + "%"
 
 		log.debug("Performing search for users matching $q")
 
@@ -129,6 +125,6 @@ class AdminsController {
 		}
 
 		log.info("Search for new administrators complete, returning $nonAdmins.size records")
-		return [users: nonAdmins]   // Should always be the case
+		[users: nonAdmins]   // Should always be the case
 	}
 }

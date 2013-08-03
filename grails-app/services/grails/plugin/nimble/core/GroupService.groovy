@@ -23,8 +23,6 @@ package grails.plugin.nimble.core
  */
 class GroupService {
 
-	boolean transactional = true
-
 	/**
 	 * Creates a new group.
 	 *
@@ -34,12 +32,8 @@ class GroupService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def createGroup(String name, String description, boolean protect) {
-		def group = new Group()
-		group.name = name
-		group.description = description
-		group.protect = protect
-
+	Group createGroup(String name, String description, boolean protect) {
+		def group = new Group(name: name, description: description, protect: protect)
 		if (!group.validate()) {
 			log.debug("Supplied details for new group were invalid")
 			return group
@@ -59,7 +53,7 @@ class GroupService {
 
 	/**
 	 * Deletes an exisiting group.
-	 * 
+	 *
 	 * @pre Passed group object must have been validated to ensure
 	 * that hibernate does not auto persist the objects to the repository prior to service invocation
 	 *
@@ -67,7 +61,7 @@ class GroupService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def deleteGroup(Group group) {
+	void deleteGroup(Group group) {
 
 		// Terminate all roles associated with this group
 		def roles = []
@@ -113,7 +107,7 @@ class GroupService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def updateGroup(Group group) {
+	Group updateGroup(Group group) {
 
 		def updatedGroup = group.save()
 		if (updatedGroup) {
@@ -138,7 +132,7 @@ class GroupService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def addMember(UserBase user, Group group) {
+	void addMember(UserBase user, Group group) {
 		group.addToUsers(user)
 		user.addToGroups(group)
 
@@ -174,7 +168,7 @@ class GroupService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def deleteMember(UserBase user, Group group) {
+	void deleteMember(UserBase user, Group group) {
 		user.removeFromGroups(group)
 		group.removeFromUsers(user)
 

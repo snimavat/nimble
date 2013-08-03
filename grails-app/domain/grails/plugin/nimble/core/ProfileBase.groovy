@@ -39,11 +39,10 @@ class ProfileBase {
 
 	def beforeUpdate = { hashEmail() }
 
-	def hashEmail = {
+	void hashEmail() {
 		// Do MD5 hash of email for Gravatar
 		if(email) {
-			def hasher = new Md5Hash(email)
-			emailHash = hasher.toHex()
+			emailHash = new Md5Hash(email).toHex()
 		}
 	}
 

@@ -16,7 +16,7 @@
  */
 package grails.plugin.nimble.security
 
-public class NimbleFilterBase {
+class NimbleFilterBase {
 
 	def onNotAuthenticated(subject, filter) {
 
@@ -45,5 +45,4 @@ public class NimbleFilterBase {
 				action: 'login',
 				params: [targetUri: targetUri])
 	}
-
 }

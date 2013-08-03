@@ -23,6 +23,5 @@ package grails.plugin.nimble.auth
  */
 class CorePermissions {
 
-	public static String editPermission = "profile:edit"
+	public static final String editPermission = "profile:edit"
 }
-

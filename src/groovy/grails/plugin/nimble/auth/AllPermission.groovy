@@ -24,4 +24,3 @@ package grails.plugin.nimble.auth
  */
 class AllPermission extends org.apache.shiro.authz.permission.AllPermission {
 }
-

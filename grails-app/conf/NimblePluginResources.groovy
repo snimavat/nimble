@@ -1,4 +1,3 @@
-
 modules = {
 	'nimble-core' {
 		dependsOn "nimble-layout-css, nimble-widgets-css, nimble-typography-css"
@@ -17,11 +16,11 @@ modules = {
 	'nimble-widgets-css' {
 		resource id:'css', url:[plugin:'nimble', dir:'css', file:'nimble-widgets.css'], disposition:'head'
 	}
-		
+
 	'nimble-login-css' {
 		resource id:'css', url:[plugin:'nimble', dir:'css', file:'nimble-login.css'], disposition:'head'
 	}
-	
+
 	'nimble-ui' {
 		dependsOn "nimble-core"
 		resource id:'ui-js', url:[plugin:'nimble', dir:'js', file:'nimbleui.js'], disposition:'head'
@@ -55,5 +54,4 @@ modules = {
 	}
 
 	'nimble-login' { dependsOn 'nimble-login-css, jquery, bootstrap-css' }
-
 }

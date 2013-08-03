@@ -16,91 +16,51 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.Group
-import grails.plugin.nimble.core.LoginRecord
-import grails.plugin.nimble.core.ProfileBase
-import grails.plugin.nimble.core.Role
-import grails.plugin.nimble.core.UserBase
-import grails.test.*
+import grails.test.GrailsUnitTestCase
+
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 /**
  * @author Bradley Beddoes
  */
 class UserTests extends GrailsUnitTestCase {
 
-	def username
-	def passwordHash
-	def actionHash
-	def enabled
-	def external
-	def federated
-	def remoteapi
-	def expiration
-	def profile
-	def role1
-	def role2
-	def group1
-	def group2
-	def pw1
-	def pw2
-	def login1
-	def login2
-	def follows1
-	def follows2
-	def follower1
-	def follower2
-	def dateCreated
-	def lastUpdated
+	private username = 'username'
+	private passwordHash = 'passwordHash'
+	private actionHash = 'actionHash'
+	private enabled = true
+	private external = true
+	private federated = true
+	private remoteapi = true
+	private expiration = new Date()
+	private profile = new ProfileBase()
+	private role1 = new Role()
+	private role2 = new Role()
+	private group1 = new Group()
+	private group2 = new Group()
+	private pw1 = 'pw1'
+	private pw2 = 'pw2'
+	private login1 = new LoginRecord()
+	private login2 = new LoginRecord()
+	private follows1 = new UserBase()
+	private follows2 = new UserBase()
+	private follower1 = new UserBase()
+	private follower2 = new UserBase()
+	private dateCreated = new Date()
+	private lastUpdated = new Date()
 
 	protected void setUp() {
 		super.setUp()
-
-		username = 'username'
-		passwordHash = 'passwordHash'
-		actionHash = 'actionHash'
-		enabled = true
-		external = true
-		federated = true
-		remoteapi = true
-		expiration = new Date()
-
-		profile = new ProfileBase()
-
-		role1 = new Role()
-		role2 = new Role()
-
-		group1 = new Group()
-		group2 = new Group()
-
-		pw1 = 'pw1'
-		pw2 = 'pw2'
-
-		login1 = new LoginRecord()
-		login2 = new LoginRecord()
-
-		follows1 = new UserBase()
-		follows2 = new UserBase()
-
-		follower1 = new UserBase()
-		follower2 = new UserBase()
-
-		dateCreated = new Date()
-		lastUpdated = new Date()
+		ConfigurationHolder.config = [nimble: [tablenames: [user: 'user']]] as ConfigObject
 	}
 
-	protected void tearDown() {
-		super.tearDown()
-	}
-
-	UserBase createValidUser() {
-		def user = new UserBase(username:username, passwordHash:passwordHash, actionHash:actionHash, enabled:enabled,
+	private UserBase createValidUser() {
+		new UserBase(username:username, passwordHash:passwordHash, actionHash:actionHash, enabled:enabled,
 		external:external, federated:federated, remoteapi:remoteapi, expiration:expiration,
 		profile:profile, roles:[role1, role2],
 		groups:[group1, group2], passwdHistory:[pw1, pw2], loginRecords:[login1, login2],
 		follows:[follows1, follows2], followers:[follower1, follower2],
 		dateCreated:dateCreated, lastUpdated:lastUpdated)
-
-		return user
 	}
 
 	void testUserCreation() {

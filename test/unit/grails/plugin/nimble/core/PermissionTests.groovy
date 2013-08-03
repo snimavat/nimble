@@ -16,108 +16,93 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.Permission;
-import grails.plugin.nimble.core.UserBase;
-import grails.test.*
+import grails.test.GrailsUnitTestCase
 
 /**
  * @author Bradley Beddoes
  */
 class PermissionTests extends GrailsUnitTestCase {
-    def type
-    def possibleActions
-    def actions
-    def target
-    def managed
-    def owner
-            
-    protected void setUp() {
-        super.setUp()
-        type = 'type'
-        possibleActions = 'possibleActions'
-        actions = 'actions'
-        target = 'target'
-        managed = false
-        owner = new UserBase(username: "dilbert")
-    }
+	private type = 'type'
+	private possibleActions = 'possibleActions'
+	private actions = 'actions'
+	private target = 'target'
+	private managed = false
+	private owner = new UserBase(username: "dilbert")
 
-    protected void tearDown() {
-        super.tearDown()
-    }
+	private Permission createValidPermission() {
+		def p = new Permission(type:type, possibleActions:possibleActions, actions:actions, target:target, managed:managed)
+		p.owner = owner
+		p
+	}
 
-    Permission createValidPermission() {
-        def permission = new Permission(type:type, possibleActions:possibleActions,
-            actions:actions, target:target, managed:managed, owner:owner)
-    }
+	void testPermissionCreation() {
+		def permission = createValidPermission()
 
-    void testPermissionCreation() {
-        def permission = createValidPermission()
+		assertEquals type, permission.type
+		assertEquals possibleActions, permission.possibleActions
+		assertEquals actions, permission.actions
+		assertEquals target, permission.target
+		assertEquals managed, permission.managed
+		assertEquals owner, permission.owner
+	}
 
-        assertEquals type, permission.type
-        assertEquals possibleActions, permission.possibleActions
-        assertEquals actions, permission.actions
-        assertEquals target, permission.target
-        assertEquals managed, permission.managed
-        assertEquals owner, permission.owner
-    }
+	void testDefaultPermissionCreation() {
+		def permission = new Permission()
 
-    void testDefaultPermissionCreation() {
-        def permission = new Permission()
+		assertEquals '*', permission.possibleActions
+		assertEquals '*', permission.actions
+	}
 
-        assertEquals '*', permission.possibleActions
-        assertEquals '*', permission.actions
-    }
+	void testPermissionConstants() {
+		assertEquals "grails.plugin.nimble.auth.AllPermission", Permission.adminPerm
+		assertEquals "grails.plugin.nimble.auth.WildcardPermission", Permission.defaultPerm
+	}
 
-    void testPermissionConstants() {
-        assertEquals "grails.plugin.nimble.auth.AllPermission", Permission.adminPerm
-        assertEquals "grails.plugin.nimble.auth.WildcardPermission", Permission.defaultPerm
-    }
+	void testTypeConstraint() {
+		mockForConstraintsTests(Permission)
+		def permission = createValidPermission()
+		assertTrue permission.validate()
 
-    void testTypeConstraint() {
-        mockForConstraintsTests(Permission)
-        def permission = createValidPermission()
-        assertTrue permission.validate()
+		permission.type = ""
+		assertFalse permission.validate()
 
-        permission.type = ""
-        assertFalse permission.validate()
+		permission.type = null
+		assertFalse permission.validate()
+	}
 
-        permission.type = null
-        assertFalse permission.validate()
-    }
+	void testPossibleActionsConstraint() {
+		mockForConstraintsTests(Permission)
+		def permission = createValidPermission()
+		assertTrue permission.validate()
 
-    void testPossibleActionsConstraint() {
-        mockForConstraintsTests(Permission)
-        def permission = createValidPermission()
-        assertTrue permission.validate()
+		permission.possibleActions = ""
+		assertFalse permission.validate()
 
-        permission.possibleActions = ""
-        assertFalse permission.validate()
+		permission.possibleActions = null
+		assertFalse permission.validate()
+	}
 
-        permission.possibleActions = null
-        assertFalse permission.validate()
-    }
+	void testActionsConstraint() {
+		mockForConstraintsTests(Permission)
+		def permission = createValidPermission()
+		assertTrue permission.validate()
 
-    void testActionsConstraint() {
-        mockForConstraintsTests(Permission)
-        def permission = createValidPermission()
-        assertTrue permission.validate()
+		permission.actions = ""
+		assertFalse permission.validate()
 
-        permission.actions = ""
-        assertFalse permission.validate()
+		permission.actions = null
+		assertFalse permission.validate()
+	}
 
-        permission.actions = null
-        assertFalse permission.validate()
-    }
+	void testTargetConstraint() {
+		mockForConstraintsTests(Permission)
+		def permission = createValidPermission()
+		assertTrue permission.validate()
 
-    void testTargetConstraint() {
-        mockForConstraintsTests(Permission)
-        def permission = createValidPermission()
-        assertTrue permission.validate()
+		permission.target = ""
+		assertFalse permission.validate()
 
-        permission.target = ""
-        assertFalse permission.validate()
-
-        permission.target = null
-        assertFalse permission.validate()
-    }
+		permission.target = null
+		assertFalse permission.validate()
+	}
 }

@@ -6,23 +6,23 @@ grails-app/domain/intient/test/*
 .sass-cache
 classes
 stacktrace.log
-docs.tar.gz 
+docs.tar.gz
 
 *~
 *.ipr
 *.iml
 *.iws
 *.war
-web-app/plugins/*
+web-app/WEB-INF
 target/
 test/reports/*
 unzipped/*
 docs/*
-*.zip
 plugin.xml
 
 src/docs
 
 grails-app/i18n/shiro.properties
 /.settings
-grails-nimble-0.5-SNAPSHOT.zip.sha1
+grails-nimble-*.zip
+grails-nimble-*.zip.sha1

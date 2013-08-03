@@ -23,8 +23,6 @@ package grails.plugin.nimble.core
  */
 class PermissionService {
 
-	boolean transactional = true
-
 	/**
 	 * Assigns a permission object to an owner and performs checks to ensure permission is correctly applied
 	 *
@@ -32,7 +30,7 @@ class PermissionService {
 	 * @param owner An object that extends PermissionOwner (e.g. UserBase, Group, Role)
 	 *
 	 * @return A permission object. The saved object is all was successful or the permission object with error details if persistence fails.
-	 * 
+	 *
 	 * @throws RuntimeException if an unrecoverable/unexpected error occurs (Rolls back transaction)
 	 */
 	def createPermission(permission, owner) {

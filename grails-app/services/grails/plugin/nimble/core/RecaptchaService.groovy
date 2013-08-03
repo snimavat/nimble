@@ -13,23 +13,23 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *  
+ *
  *  Adapted from the original Recaptcha plugin by Chad Johnston, cjohnston at megatome dot com
  *  http://grails.org/ReCaptcha+Plugin
  */
 package grails.plugin.nimble.core
 
+import net.tanesha.recaptcha.ReCaptcha
 import net.tanesha.recaptcha.ReCaptchaFactory
-import net.tanesha.recaptcha.*
-import grails.util.GrailsUtil
+
 import org.springframework.beans.factory.InitializingBean
 
 class RecaptchaService implements InitializingBean {
 
-	boolean transactional = false
+	static transactional = false
 
-	public static String SESSION_KEY = "grails.plugin.nimble.service.recaptcha"
-	public static String SESSION_ERROR_KEY = "grails.plugin.nimble.service.recaptcha.error"
+	public static final String SESSION_KEY = "grails.plugin.nimble.service.recaptcha"
+	public static final String SESSION_ERROR_KEY = "grails.plugin.nimble.service.recaptcha.error"
 
 	def publicKey
 	def privateKey
@@ -56,8 +56,7 @@ class RecaptchaService implements InitializingBean {
 	 *
 	 * @return HTML code, suitable for embedding into a webpage.
 	 */
-	def createCaptcha(session, props) {
-		ReCaptcha recap
+	String createCaptcha(session, props) {
 
 		log.debug("Creating ReCaptcha markup")
 
@@ -66,6 +65,7 @@ class RecaptchaService implements InitializingBean {
 			return "<em>ReCaptcha is currently not required</em>"
 		}
 
+		ReCaptcha recap
 		if (secureAPI) {
 			recap = ReCaptchaFactory.newSecureReCaptcha(publicKey, privateKey, includeNoScript)
 		} else {
@@ -86,10 +86,11 @@ class RecaptchaService implements InitializingBean {
 	 *
 	 * @return True if the supplied answer is correct, false otherwise. Returns true if ReCaptcha support is disabled.
 	 */
-	def verifyAnswer(session, remoteAddress, params) {
+	boolean verifyAnswer(session, remoteAddress, params) {
 		if (!isEnabled()) {
 			return true
 		}
+
 		ReCaptcha recaptcha = session[RecaptchaService.SESSION_KEY]
 		if (recaptcha) {
 			def response = recaptcha.checkAnswer(remoteAddress, params.recaptcha_challenge_field?.trim(), params.recaptcha_response_field?.trim())
@@ -109,7 +110,7 @@ class RecaptchaService implements InitializingBean {
 	 *
 	 * @param session The current session
 	 */
-	def validationFailed(session) {
+	boolean validationFailed(session) {
 		return (session[RecaptchaService.SESSION_ERROR_KEY] != null)
 	}
 
@@ -118,8 +119,8 @@ class RecaptchaService implements InitializingBean {
 	 *
 	 * @param session The current session.
 	 */
-	def cleanUp(session) {
-		session[RecaptchaService.SESSION_KEY] = null
-		session[RecaptchaService.SESSION_ERROR_KEY] = null
+	void cleanUp(session) {
+		session.removeAttribute RecaptchaService.SESSION_KEY
+		session.removeAttribute RecaptchaService.SESSION_ERROR_KEY
 	}
 }

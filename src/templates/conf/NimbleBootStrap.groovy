@@ -15,7 +15,6 @@
  *  limitations under the License.
  */
 
-
 import grails.plugin.nimble.InstanceGenerator
 import grails.plugin.nimble.core.AdminsService
 import grails.plugin.nimble.core.Role
@@ -45,13 +44,13 @@ class NimbleBootStrap {
 
 		if(!UserBase.findByUsername("user")) {
 			// Create example User account
-			def user = InstanceGenerator.user()
+			def user = InstanceGenerator.user(grailsApplication)
 			user.username = "user"
 			user.pass = 'useR123!'
 			user.passConfirm = 'useR123!'
 			user.enabled = true
 
-			def userProfile = InstanceGenerator.profile()
+			def userProfile = InstanceGenerator.profile(grailsApplication)
 			userProfile.fullName = "Test User"
 			userProfile.owner = user
 			user.profile = userProfile
@@ -68,13 +67,13 @@ class NimbleBootStrap {
 		if(!UserBase.findByUsername("admin")) {
 			// Create example Administrative account
 			def admins = Role.findByName(AdminsService.ADMIN_ROLE)
-			def admin = InstanceGenerator.user()
+			def admin = InstanceGenerator.user(grailsApplication)
 			admin.username = "admin"
 			admin.pass = "admiN123!"
 			admin.passConfirm = "admiN123!"
 			admin.enabled = true
 
-			def adminProfile = InstanceGenerator.profile()
+			def adminProfile = InstanceGenerator.profile(grailsApplication)
 			adminProfile.fullName = "Administrator"
 			adminProfile.owner = admin
 			admin.profile = adminProfile
@@ -91,11 +90,7 @@ class NimbleBootStrap {
 		}
 	}
 
-	def destroy = {
-
-	}
-
-	private internalBootStap(def servletContext) {
+	private internalBootStap(servletContext) {
 		nimbleService.init()
 	}
 }

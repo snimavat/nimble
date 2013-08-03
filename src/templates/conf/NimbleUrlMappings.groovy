@@ -21,86 +21,87 @@
  * @author Bradley Beddoes
  */
 class NimbleUrlMappings {
-    static mappings = {
 
-    "/administration/adminstrators/$action?/$id?" {
-            controller = "admins"
-        }
+	static mappings = {
 
-    "/administration/users/$action?/$id?" {
-            controller = "user"
-        }
+		"/administration/adminstrators/$action?/$id?" {
+			controller = "admins"
+		}
 
-    "/administration/groups/$action?/$id?" {
-            controller = "group"
-        }
+		"/administration/users/$action?/$id?" {
+			controller = "user"
+		}
 
-    "/administration/roles/$action?/$id?" {
-            controller = "role"
-        }
+		"/administration/groups/$action?/$id?" {
+			controller = "group"
+		}
 
-    "/register" {
-            controller = "account"
-            action = "createuser"
-        }
+		"/administration/roles/$action?/$id?" {
+			controller = "role"
+		}
 
-    "/register/validusername" {
-            controller = "account"
-            action = "validusername"
-        }
+		"/register" {
+			controller = "account"
+			action = "createuser"
+		}
 
-    "/register/save" {
-            controller = "account"
-            action = "saveuser"
-        }
+		"/register/validusername" {
+			controller = "account"
+			action = "validusername"
+		}
 
-    "/registered" {
-            controller = "account"
-            action = "createduser"
-        }
+		"/register/save" {
+			controller = "account"
+			action = "saveuser"
+		}
 
-    "/validateuser/$id" {
-            controller = "account"
-            action = "validateuser"
-        }
+		"/registered" {
+			controller = "account"
+			action = "createduser"
+		}
 
-    "/forgottenpassword" {
-            controller = "account"
-            action = "forgottenpassword"
-        }
+		"/validateuser/$id" {
+			controller = "account"
+			action = "validateuser"
+		}
 
-    "/forgottenpassword/submit" {
-            controller = "account"
-            action = "forgottenpasswordprocess"
-        }
+		"/forgottenpassword" {
+			controller = "account"
+			action = "forgottenpassword"
+		}
 
-    "/forgottenpassword/complete" {
-            controller = "account"
-            action = "forgottenpasswordcomplete"
-        }
+		"/forgottenpassword/submit" {
+			controller = "account"
+			action = "forgottenpasswordprocess"
+		}
 
-    "/forgottenpassword/external/$id?" {
-            controller = "account"
-            action = "forgottenpasswordexternal"
-        }
+		"/forgottenpassword/complete" {
+			controller = "account"
+			action = "forgottenpasswordcomplete"
+		}
 
-    "/login" {
-            controller = "auth"
-            action = "login"
-        }
+		"/forgottenpassword/external/$id?" {
+			controller = "account"
+			action = "forgottenpasswordexternal"
+		}
 
-    "/logout" {
-            controller = "auth"
-            action = "logout"
-        }
+		"/login" {
+			controller = "auth"
+			action = "login"
+		}
 
-    "/unauthorized" {
-            controller = "auth"
-            action = "unauthorized"
-        }
+		"/logout" {
+			controller = "auth"
+			action = "logout"
+		}
 
-    "/auth/$action" {
-            controller = "auth"
-        }
-    }
+		"/unauthorized" {
+			controller = "auth"
+			action = "unauthorized"
+		}
+
+		"/auth/$action" {
+			controller = "auth"
+		}
+	}
 }

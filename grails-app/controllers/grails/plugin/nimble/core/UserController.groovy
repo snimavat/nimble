@@ -34,13 +34,11 @@ class UserController {
 	def roleService
 	def permissionService
 
-	def index = {
-		redirect action: list, params: params
-	}
+	static defaultAction = 'list'
 
-	def list = {
+	def list() {
 		params.max = Math.min(params.max ? params.int('max') : 10,100)
-		params.offset = params.offset ? params.offset : 0
+		params.offset = params.offset ?: 0
 		params.sort = params.sort ?: "username"
 		params.order = params.order ?: "asc"
 
@@ -48,76 +46,76 @@ class UserController {
 		[users: UserBase.list(params)]
 	}
 
-	def show = {
-		def user = UserBase.get(params.id)
+	def show(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: list
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'list'
+			return
 		}
-		else {
-			log.debug("Showing user [$user.id]$user.username")
-			[user: user]
-		}
+
+		log.debug("Showing user [$user.id]$user.username")
+		[user: user]
 	}
 
-	def edit = {
-		def user = UserBase.get(params.id)
+	def edit(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: list
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'list'
+			return
 		}
-		else {
-			log.debug("Editing user [$user.id]$user.username")
-			[user: user]
-		}
+
+		log.debug("Editing user [$user.id]$user.username")
+		[user: user]
 	}
 
-	def update = {
-		def user = UserBase.get(params.id)
+	def update(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: edit, id: params.id
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'edit', id: id
+			return
 		}
-		else {
-			def fields = grailsApplication.config.nimble.fields.admin.user
-			user.properties[fields] = params
-			if (!user.validate()) {
-				log.debug("Updated details for user [$user.id]$user.username are invalid")
-				render view: 'edit', model: [user: user]
-			}
-			else {
-				def updatedUser = userService.updateUser(user)
-				log.info("Successfully updated details for user [$user.id]$user.username")
-				flash.type = "success"
-				flash.message = message(code: 'nimble.user.update.success', args: [user.username])
-				redirect action: show, id: updatedUser.id
-			}
+
+		def fields = nimbleConfig.fields.admin.user
+		user.properties[fields] = params
+		if (!user.validate()) {
+			log.debug("Updated details for user [$user.id]$user.username are invalid")
+			render view: 'edit', model: [user: user]
+			return
 		}
+
+		def updatedUser = userService.updateUser(user)
+		log.info("Successfully updated details for user [$user.id]$user.username")
+		flash.type = "success"
+		flash.message = message(code: 'nimble.user.update.success', args: [user.username])
+		redirect action: 'show', id: updatedUser.id
 	}
 
-	def create = {
-		def user = InstanceGenerator.user()
-		user.profile = InstanceGenerator.profile()
+	def create() {
+		def user = InstanceGenerator.user(grailsApplication)
+		user.profile = InstanceGenerator.profile(grailsApplication)
 		log.debug("Starting user creation process")
 		[user: user]
 	}
 
-	def save = {
-		def user = InstanceGenerator.user()
-		def profile = InstanceGenerator.profile()
+	def save() {
+		def user = InstanceGenerator.user(grailsApplication)
+		def profile = InstanceGenerator.profile(grailsApplication)
 
 		user.profile = profile
 		profile.owner = user
 
-		def userFields = grailsApplication.config.nimble.fields.enduser.user
-		def profileFields = grailsApplication.config.nimble.fields.enduser.profile
+		def userFields = nimbleConfig.fields.enduser.user
+		def profileFields = nimbleConfig.fields.enduser.profile
 
 		user.properties[userFields] = params
 		user.profile.properties[profileFields] = params
@@ -129,421 +127,423 @@ class UserController {
 		if (savedUser.hasErrors()) {
 			log.info("Failed to save new user")
 			render view: 'create', model: [roleList: Role.list(), user: user]
+			return
 		}
-		else {
-			log.info("Successfully created new user [$savedUser.id]$savedUser.username")
-			redirect action: show, id: user.id
-		}
+
+		log.info("Successfully created new user [$savedUser.id]$savedUser.username")
+		redirect action: 'show', id: user.id
 	}
 
-	def changepassword = {
-		def user = UserBase.get(params.id)
+	def changepassword(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: list
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'list'
+			return
 		}
-		else {
-			if (user.external) {
-				log.warn("Attempt to change password on user [$user.id]$user.username that is externally managed denied")
-				flash.type = "error"
-				flash.message = message(code: 'nimble.user.password.external.nochange', args: [user.username])
-				redirect action: show, id: user.id
-			}
-			else {
-				log.debug("Starting password change for user [$user.id]$user.username")
-				[user: user]
-			}
+
+		if (user.external) {
+			log.warn("Attempt to change password on user [$user.id]$user.username that is externally managed denied")
+			flash.type = "error"
+			flash.message = message(code: 'nimble.user.password.external.nochange', args: [user.username])
+			redirect action: 'show', id: user.id
+			return
 		}
+
+		log.debug("Starting password change for user [$user.id]$user.username")
+		[user: user]
 	}
 
-	def changelocalpassword = {
-		def user = UserBase.get(params.id)
+	def changelocalpassword(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: list
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'list'
+			return
 		}
-		else {
-			if (!user.external) {
-				log.warn("Attempt to change password on user [$user.id]$user.username that is externally managed denied")
-				flash.type = "error"
-				flash.message = message(code: 'nimble.user.password.internal.nochange', args: [user.username])
-				redirect action: show, id: user.id
-			}
-			else {
-				log.debug("Starting local password change for user [$user.id]$user.username")
-				[user: user]
-			}
+
+		if (!user.external) {
+			log.warn("Attempt to change password on user [$user.id]$user.username that is externally managed denied")
+			flash.type = "error"
+			flash.message = message(code: 'nimble.user.password.internal.nochange', args: [user.username])
+			redirect action: 'show', id: user.id
+			return
 		}
+
+		log.debug("Starting local password change for user [$user.id]$user.username")
+		[user: user]
 	}
 
-	def savepassword = {
-		def user = UserBase.get(params.id)
+	def savepassword(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
+			log.warn("User identified by id '$id' was not located")
 			flash.type = "error"
-			flash.message = message(code: 'nimble.user.nonexistant', args: [params.id])
-			redirect action: list
+			flash.message = message(code: 'nimble.user.nonexistant', args: [id])
+			redirect action: 'list'
+			return
 		}
-		else {
-			user.properties['pass', 'passConfirm'] = params
-			if (!user.validate() || !userService.validatePass(user, true)) {
-				log.debug("Password change for [$user.id]$user.username was invalid")
-				render view: 'changepassword', model: [user: user]
-			}
-			else {
-				def savedUser = userService.changePassword(user)
-				log.info("Successfully saved password change for user [$user.id]$user.username")
-				flash.type = "success"
-				flash.message = message(code: 'nimble.user.password.change.success', args: [params.id])
-				redirect action: show, id: user.id
-			}
+
+		user.properties['pass', 'passConfirm'] = params
+		if (!user.validate() || !userService.validatePass(user, true)) {
+			log.debug("Password change for [$user.id]$user.username was invalid")
+			render view: 'changepassword', model: [user: user]
+			return
 		}
+
+		def savedUser = userService.changePassword(user)
+		log.info("Successfully saved password change for user [$user.id]$user.username")
+		flash.type = "success"
+		flash.message = message(code: 'nimble.user.password.change.success', args: [id])
+		redirect action: 'show', id: user.id
 	}
 
 	// AJAX related actions
-	def enable = {
-		def user = UserBase.get(params.id)
+	def enable(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def enabledUser = userService.enableUser(user)
-			log.info("Enabled user [$user.id]$user.username")
-			render message(code: 'nimble.user.enable.success', args: [user.username])
-		}
+
+		def enabledUser = userService.enableUser(user)
+		log.info("Enabled user [$user.id]$user.username")
+		render message(code: 'nimble.user.enable.success', args: [user.username])
 	}
 
-	def disable = {
-		def user = UserBase.get(params.id)
+	def disable(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render = message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render = message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def disabledUser = userService.disableUser(user)
-			log.info("Disabled user [$user.id]$user.username")
-			render message(code: 'nimble.user.disable.success', args: [user.username])
-		}
+
+		def disabledUser = userService.disableUser(user)
+		log.info("Disabled user [$user.id]$user.username")
+		render message(code: 'nimble.user.disable.success', args: [user.username])
 	}
 
-	def enableapi = {
-		def user = UserBase.get(params.id)
+	def enableapi(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def enabledUser = userService.enableRemoteApi(user)
-			log.info("Enabled remote api for user [$user.id]$user.username")
-			render message(code: 'nimble.user.enableapi.success', args: [user.username])
-		}
+
+		def enabledUser = userService.enableRemoteApi(user)
+		log.info("Enabled remote api for user [$user.id]$user.username")
+		render message(code: 'nimble.user.enableapi.success', args: [user.username])
 	}
 
-	def disableapi = {
-		def user = UserBase.get(params.id)
+	def disableapi(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def disabledUser = userService.disableRemoteApi(user)
-			log.info("Disabled remote api for user [$user.id]$user.username")
-			render message(code: 'nimble.user.disableapi.success', args: [user.username])
-		}
+
+		def disabledUser = userService.disableRemoteApi(user)
+		log.info("Disabled remote api for user [$user.id]$user.username")
+		render message(code: 'nimble.user.disableapi.success', args: [user.username])
 	}
 
-	def validusername = {
-		if (params?.val == null || params?.val?.length() < 4) {
+	def validusername(String val) {
+		if (val == null || val.length() < 4) {
 			render message(code: 'nimble.user.username.invalid')
 			response.status = 500
+			return
 		}
-		else {
-			def users = UserBase.findAllByUsername(params?.val)
-			if (users != null && users.size() > 0) {
-				render message(code: 'nimble.user.username.invalid')
-				response.status = 500
-			}
-			else {
-				render message(code: 'nimble.user.username.valid')
-			}
-		}
-	}
 
-	def listlogins = {
-		def user = UserBase.get(params.id)
-		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+		def users = UserBase.findAllByUsername(val)
+		if (users != null && users.size() > 0) {
+			render message(code: 'nimble.user.username.invalid')
 			response.status = 500
+			return
 		}
-		else {
-			log.debug("Listing login events for user [$user.id]$user.username")
-			def c = LoginRecord.createCriteria()
-			def logins = c.list {
-				eq("owner", user)
-				order("dateCreated")
-				maxResults(20)
-			}
-			render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, ownerID: user.id])
-		}
+
+		render message(code: 'nimble.user.username.valid')
 	}
 
-	def listgroups = {
-		def user = UserBase.get(params.id)
+	def listlogins(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			log.debug("Listing groups user [$user.id]$user.username is a member of")
-			render(template: '/templates/admin/groups_list', model: [groups: user.groups, ownerID: user.id])
+
+		log.debug("Listing login events for user [$user.id]$user.username")
+		def c = LoginRecord.createCriteria()
+		def logins = c.list {
+			eq("owner", user)
+			order("dateCreated")
+			maxResults(20)
 		}
+		render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, ownerID: user.id])
 	}
 
-	def searchgroups = {
-		def q = "%" + params.q + "%"
+	def listgroups(id) {
+		def user = UserBase.get(id)
+		if (!user) {
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
+			response.status = 500
+			return
+		}
+
+		log.debug("Listing groups user [$user.id]$user.username is a member of")
+		render(template: '/templates/admin/groups_list', model: [groups: user.groups, ownerID: user.id])
+	}
+
+	def searchgroups(id, String q) {
+		q = "%" + q + "%"
 		log.debug("Performing search for groups matching $q")
-		def user = UserBase.get(params.id)
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def groups = Group.findAllByNameIlike(q)
-			def nonMembers = []
-			groups.each {
-				if (!it.users.contains(user) && !it.protect) {
-					nonMembers.add(it)    // Eject groups user is already a part of
-					log.debug("Adding group identified as [$it.id]$it.name to search results")
-				}
+
+		def groups = Group.findAllByNameIlike(q)
+		def nonMembers = []
+		groups.each {
+			if (!it.users.contains(user) && !it.protect) {
+				nonMembers.add(it)    // Eject groups user is already a part of
+				log.debug("Adding group identified as [$it.id]$it.name to search results")
 			}
-			log.info("Search for new groups user [$user.id]$user.username can join complete, returning $nonMembers.size records")
-			render(template: '/templates/admin/groups_search', contextPath: pluginContextPath, model: [groups: nonMembers, ownerID: user.id])
 		}
+		log.info("Search for new groups user [$user.id]$user.username can join complete, returning $nonMembers.size records")
+		render(template: '/templates/admin/groups_search', contextPath: pluginContextPath, model: [groups: nonMembers, ownerID: user.id])
 	}
 
-	def grantgroup = {
-		def user = UserBase.get(params.id)
+	def grantgroup(id, groupID) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def group = Group.get(params.groupID)
-			if (!group) {
-				log.warn("Group identified by id '$params.groupID' was not located")
-				render message(code: 'nimble.group.nonexistant', args: [params.groupID])
-				response.status = 500
-			}
-			else {
-				if (group.protect) {
-					log.warn("Can't add user [$user.id]$user.username to group [$group.id]$group.name as group is protected")
-					render message(code: 'nimble.group.protected.no.modification', args: [group.name, user.username])
-					response.status = 500
-				}
-				else {
-					groupService.addMember(user, group)
-					log.info("Added user [$user.id]$user.username to group [$group.id]$group.name")
-					render message(code: 'nimble.group.addmember.success', args: [group.name, user.username])
-				}
-			}
+
+		def group = Group.get(groupID)
+		if (!group) {
+			log.warn("Group identified by id '$groupID' was not located")
+			render message(code: 'nimble.group.nonexistant', args: [groupID])
+			response.status = 500
+			return
 		}
+
+		if (group.protect) {
+			log.warn("Can't add user [$user.id]$user.username to group [$group.id]$group.name as group is protected")
+			render message(code: 'nimble.group.protected.no.modification', args: [group.name, user.username])
+			response.status = 500
+			return
+		}
+
+		groupService.addMember(user, group)
+		log.info("Added user [$user.id]$user.username to group [$group.id]$group.name")
+		render message(code: 'nimble.group.addmember.success', args: [group.name, user.username])
 	}
 
-	def removegroup = {
-		def user = UserBase.get(params.id)
+	def removegroup(id, groupID) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def group = Group.get(params.groupID)
-			if (!group) {
-				log.warn("Group identified by id '$params.groupID' was not located")
-				render message(code: 'nimble.group.nonexistant', args: [params.groupID])
-				response.status = 500
-			}
-			else {
-				if (group.protect) {
-					log.warn("Can't remove user [$user.id]$user.username from group [$group.id]$group.name as group is protected")
-					render message(code: 'nimble.group.protected.no.modification', args: [group.name, user.username])
-					response.status = 500
-				}
-				else {
-					groupService.deleteMember(user, group)
-					log.info("Removed user [$user.id]$user.username from group [$group.id]$group.name")
-					render message(code: 'nimble.group.removemember.success', args: [group.name, user.username])
-				}
-			}
+
+		def group = Group.get(groupID)
+		if (!group) {
+			log.warn("Group identified by id '$groupID' was not located")
+			render message(code: 'nimble.group.nonexistant', args: [groupID])
+			response.status = 500
+			return
 		}
+
+		if (group.protect) {
+			log.warn("Can't remove user [$user.id]$user.username from group [$group.id]$group.name as group is protected")
+			render message(code: 'nimble.group.protected.no.modification', args: [group.name, user.username])
+			response.status = 500
+			return
+		}
+
+		groupService.deleteMember(user, group)
+		log.info("Removed user [$user.id]$user.username from group [$group.id]$group.name")
+		render message(code: 'nimble.group.removemember.success', args: [group.name, user.username])
 	}
 
-	def listpermissions = {
-		def user = UserBase.get(params.id)
+	def listpermissions(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			log.debug("Listing permissions user [$user.id]$user.username is granted")
-			render(template: '/templates/admin/permissions_list', contextPath: pluginContextPath, model: [permissions: user.permissions, parent: user])
-		}
+
+		log.debug("Listing permissions user [$user.id]$user.username is granted")
+		render(template: '/templates/admin/permissions_list', contextPath: pluginContextPath, model: [permissions: user.permissions, parent: user])
 	}
 
-	def createpermission = {
-		def user = UserBase.get(params.id)
+	def createpermission(id, first, second, third, fourth, fifth, sixth) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			LevelPermission permission = new LevelPermission()
-			permission.populate(params.first, params.second, params.third, params.fourth, params.fifth, params.sixth)
-			permission.managed = false
 
-			if (permission.hasErrors()) {
-				log.warn("Creating new permission for user [$user.id]$user.username failed, permission is invalid")
-				render(template: "/templates/errors", contextPath: pluginContextPath, model: [bean: permission])
-				response.status = 500
-			}
-			else {
-				def savedPermission = permissionService.createPermission(permission, user)
-				log.info("Creating new permission for user [$user.id]$user.username succeeded")
-				render message(code: 'nimble.permission.create.success', args: [user.username])
-			}
+		LevelPermission permission = new LevelPermission()
+		permission.populate(first, second, third, fourth, fifth, sixth)
+		permission.managed = false
+
+		if (permission.hasErrors()) {
+			log.warn("Creating new permission for user [$user.id]$user.username failed, permission is invalid")
+			render(template: "/templates/errors", contextPath: pluginContextPath, model: [bean: permission])
+			response.status = 500
+			return
 		}
+
+		def savedPermission = permissionService.createPermission(permission, user)
+		log.info("Creating new permission for user [$user.id]$user.username succeeded")
+		render message(code: 'nimble.permission.create.success', args: [user.username])
 	}
 
-	def removepermission = {
-		def user = UserBase.get(params.id)
+	def removepermission(id, permID) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def permission = Permission.get(params.permID)
-			if (!permission) {
-				log.warn("Permission identified by id '$params.permID' was not located")
-				render message(code: 'nimble.permission.nonexistant', args: [params.permID])
-				response.status = 500
-			}
-			else {
-				permissionService.deletePermission(permission)
-				log.info("Removing permission [$permission.id] from user [$user.id]$user.username succeeded")
-				render message(code: 'nimble.permission.remove.success', args: [user.username])
-			}
+
+		def permission = Permission.get(permID)
+		if (!permission) {
+			log.warn("Permission identified by id '$permID' was not located")
+			render message(code: 'nimble.permission.nonexistant', args: [permID])
+			response.status = 500
+			return
 		}
+
+		permissionService.deletePermission(permission)
+		log.info("Removing permission [$permission.id] from user [$user.id]$user.username succeeded")
+		render message(code: 'nimble.permission.remove.success', args: [user.username])
 	}
 
-	def listroles = {
-		def user = UserBase.get(params.id)
+	def listroles(id) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			log.debug("Listing roles user [$user.id]$user.username is granted")
-			render(template: '/templates/admin/roles_list', contextPath: pluginContextPath, model: [roles: user.roles, ownerID: user.id])
-		}
+
+		log.debug("Listing roles user [$user.id]$user.username is granted")
+		render(template: '/templates/admin/roles_list', contextPath: pluginContextPath, model: [roles: user.roles, ownerID: user.id])
 	}
 
-	def searchroles = {
-		def q = "%" + params.q + "%"
+	def searchroles(id, String q) {
+		q = "%" + q + "%"
 		log.debug("Performing search for roles matching $q")
-		def user = UserBase.get(params.id)
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q, false, [sort:"name"])
-			def respRoles = []
-			roles.each {
-				if (!user.roles.contains(it) && !it.protect) {
-					respRoles.add(it)    // Eject already assigned roles for this user
-					log.debug("Adding role identified as [$it.id]$it.name to search results")
-				}
+
+		def roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q, false, [sort:"name"])
+		def respRoles = []
+		roles.each {
+			if (!user.roles.contains(it) && !it.protect) {
+				respRoles.add(it)    // Eject already assigned roles for this user
+				log.debug("Adding role identified as [$it.id]$it.name to search results")
 			}
-			log.info("Search for new roles user [$user.id]$user.username can be assigned complete, returning $respRoles.size records")
-			render(template: '/templates/admin/roles_search', contextPath: pluginContextPath, model: [roles: respRoles, ownerID: user.id])
 		}
+		log.info("Search for new roles user [$user.id]$user.username can be assigned complete, returning $respRoles.size records")
+		render(template: '/templates/admin/roles_search', contextPath: pluginContextPath, model: [roles: respRoles, ownerID: user.id])
 	}
 
-	def grantrole = {
-		def user = UserBase.get(params.id)
+	def grantrole(id, roleID) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def role = Role.get(params.roleID)
-			if (!role) {
-				log.warn("Role identified by id '$params.roleID' was not located")
-				render message(code: 'nimble.role.nonexistant', args: [params.roleID])
-				response.status = 500
-			}
-			else {
-				if (role.protect) {
-					log.warn("Can't assign user [$user.id]$user.username role [$role.id]$role.name as role is protected")
-					render message(code: 'nimble.role.protected.no.modification', args: [role.name, user.username])
-					response.status = 500
-				}
-				else {
-					roleService.addMember(user, role)
-					log.info("Assigned user [$user.id]$user.username role [$role.id]$role.name")
-					render message(code: 'nimble.role.addmember.success', args: [role.name, user.username])
-				}
-			}
+
+		def role = Role.get(roleID)
+		if (!role) {
+			log.warn("Role identified by id '$roleID' was not located")
+			render message(code: 'nimble.role.nonexistant', args: [roleID])
+			response.status = 500
+			return
 		}
+
+		if (role.protect) {
+			log.warn("Can't assign user [$user.id]$user.username role [$role.id]$role.name as role is protected")
+			render message(code: 'nimble.role.protected.no.modification', args: [role.name, user.username])
+			response.status = 500
+			return
+		}
+
+		roleService.addMember(user, role)
+		log.info("Assigned user [$user.id]$user.username role [$role.id]$role.name")
+		render message(code: 'nimble.role.addmember.success', args: [role.name, user.username])
 	}
 
-	def removerole = {
-		def user = UserBase.get(params.id)
+	def removerole(id, roleID) {
+		def user = UserBase.get(id)
 		if (!user) {
-			log.warn("User identified by id '$params.id' was not located")
-			render message(code: 'nimble.user.nonexistant', args: [params.id])
+			log.warn("User identified by id '$id' was not located")
+			render message(code: 'nimble.user.nonexistant', args: [id])
 			response.status = 500
+			return
 		}
-		else {
-			def role = Role.get(params.roleID)
-			if (!role) {
-				log.warn("Role identified by id '$params.roleID' was not located")
-				render message(code: 'nimble.role.nonexistant', args: [params.roleID])
-				response.status = 500
-			}
-			else {
-				if (role.protect) {
-					log.warn("Can't assign user [$user.id]$user.username role [$role.id]$role.name as role is protected")
-					render message(code: 'nimble.role.protected.no.modification', args: [role.name, user.username])
-					response.status = 500
-				}
-				else {
-					roleService.deleteMember(user, role)
-					log.info("Removed user [$user.id]$user.username from role [$role.id]$role.name")
-					render message(code: 'nimble.role.removemember.success', args: [role.name, user.username])
-				}
-			}
+
+		def role = Role.get(roleID)
+		if (!role) {
+			log.warn("Role identified by id '$roleID' was not located")
+			render message(code: 'nimble.role.nonexistant', args: [roleID])
+			response.status = 500
+			return
 		}
+
+		if (role.protect) {
+			log.warn("Can't assign user [$user.id]$user.username role [$role.id]$role.name as role is protected")
+			render message(code: 'nimble.role.protected.no.modification', args: [role.name, user.username])
+			response.status = 500
+			return
+		}
+
+		roleService.deleteMember(user, role)
+		log.info("Removed user [$user.id]$user.username from role [$role.id]$role.name")
+		render message(code: 'nimble.role.removemember.success', args: [role.name, user.username])
 	}
 
+	private getNimbleConfig() {
+		grailsApplication.config.nimble
+	}
 }
-

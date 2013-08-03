@@ -15,8 +15,6 @@
  *  limitations under the License.
  */
 
-import grails.plugin.nimble.core.*
-
 /**
  * Provides generic, mostly UI related tags to the Nimble application
  *
@@ -37,33 +35,32 @@ class NimbleHeaderTagLib {
 	}
 
 	// Enables growl like message popup in the page
-	def growl = {attrs, body ->
+	def growl = {attrs ->
 		out << render(template: "/templates/header/growl", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	// Imports JQuery Javascript to make the JQuery library available to the current page
-	def jquery = {attrs, body ->
+	def jquery = {attrs ->
 		out << render(template: "/templates/header/jquerysetup", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	// Imports css required to use FAM FAM FAM icons in buttons etc
-	def famfamfam = {attrs, body ->
+	def famfamfam = {attrs ->
 		out << render(template: "/templates/header/famfamfamsetup", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	// Imports default Nimble login UI css
-	def login = {attrs, body ->
+	def login = {attrs ->
 		out << render(template: "/templates/header/loginsetup", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	// Imports layouts and javascript required for the administration layout
-	def admin = {attrs, body ->
+	def admin = {attrs ->
 		out << render(template: "/templates/header/adminsetup", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	// Imports base Nimble UI CSS
-	def basecss = {attrs, body ->
+	def basecss = {attrs ->
 		out << render(template: "/templates/header/basecsssetup", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
-
 }

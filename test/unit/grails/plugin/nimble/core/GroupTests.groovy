@@ -16,50 +16,34 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.Group
-import grails.plugin.nimble.core.Role
-import grails.plugin.nimble.core.UserBase
-import grails.test.*
+import grails.test.GrailsUnitTestCase
+
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 /**
  * @author Bradley Beddoes
  */
 class GroupTests extends GrailsUnitTestCase {
-	String name
-	def description
-	def protect
+	private String name = 'name'
+	private description = 'description'
+	private protect = true
 
-	def user1
-	def user2
+	private user1 = new UserBase()
+	private user2 = new UserBase()
 
-	def role1
-	def role2
+	private role1 = new Role()
+	private role2 = new Role()
 
-	def dateCreated
-	def lastUpdated
+	private dateCreated = new Date()
+	private lastUpdated = new Date()
 
 	protected void setUp() {
 		super.setUp()
-		name = 'name'
-		description = 'description'
-		protect = true
-
-		user1 = new UserBase()
-		user2 = new UserBase()
-
-		role1 = new Role()
-		role2 = new Role()
-
-		dateCreated = new Date()
-		lastUpdated = new Date()
+		ConfigurationHolder.config = [nimble: [tablenames: [group: 'group']]] as ConfigObject
 	}
 
-	protected void tearDown() {
-		super.tearDown()
-	}
-
-	Group createValidGroup() {
-		def group = new Group(name:name, description:description, protect:protect,
+	private Group createValidGroup() {
+		new Group(name:name, description:description, protect:protect,
 		users:[user1, user2], roles:[role1, role2], dateCreated:dateCreated, lastUpdated:lastUpdated)
 	}
 

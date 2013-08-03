@@ -26,9 +26,9 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class Permission implements Serializable {
 
-	static public final String defaultPerm = "grails.plugin.nimble.auth.WildcardPermission"
-	static public final String wildcardPerm = "grails.plugin.nimble.auth.WildcardPermission"
-	static public final String adminPerm = "grails.plugin.nimble.auth.AllPermission"
+	public static final String defaultPerm = "grails.plugin.nimble.auth.WildcardPermission"
+	public static final String wildcardPerm = "grails.plugin.nimble.auth.WildcardPermission"
+	public static final String adminPerm = "grails.plugin.nimble.auth.AllPermission"
 
 	String type
 	String possibleActions = "*"
@@ -50,37 +50,29 @@ class Permission implements Serializable {
 	}
 
 	static constraints = {
-		type(nullable: false, blank: false)
-		possibleActions(nullable: false, blank: false)
-		actions(nullable: false, blank: false)
-		target(nullable: false, blank: false)
+		type(blank: false)
+		possibleActions(blank: false)
+		actions(blank: false)
+		target(blank: false)
 
 		user(nullable:true)
 		role(nullable:true)
 		group(nullable:true)
 	}
 
-	def setOwner (def owner) {
-		if (owner instanceof UserBase)
-			this.user = owner
-
-		if (owner instanceof Role)
-			this.role = owner
-
-		if (owner instanceof Group)
-			this.group = owner
+	void setOwner(owner) {
+		if (owner instanceof UserBase) {
+			user = owner
+		}
+		else if (owner instanceof Role) {
+			role = owner
+		}
+		else if (owner instanceof Group) {
+			group = owner
+		}
 	}
 
 	def getOwner() {
-		if(this.user != null)
-			return user
-
-		if(this.role != null)
-			return role
-
-		if(this.group != null)
-			return group
-
-		return null
+		user ?: role ?: group
 	}
 }

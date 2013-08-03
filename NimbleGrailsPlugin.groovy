@@ -1,13 +1,10 @@
+import grails.plugin.nimble.core.UserBase
+import grails.util.Environment
 
-import grails.util.GrailsUtil
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.authc.credential.Sha256CredentialsMatcher
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.springframework.mail.javamail.JavaMailSenderImpl
-
-import org.apache.shiro.authc.credential.Sha256CredentialsMatcher
-import org.apache.shiro.SecurityUtils
-
-import grails.plugin.nimble.core.UserBase
-
 
 class NimbleGrailsPlugin {
 	def version = "0.5-SNAPSHOT"
@@ -20,7 +17,7 @@ class NimbleGrailsPlugin {
 
 	def documentation = "http://sites.google.com/site/nimbledoc/"
 	def license = "APACHE"
-	def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
+	def issueManagement = [ system: "GITHUB", url: "https://github.com/snimavat/nimble/issues" ]
 	def scm = [system: 'GitHub', url: 'https://github.com/snimavat/nimble']
 
 	def observe = [
@@ -35,7 +32,6 @@ class NimbleGrailsPlugin {
 		'grails-app/conf/NimbleSecurityFilters.groovy',
 		'grails-app/conf/NimbleBootStrap.groovy',
 	]
-
 
 	def doWithSpring = {
 		loadNimbleConfig(application)
@@ -57,7 +53,6 @@ class NimbleGrailsPlugin {
 			if(mailConfig.props instanceof Map && mailConfig.props)
 				javaMailProperties = mailConfig.props
 		}
-
 	}
 
 	def doWithDynamicMethods = { ctx ->
@@ -68,19 +63,17 @@ class NimbleGrailsPlugin {
 		}
 
 		// Supply functionality to controllers
-		application.controllerClasses?.each { controller ->
+		application.controllerClasses.each { controller ->
 			log.debug("Injecting Nimble methods to Controller ${controller}")
 			injectAuthn(controller, application)
 		}
 
 		// Supply functionality to services
-		application.serviceClasses?.each { service ->
+		application.serviceClasses.each { service ->
 			log.debug("Injecting Nimble methods to Service ${service}")
 			injectAuthn(service, application)
 		}
-
 	}
-
 
 	def onChange = { event ->
 		if (!(event.source instanceof Class)) {
@@ -90,17 +83,12 @@ class NimbleGrailsPlugin {
 		Class clazz = event.source
 		log.debug "onChange : Re-adding dynamic methods to $clazz.name"
 		injectAuthn(clazz, event.application)
-
 	}
 
-	def onConfigChange = { event ->
-	}
+	private void injectAuthn(clazz, application) {
+		clazz.metaClass.getAuthenticatedSubject = { -> SecurityUtils.getSubject() }
 
-	private void injectAuthn(def clazz, def application) {
-		clazz.metaClass.getAuthenticatedSubject = {
-			def subject = SecurityUtils.getSubject()
-		}
-		clazz.metaClass.getAuthenticatedUser = {
+		clazz.metaClass.getAuthenticatedUser = { ->
 			def principal = SecurityUtils.getSubject()?.getPrincipal()
 			def authUser
 
@@ -121,7 +109,6 @@ class NimbleGrailsPlugin {
 				log.debug("No currently authenticated user found")
 			}
 
-
 			return authUser
 		}
 	}
@@ -131,16 +118,15 @@ class NimbleGrailsPlugin {
 		GroovyClassLoader classLoader = new GroovyClassLoader(getClass().classLoader)
 
 		// Merging default Nimble config into main application config
-		config.merge(new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass('DefaultNimbleConfig')))
+		config.merge(new ConfigSlurper(Environment.current.name).parse(classLoader.loadClass('DefaultNimbleConfig')))
 
 		// Merging user-defined Nimble config into main application config if provided
 		try {
-			config.merge(new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass('NimbleConfig')))
+			config.merge(new ConfigSlurper(Environment.current.name).parse(classLoader.loadClass('NimbleConfig')))
 		} catch (Exception ignored) {
 			// ignore, just use the defaults
 		}
 
 		return config
 	}
-
 }
