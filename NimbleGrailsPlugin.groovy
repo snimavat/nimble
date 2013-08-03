@@ -11,7 +11,7 @@ import grails.plugin.nimble.core.UserBase
 
 class NimbleGrailsPlugin {
 	def version = "0.5-SNAPSHOT"
-	def grailsVersion = "2.0 > *"
+	def grailsVersion = "2.0.1 > *"
 
 	def title = "Nimble"
 	def author = "Sudhir Nimavat"
@@ -23,7 +23,7 @@ class NimbleGrailsPlugin {
 	def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
 	def scm = [system: 'GitHub', url: 'https://github.com/snimavat/nimble']
 
-	def dependsOn = [shiro: "1.1.2 > *", mail: "1.0 > *", "twitterBootstrap":"2.3.0 > *", resources:"1.1.6 > *", fields:'1.2 > *']
+	def dependsOn = [shiro: "1.1.4 > *", mail: "1.0 > *", "twitterBootstrap":"2.3.0 > *", resources:"1.1.6 > *", fields:'1.2 > *', jquery:'1.7.1 > *']
 
 
 	def observe = [
