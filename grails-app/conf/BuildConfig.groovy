@@ -20,9 +20,16 @@ grails.project.dependency.resolution = {
 	}
 
 	plugins {
-		runtime(":twitter-bootstrap:2.3.2", ":resources:1.2", ":fields:1.3") { export = false }
-		compile(":shiro:1.1.3", ":mail:1.0.1") { export = false }
-		build(":release:2.2.1", ":rest-client-builder:1.0.3") { export = false }
+		runtime ":twitter-bootstrap:2.3.2"
+		runtime ":resources:1.2"
+		runtime ":fields:1.3"
+		runtime ":jquery:1.10.2"
 
+		compile ":shiro:1.1.4"
+		compile ":mail:1.0.1"
+
+		build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+			export = false
+		}
 	}
 }

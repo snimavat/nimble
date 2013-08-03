@@ -23,9 +23,6 @@ class NimbleGrailsPlugin {
 	def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
 	def scm = [system: 'GitHub', url: 'https://github.com/snimavat/nimble']
 
-	def dependsOn = [shiro: "1.1.4 > *", mail: "1.0 > *", "twitterBootstrap":"2.3.0 > *", resources:"1.1.6 > *", fields:'1.2 > *', jquery:'1.7.1 > *']
-
-
 	def observe = [
 		'controllers',
 		'services',
