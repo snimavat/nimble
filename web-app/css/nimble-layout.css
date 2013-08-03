@@ -5,7 +5,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #right > h1, #right > h2, #right > h3, #right > h4, #right > h5, #right > h6 {
-    margin: 18px 15px 15px 0;    
+    margin: 0px 15px 15px 0;    
 }
 
 .navbar {
@@ -24,6 +24,12 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 45px;	
 }
 
+.navbar .container-fluid {
+	margin : 0;
+	padding-left: 26px;
+}
+
+
 #main-container {
 	position: relative;
 	margin: 0;
@@ -35,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 #main-content {
 	position: relative;
 	margin: 0;
-	margin-left: 200px;
+	margin-left: 250px;
 	padding: 0;
 	border: none;
     border-bottom: 1px solid;
@@ -46,6 +52,12 @@ h1, h2, h3, h4, h5, h6 {
 	min-width: 400px;
 	
 }
+
+#main-content > div.container-fluid {
+	margin : 0;
+	padding-left: 10px;
+}
+
 
 #breadcrumbs {
 	position: relative;
@@ -62,8 +74,8 @@ h1, h2, h3, h4, h5, h6 {
 	position: absolute;
 	margin: 0;
 	padding: 0;	
-    border-top: 1px solid;                
-    width: 200px;   	
+    border-top: 0;                   
+    width: 240px;   	
 }
 
 #sidebar .nav-list {
@@ -75,30 +87,23 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	margin-bottom: -1px;
 	padding: 0;   
-    border-top: 1px;
-    border-bottom: 1px solid;       
 }
 
 
 #sidebar .nav-list li a,
  #sidebar .nav-list li a:hover {
-	margin: 0px 1px;
-  	padding: .8em 2em;
+	margin: 0;
+  	padding: 11px 26px;
   	border: 0;  	
 }
 
 #sidebar .nav-list li.active {
-  border-right: 0px;  
-  border-top: 1px solid;
-  border-bottom: 1px solid;   	
+    
 }
 
 #sidebar .nav-list li.active a {
   border: 0;
 }
-
-#sidebar .nav-list li:first-child {border-top: none;}
-#sidebar .nav-list li:last-child {border-bottom: none;}
 
 dl {
     margin-bottom:50px;

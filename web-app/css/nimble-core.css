@@ -1,23 +1,34 @@
 html,body{height:100%;}
 
 body {
-    background: none repeat scroll 0 0 #FFF;
+    background: none repeat scroll 0 0 #f9f9f9;
 }
  
 
 .navbar .navbar-inner {
-    background: none repeat scroll 0 0 #4A8BC2;   
+    background: none repeat scroll 0 0 #6F8FAF;   
     border-radius: 0 0 0 0;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border: 0;
+    border-bottom: 1px solid #507090;
+    
 
 }
 
 .navbar .brand {
-    color: #FFFFFF;
-    font-size: 24px;
+    color: #f9f9f9;
+    font-size: 26px;
     text-shadow: none;
+    
+	color:#4A6784;
+	text-shadow: 1px 1px 0px #96AEC6;
+	font-weight: 700;
+    
 }
 
+
+#main-container {
+	box-shadow: 0 -1px 0px #47637F;
+}
 
 #breadcrumbs {
 	background-color: #F5F5F5;
@@ -27,37 +38,39 @@ body {
     display:none;
 }
 
-#main-content {
-    background: none repeat scroll 0 0 #FAFAFA;
-    border-top: 1px solid #619ACA;
-    border-bottom: 1px solid #CFCFD6;    
-    border-left: 1px solid #CFCFD6;         
+#main-content {    
+    border-top: 0;
+    border-bottom: 0;    
+    border-left: 0;            
 }
 
+
 #sidebar {
-    background: none repeat scroll 0 0 #4A8BC2;
-    border-top: 1px solid #619ACA;    
+    background: none repeat scroll 0 0 #dddddd;
+    border:0;    
+    border-bottom: 1px solid #d5d5d5;
+    height: 100%;
+    box-shadow: 0 0px 1px #3D566F;
+    -webkit-box-shadow: 0px 0px 1px #3D566F;    
+    
 }
 
 
 #sidebar .nav-list li {        
-    border-top: 1px solid #619ACA;
-    border-bottom: 1px solid #346D9D;       
-    box-shadow: 0 1px 0 0 #619ACA inset, 0 -1px 0 0 #346D9D inset;
+     border-bottom: 1px solid #cccccc;
+     box-shadow: 0 1px 0px #eeeeee;             
 }
 
 #sidebar .nav-list li a,
 #sidebar .nav-list li a:hover {
 	background: none;	
-	color: #FFF;  
+	color: #6e6e6e;  
+	text-shadow: 1px 1px 0px #fff;
+	font-weight: 600;
 }
 
-#sidebar .nav-list li.active {
-  background: #346D9D;
-  border-right: 0px;  
-  border-top: 1px solid #3776A9;
-  border-bottom: 1px solid #326A98;   
-  
+#sidebar .nav-list li.active {  
+	
 }
 
 #sidebar .nav-list li.active a {
@@ -65,7 +78,9 @@ body {
 }
 
 #sidebar .nav-list li:hover {
-  background: #346D9D;
+  background: #e8e8e8;
+  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;         
 }
 
 
