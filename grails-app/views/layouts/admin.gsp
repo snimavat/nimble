@@ -17,19 +17,31 @@
       <r:layoutResources />
    </head>
    <body>
-      <div class="navbar">
+      <g:set var="currentUser" value="${UserBase.get(SecurityUtils.subject.principal)}" />
+      <div class="navbar" id="top-header">
          <div class="navbar-inner">
             <div class="container-fluid">
-               <a class="brand" href="#">Nimble</a>
-               <!-- 
-                  <ul class="nav ace-nav pull-right">
-                    <li class="grey">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <span class="badge badge-grey">4</span>
-                        </a>                    
-                    </li>
-                  </ul>
-                   -->
+               <a class="brand" href="#">Nimble</a>               
+               <ul class="nav pull-right">
+                  <li class="profile dropdown">
+                     <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown">
+                     ${currentUser.username}
+                     <b class="caret icon-white"></b>                           
+                     </a>        
+                     <ul class="dropdown-menu">
+                        <li>
+                           <g:link controller="user" action="show" id="${currentUser.id}">
+                              <g:message code="nimble.link.myaccount" />
+                           </g:link>
+                        </li>
+                        <li>
+                           <g:link controller="auth" action="signout">
+                              <g:message code="nimble.link.logout.basic" />
+                           </g:link>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
             </div>
          </div>
       </div>
@@ -44,7 +56,7 @@
             <div id="breadcrumbs" class="breadcrumbs">  </div>
             <div class="container-fluid">
                <div class="row-fluid">
-                  <div id="right" class="span12">                     
+                  <div id="right" class="span12">
                      <g:layoutBody />
                   </div>
                </div>

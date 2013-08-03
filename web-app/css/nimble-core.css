@@ -15,16 +15,33 @@ body {
 }
 
 .navbar .brand {
-    color: #f9f9f9;
-    font-size: 26px;
-    text-shadow: none;
-    
+    font-size: 26px;    
 	color:#4A6784;
 	text-shadow: 1px 1px 0px #96AEC6;
 	font-weight: 700;
     
 }
 
+#top-header .nav > li {
+	background: none repeat scroll 0 0 #8DA7C1;
+	padding-bottom: 4px;
+}
+
+#top-header .nav .profile > a, .navbar .nav .profile > a:hover {
+	color:#fff;	
+}
+
+#top-header .nav li.dropdown.open > .dropdown-toggle, 
+#top-header .nav li.dropdown.active > .dropdown-toggle, 
+#top-header .nav li.dropdown.open.active > .dropdown-toggle {
+    background: transparent;
+    color: #fff;
+}
+ .dropdown-menu {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+ }
 
 #main-container {
 	box-shadow: 0 -1px 0px #47637F;

@@ -67,7 +67,7 @@ class NimbleGrailsPlugin {
 		// Supply functionality to filters
 		application.filtersClasses.each { filter ->
 			log.debug("Injecting Nimble methods to Filter ${filter}")
-			injectAuthn(filter, application)
+			injectAuthn(filter.clazz, application)
 		}
 
 		// Supply functionality to controllers
