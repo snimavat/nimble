@@ -13,18 +13,13 @@
    <div class="widget widget-heading-simple widget-body-gray">
       <div class="widget-body">
          <div class="row-fluid">
-            <div class="span8">
+            <div class="span12">
                <g:link controller="group" action="create" class="btn btn-primary btn-small">
                   <g:message code="nimble.link.creategroup" />
                </g:link>
-            </div>
-            <div class="span4">
-               <form class="form-search pull-right">
-                  <input type="text" class="input-medium search-query">
-                  <button type="submit" class="btn">Search</button>
-               </form>
-            </div>
+            </div>         
          </div>
+          
          <table class="table table-striped table-bordered table-white">
             <thead>
                <tr>
