@@ -16,58 +16,38 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.Group
-import grails.plugin.nimble.core.Role
-import grails.plugin.nimble.core.UserBase
-import grails.test.*
+import grails.test.GrailsUnitTestCase
+
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 /**
  * @author Bradley Beddoes
  */
 class RoleTests extends GrailsUnitTestCase {
 
-	def description
-	String name
-	def protect
+	private description = 'description'
+	private String name = 'name'
+	private protect = true
 
-	def user1
-	def user2
-	def user3
+	private user1 = new UserBase()
+	private user2 = new UserBase()
+	private user3 = new UserBase()
 
-	def group1
-	def group2
+	private group1 = new Group()
+	private group2 = new Group()
 
-	def dateCreated
-	def lastUpdated
+	private dateCreated = new Date()
+	private lastUpdated = new Date()
 
 	protected void setUp() {
 		super.setUp()
-
-		description = 'description'
-		name = 'name'
-		protect = true
-
-		user1 = new UserBase()
-		user2 = new UserBase()
-		user3 = new UserBase()
-
-		group1 = new Group()
-		group2 = new Group()
-
-		dateCreated = new Date()
-		lastUpdated = new Date()
+		ConfigurationHolder.config = [nimble: [tablenames: [role: 'role']]] as ConfigObject
 	}
 
-	protected void tearDown() {
-		super.tearDown()
-	}
-
-	Role createValidRole() {
-		def role = new Role(description:description, name:name, protect:protect,
+	private Role createValidRole() {
+		new Role(description:description, name:name, protect:protect,
 		users:[user1, user2, user3], groups:[group1, group2],
 		dateCreated:dateCreated, lastUpdated:lastUpdated)
-
-		return role
 	}
 
 	void testRoleCreation() {

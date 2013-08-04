@@ -23,7 +23,7 @@ import org.apache.shiro.authc.AuthenticationException
  *
  * @author Bradley Beddoes
  */
-public class AccountCreatedException extends AuthenticationException {
+class AccountCreatedException extends AuthenticationException {
 
 	String newUserId
 }

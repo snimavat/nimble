@@ -16,9 +16,14 @@
  */
 package grails.plugin.nimble.core
 
+import org.apache.shiro.authc.AccountException
+import org.apache.shiro.authc.DisabledAccountException
+import org.apache.shiro.authc.IncorrectCredentialsException
+import org.apache.shiro.authc.SimpleAccount
+import org.apache.shiro.authc.UnknownAccountException
+import org.apache.shiro.authc.UsernamePasswordToken
 import org.apache.shiro.authz.permission.AllPermission
 import org.apache.shiro.authz.permission.WildcardPermission
-import org.apache.shiro.authc.*
 
 /**
  * Integrates with Shiro to establish a session for users accessing the system based
@@ -27,7 +32,7 @@ import org.apache.shiro.authc.*
  * @author Bradley Beddoes
  */
 class LocalizedRealm {
-	static authTokenClass = org.apache.shiro.authc.UsernamePasswordToken
+	static authTokenClass = UsernamePasswordToken
 
 	def credentialMatcher
 	def sessionFactory
@@ -69,13 +74,13 @@ class LocalizedRealm {
 		return account
 	}
 
-	def hasRole(principal, roleName) {
+	boolean hasRole(principal, roleName) {
 		def session
-		def result = false
+		boolean result = false
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase.class, new Long(principal))
+			def user = session.get(UserBase, Long.valueOf(principal))
 
 			if (user) {
 				log.debug("Determining if user [$user.id]:$user.username is assigned role $roleName")
@@ -117,14 +122,14 @@ class LocalizedRealm {
 		}
 	}
 
-	def hasAllRoles(principal, roles) {
+	boolean hasAllRoles(principal, roles) {
 
 		def session
-		def result = false
+		boolean result = false
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase.class, new Long(principal))
+			def user = session.get(UserBase, Long.valueOf(principal))
 
 			log.debug("Determining if user [$user.id]:$user.username is assigned multiple roles")
 
@@ -171,10 +176,10 @@ class LocalizedRealm {
 		}
 	}
 
-	def isPermitted(principal, requiredPermission) {
+	boolean isPermitted(principal, requiredPermission) {
 
 		def session
-		def permitted = false
+		boolean permitted = false
 
 		/**
 		 * After extensive bench marking of the reflection approach
@@ -192,7 +197,7 @@ class LocalizedRealm {
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase.class, new Long(principal))
+			def user = session.get(UserBase, Long.valueOf(principal))
 
 			log.debug("Determining if permissions assigned to user [$user.id]:$user.username contain a permission that implies $requiredPermission")
 			// Try all directly assigned permissions
@@ -258,7 +263,7 @@ class LocalizedRealm {
 	protected boolean validatePermission(permission, requiredPermission) {
 		boolean permitted = false
 
-		if (permission.type.equals(WildcardPermission.class.name) || permission.type.equals(grails.plugin.nimble.auth.WildcardPermission.class.name)) {
+		if (permission.type.equals(WildcardPermission.name) || permission.type.equals(grails.plugin.nimble.auth.WildcardPermission.name)) {
 			def perm = new WildcardPermission(permission.target, false)
 
 			if (perm.implies(requiredPermission)) {
@@ -269,7 +274,7 @@ class LocalizedRealm {
 				log.debug("Permission $permission does not imply $requiredPermission")
 			}
 		}
-		else if (permission.type.equals(AllPermission.class.name) || permission.type.equals(grails.plugin.nimble.auth.AllPermission.class.name)) {
+		else if (permission.type.equals(AllPermission.name) || permission.type.equals(grails.plugin.nimble.auth.AllPermission.name)) {
 			def perm = new AllPermission()
 
 			if (perm.implies(requiredPermission)) {
@@ -280,5 +285,4 @@ class LocalizedRealm {
 
 		return permitted
 	}
-
 }

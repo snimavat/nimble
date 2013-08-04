@@ -26,7 +26,7 @@ class NimbleInlineJSTagLib {
 	static namespace = "njs"
 
 	// Enables growl message popup when the Grails application stores a message in flash scope
-	def flashgrowl = {attrs, body ->
+	def flashgrowl = {attrs ->
 		out << render(template: "/templates/inlinejs/flashgrowl", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 

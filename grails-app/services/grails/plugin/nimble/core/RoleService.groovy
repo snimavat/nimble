@@ -16,15 +16,12 @@
  */
 package grails.plugin.nimble.core
 
-
 /**
  * Provides methods for interacting with Nimble roles.
  *
  * @author Bradley Beddoes
  */
 class RoleService {
-
-	boolean transactional = true
 
 	/**
 	 * Creates a new role.
@@ -35,11 +32,8 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def createRole(String name, String description, boolean protect) {
-		def role = new Role()
-		role.name = name
-		role.description = description
-		role.protect = protect
+	Role createRole(String name, String description, boolean protect) {
+		def role = new Role(name: name, description: description, protect: protect)
 
 		if(!role.validate()) {
 			log.debug("Supplied values for new role are invalid")
@@ -69,7 +63,7 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def deleteRole(Role role) {
+	void deleteRole(Role role) {
 
 		// Remove all users from this role
 		def users = []
@@ -115,7 +109,7 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def updateRole(Role role) {
+	Role updateRole(Role role) {
 
 		def updatedRole = role.save()
 		if (updatedRole) {
@@ -140,7 +134,7 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def addMember(UserBase user, Role role) {
+	void addMember(UserBase user, Role role) {
 		role.addToUsers(user)
 		user.addToRoles(role)
 
@@ -167,16 +161,16 @@ class RoleService {
 
 	/**
 	 * Removes a role from a user.
-	 * 
+	 *
 	 * @pre Passed role and user object must have been validated to ensure
 	 * that hibernate does not auto persist the objects to the repository prior to service invocation
 	 *
 	 * @param user The user whole the referenced role should be removed from
 	 * @param role The role to be assigned
-	 * 
+	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def deleteMember(UserBase user, Role role) {
+	void deleteMember(UserBase user, Role role) {
 		role.removeFromUsers(user)
 		user.removeFromRoles(role)
 
@@ -211,7 +205,7 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def addGroupMember(Group group, Role role) {
+	void addGroupMember(Group group, Role role) {
 		role.addToGroups(group)
 		group.addToRoles(role)
 
@@ -236,7 +230,7 @@ class RoleService {
 
 	/**
 	 * Removes a role from a group.
-	 * 
+	 *
 	 * @pre Passed role and user object must have been validated to ensure
 	 * that hibernate does not auto persist the objects to the repository prior to service invocation
 	 *
@@ -245,7 +239,7 @@ class RoleService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def deleteGroupMember(Group group, Role role) {
+	void deleteGroupMember(Group group, Role role) {
 		role.removeFromGroups(group)
 		group.removeFromRoles(role)
 

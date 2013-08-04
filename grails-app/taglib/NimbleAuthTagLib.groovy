@@ -18,6 +18,7 @@
 import grails.plugin.nimble.auth.WildcardPermission
 import grails.plugin.nimble.core.AdminsService
 import grails.plugin.nimble.core.UserBase
+import groovy.xml.MarkupBuilder
 
 import org.apache.shiro.SecurityUtils
 
@@ -34,13 +35,9 @@ class NimbleAuthTagLib {
 	 * Provides markup that renders the username of the logged in user
 	 */
 	def principal = {
-		Long id = SecurityUtils.getSubject()?.getPrincipal()
-
-		if (id) {
-			def user = UserBase.get(id)
-
-			if (user)
-				out << user.username
+		def user = getUser()
+		if (user) {
+			out << user.username
 		}
 	}
 
@@ -48,13 +45,9 @@ class NimbleAuthTagLib {
 	 * Provides markup the renders the name of the logged in user
 	 */
 	def principalName = {attrs, body ->
-		Long id = SecurityUtils.getSubject()?.getPrincipal()
-
-		if (id) {
-			def user = UserBase.get(id)
-
-			if (user?.profile?.fullName)
-				out << user.profile.fullName
+		def user = getUser()
+		if (user?.profile?.fullName) {
+			out << user.profile.fullName
 		}
 	}
 
@@ -62,16 +55,9 @@ class NimbleAuthTagLib {
 	 * Provides markup that renders a link to the administrative view of the logged in principal
 	 */
 	def principalLink = {attrs, body ->
-		Long id = SecurityUtils.getSubject()?.getPrincipal()
-
-		if (id) {
-			def user = UserBase.get(id)
-
-			if (user) {
-				def mkp = new groovy.xml.MarkupBuilder(out)
-				mkp.a('href': createLink(controller: 'user', action: 'show', id: id), 'class': 'icon icon_user', body()) {
-				}
-			}
+		def user = getUser()
+		if (user) {
+			new MarkupBuilder(out).a('href': createLink(controller: 'user', action: 'show', id: id), 'class': 'icon icon_user', body()) {}
 		}
 	}
 
@@ -302,5 +288,10 @@ class NimbleAuthTagLib {
 	private boolean checkPermission(String target) {
 		WildcardPermission permission = new WildcardPermission(target, false)
 		return SecurityUtils.subject.isPermitted(permission)
+	}
+
+	private UserBase getUser() {
+		Long id = SecurityUtils.getSubject()?.principal
+		id ? UserBase.get(id) : null
 	}
 }

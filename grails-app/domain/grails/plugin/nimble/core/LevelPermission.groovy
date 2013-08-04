@@ -17,6 +17,7 @@
 package grails.plugin.nimble.core
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 /**
  * Represents a WildcardPermission in the data repository.
  * Each level of a wildcard permission (upto 6) is able to be represented by
@@ -26,8 +27,8 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  */
 class LevelPermission extends Permission {
 
-	private final String tokenSep = ","
-	private final String levelSep = ":"
+	private static final String tokenSep = ","
+	private static final String levelSep = ":"
 
 	static hasMany = [
 		first: String,
@@ -44,7 +45,7 @@ class LevelPermission extends Permission {
 	}
 
 	static constraints = {
-		first(nullable: false, minSize: 1)
+		first(minSize: 1)
 		second(nullable: true)
 		third(nullable: true)
 		fourth(nullable: true)
@@ -52,62 +53,25 @@ class LevelPermission extends Permission {
 		sixth(nullable: true)
 	}
 
-	def LevelPermission() {
+	LevelPermission() {
 		type = Permission.defaultPerm
 	}
 
-	def buildTarget() {
-		def target = ""
+	void buildTarget() {
+		StringBuilder target = new StringBuilder()
 
-		first?.eachWithIndex {token, i ->
-			target = target + token
-			if (i != (first.size() - 1))
-				target = target + tokenSep   //Add level token seperator
-		}
-
-		if (second && second.size() > 0) {
-			target = target + levelSep
-
-			second.eachWithIndex {token, i ->
-				target = target + token
-				if (i != (second.size() - 1))
-					target = target + tokenSep   //Add level token seperator
-			}
-
-			if (third && third.size() > 0) {
-				target = target + levelSep
-
-				third.eachWithIndex {token, i ->
-					target = target + token
-					if (i != (third.size() - 1))
-						target = target + tokenSep   //Add level token seperator
-				}
-
-				if (fourth && fourth.size() > 0) {
-					target = target + levelSep
-
-					fourth.eachWithIndex {token, i ->
-						target = target + token
-						if (i != (fourth.size() - 1))
-							target = target + tokenSep   //Add level token seperator
-					}
-
-					if (fifth && fifth.size() > 0) {
-						target = target + levelSep
-
-						fifth.eachWithIndex {token, i ->
-							target = target + token
-							if (i != (fifth.size() - 1))
-								target = target + tokenSep   //Add level token seperator
-						}
-
-						if (sixth && sixth.size() > 0) {
-							target = target + levelSep
-
-							sixth.eachWithIndex {token, i ->
-								target = target + token
-								if (i != (sixth.size() - 1))
-									target = target + tokenSep   //Add level token seperator
+		if (first) {
+			addTokens first, target, false
+			if (second) {
+				addTokens second, target
+				if (third) {
+					addTokens third, target
+					if (fourth) {
+						addTokens fourth, target
+						if (fifth) {
+							addTokens fifth, target
+							if (sixth) {
+								addTokens sixth, target
 							}
 						}
 					}
@@ -116,8 +80,21 @@ class LevelPermission extends Permission {
 		}
 
 		// Sanitize ordering so things are easy for human consumption more then anything
-		target = target.split(':').collect{ it.split(',').sort().join(',') }.join(':')
-		this.target = target
+		this.target = target.toString().split(':').collect{ it.split(',').sort().join(',') }.join(':')
+	}
+
+	private void addTokens(o, StringBuilder target, boolean addLevelSep = true) {
+		if (addLevelSep) {
+			target.append levelSep
+		}
+
+		int last = o.size() - 1
+		o.eachWithIndex { token, i ->
+			target.append token
+			if (i != last) {
+				target.append tokenSep   //Add level token seperator
+			}
+		}
 	}
 
 	/**
@@ -133,53 +110,48 @@ class LevelPermission extends Permission {
 	 *
 	 * @return void - Will populate errors if problems found in any sector, does not persist object
 	 */
-	public populate(first, second, third, fourth, fifth, sixth) {
+	void populate(first, second, third, fourth, fifth, sixth) {
 
-		if (first == null || first == '' || first.contains(this.levelSep)) {
-			this.errors.rejectValue('target', 'nimble.levelpermission.invalid.first.sector')
+		if (containsLevelSep(first, 'first')) {
 			return
 		}
-		this.first = first.split(this.tokenSep) as List
+
+		this.first = splitByTokenSep(first)
 
 		if (second) {
-			if (second.contains(this.levelSep)) {
-				this.errors.rejectValue('target', 'nimble.levelpermission.invalid.second.sector')
+			if (containsLevelSep(second, 'second')) {
 				return
 			}
 
-			this.second = second.split(this.tokenSep) as List
+			this.second = splitByTokenSep(second)
 
 			if (third) {
-				if (third.contains(this.levelSep)) {
-					this.errors.rejectValue('target', 'nimble.levelpermission.invalid.third.sector')
+				if (containsLevelSep(third, 'third')) {
 					return
 				}
 
-				this.third = third.split(this.tokenSep) as List
+				this.third = splitByTokenSep(third)
 
 				if (fourth) {
-					if (fourth.contains(this.levelSep)) {
-						this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fourth.sector')
+					if (containsLevelSep(fourth, 'fourth')) {
 						return
 					}
 
-					this.fourth = fourth.split(this.tokenSep) as List
+					this.fourth = splitByTokenSep(fourth)
 
 					if (fifth) {
-						if (fifth.contains(this.levelSep)) {
-							this.errors.rejectValue('target', 'nimble.levelpermission.invalid.fifth.sector')
+						if (containsLevelSep(fifth, 'fifth')) {
 							return
 						}
 
-						this.fifth = fifth.split(this.tokenSep) as List
+						this.fifth = splitByTokenSep(fifth)
 
 						if (sixth) {
-							if (sixth.contains(this.levelSep)) {
-								this.errors.rejectValue('target', 'nimble.levelpermission.invalid.sixth.sector')
+							if (containsLevelSep(sixth, 'sixth')) {
 								return
 							}
 
-							this.sixth = sixth.split(this.tokenSep) as List
+							this.sixth = splitByTokenSep(sixth)
 						}
 					}
 				}
@@ -187,5 +159,16 @@ class LevelPermission extends Permission {
 		}
 
 		buildTarget()
+	}
+
+	private boolean containsLevelSep(o, String name) {
+		if (!o || o.contains(levelSep)) {
+			errors.rejectValue('target', "nimble.levelpermission.invalid.${name}.sector")
+			return true
+		}
+	}
+
+	private List splitByTokenSep(o) {
+		o.split tokenSep
 	}
 }

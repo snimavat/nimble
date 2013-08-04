@@ -16,35 +16,20 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.Url
-import grails.test.*
+import grails.test.GrailsUnitTestCase
 
 /**
  * @author Bradley Beddoes
  */
 class UrlTests extends GrailsUnitTestCase {
 
-	String name
-	def description
-	def location
-	def altText
+	private String name = 'name'
+	private description = 'description'
+	private location = 'http://unit.test.com'
+	private altText = 'altText'
 
-	protected void setUp() {
-		super.setUp()
-
-		name = 'name'
-		description = 'description'
-		location = 'http://unit.test.com'
-		altText = 'altText'
-	}
-
-	protected void tearDown() {
-		super.tearDown()
-	}
-
-	Url createValidUrl() {
-		def url = new Url(name:name, description:description, location:location, altText:altText)
-		return url
+	private Url createValidUrl() {
+		new Url(name:name, description:description, location:location, altText:altText)
 	}
 
 	void testUrlCreation() {

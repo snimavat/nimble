@@ -16,8 +16,6 @@
  */
 package grails.plugin.nimble.core
 
-import org.apache.shiro.SecurityUtils
-
 /**
  * Various Nimble specific pieces of logic, shouldn't need to be called by any
  * host application.
@@ -28,21 +26,18 @@ class NimbleService {
 
 	def grailsApplication
 
-	boolean transactional = true
-
 	/**
 	 * Integrates with extended Nimble bootstrap process, sets up basic Nimble environment
 	 * once all domain objects etc ave dynamic methods available to them.
 	 */
-	public void init() {
+	void init() {
 
 		// Perform all base Nimble setup
 		def userRole = Role.findByName(UserService.USER_ROLE)
 		if (!userRole) {
-			userRole = new Role()
-			userRole.description = 'Issued to all users'
-			userRole.name = UserService.USER_ROLE
-			userRole.protect = true
+			userRole = new Role(description: 'Issued to all users',
+			                    name: UserService.USER_ROLE,
+			                    protect: true)
 			userRole.save()
 
 			if (userRole.hasErrors()) {
@@ -53,10 +48,9 @@ class NimbleService {
 
 		def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
 		if (!adminRole) {
-			adminRole = new Role()
-			adminRole.description = 'Assigned to users who are considered to be system wide administrators'
-			adminRole.name = AdminsService.ADMIN_ROLE
-			adminRole.protect = true
+			adminRole = new Role(description: 'Assigned to users who are considered to be system wide administrators',
+			                     name: AdminsService.ADMIN_ROLE,
+			                     protect: true)
 			adminRole.save()
 
 			if (adminRole.hasErrors()) {
@@ -66,27 +60,11 @@ class NimbleService {
 		}
 
 		// Execute all service init that relies on base Nimble environment
-		def services = grailsApplication.getArtefacts("Service")
-		for (service in services) {
-			if(service.clazz.methods.find{it.name == 'nimbleInit'} != null) {
-				def serviceBean = grailsApplication.mainContext.getBean(service.propertyName)
-				serviceBean.nimbleInit()
+		def ctx = grailsApplication.mainContext
+		for (service in grailsApplication.serviceClasses) {
+			if(service.clazz.methods.find{it.name == 'nimbleInit'}) {
+				ctx.getBean(service.propertyName).nimbleInit()
 			}
 		}
-
-		/**
-		 * This is some terribly hacky shit to fix a major problem once Nimble
-		 * was upgraded to use 1.1.1 (possibly groovy not grails specific)
-		 *
-		 * TODO: remove this ugly ugly piece of crud when 1.1.2 or 1.2 comes out
-		 * BUG: http://jira.codehaus.org/browse/GRAILS-4580
-		 */
-		/*
-		 * we no loger need this now
-		 def domains = grailsApplication.getArtefacts("Domain")
-		 for (domain in domains) {
-		 domain.clazz.count()
-		 }
-		 */
 	}
 }

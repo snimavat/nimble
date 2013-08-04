@@ -37,9 +37,9 @@ class LoginRecord {
 		table ConfigurationHolder.config.nimble.tablenames.loginrecord
 	}
 	static constraints = {
-		remoteAddr(nullable: false, blank: false)
-		remoteHost(nullable: false, blank: false)
-		userAgent(nullable: false, blank: false)
+		remoteAddr(blank: false)
+		remoteHost(blank: false)
+		userAgent(blank: false)
 
 		dateCreated(nullable: true) // must be true to enable grails
 		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation

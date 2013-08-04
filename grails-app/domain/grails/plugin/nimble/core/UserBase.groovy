@@ -76,19 +76,16 @@ class UserBase {
 		actionHash(nullable: true, blank: false)
 		realm(nullable: true, blank: false)
 
-		profile(nullable:false)
+		profile()
 
 		expiration(nullable: true)
 
 		dateCreated(nullable: true) // must be true to enable grails
 		lastUpdated(nullable: true) // auto-inject to be useful which occurs post validation
-
-		permissions(nullable:true)
 	}
 
 	// Transients
 	static transients = ['pass', 'passConfirm']
 	String pass
 	String passConfirm
-
 }

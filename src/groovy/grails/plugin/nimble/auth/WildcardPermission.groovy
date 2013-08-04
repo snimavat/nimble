@@ -22,12 +22,13 @@ package grails.plugin.nimble.auth
  *
  * @author Bradley Beddoes
  */
-public class WildcardPermission extends org.apache.shiro.authz.permission.WildcardPermission {
-	public WildcardPermission(String wildcardString) {
+class WildcardPermission extends org.apache.shiro.authz.permission.WildcardPermission {
+
+	WildcardPermission(String wildcardString) {
 		super(wildcardString)
 	}
 
-	public WildcardPermission(String wildcardString, boolean caseSensitive) {
+	WildcardPermission(String wildcardString, boolean caseSensitive) {
 		super(wildcardString, caseSensitive)
 	}
 }

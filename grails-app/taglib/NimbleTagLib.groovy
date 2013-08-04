@@ -15,6 +15,8 @@
  *  limitations under the License.
  */
 
+import groovy.xml.MarkupBuilder
+
 /**
  * Provides generic, mostly UI related tags to the Nimble application
  *
@@ -29,28 +31,28 @@ class NimbleTagLib {
 	/**
 	 * Provides an inline output of the Grails application message in flash scope
 	 */
-	def flashembed = {attrs, body ->
+	def flashembed = {attrs ->
 		out << render(template: "/templates/flashembed", contextPath: pluginContextPath, model:[nimblePath:pluginContextPath])
 	}
 
 	/**
 	 * Provides nimble session terminated message
 	 */
-	def sessionterminated = {attrs, body ->
+	def sessionterminated = {attrs ->
 		out << render(template: "/templates/sessionterminated", contextPath: pluginContextPath)
 	}
 
 	/**
 	 * Provides markup to render confirmation
 	 */
-	def confirm = {attrs, body ->
+	def confirm = {attrs ->
 		out << render(template:"/templates/nimble/help/confirmation", contextPath: pluginContextPath)
 	}
 
 	/**
 	 * provides markup to render grails error messages for beans
 	 */
-	def errors = {attrs, body ->
+	def errors = {attrs ->
 		def bean = attrs['bean']
 		if (bean)
 			out << render(template: "/templates/errors", contextPath: pluginContextPath, model: [bean: bean])
@@ -61,21 +63,21 @@ class NimbleTagLib {
 	/**
 	 * Provides markup to render the default password policy
 	 */
-	def passwordpolicy = {attrs, body ->
+	def passwordpolicy = {attrs ->
 		out << render(template: "/templates/nimble/help/passwordpolicy")
 	}
 
 	/**
 	 * Provides markup to render the default username policy
 	 */
-	def usernamepolicy = {attrs, body ->
+	def usernamepolicy = {attrs ->
 		out << render(template: "/templates/nimble/help/usernamepolicy")
 	}
 
 	/**
 	 * Provides markup to render the default account creation policy
 	 */
-	def accountcreationpolicy = {attrs, body ->
+	def accountcreationpolicy = {attrs ->
 		out << render(template: "/templates/nimble/help/accountcreationpolicy")
 	}
 
@@ -113,8 +115,8 @@ class NimbleTagLib {
 		if(attrs.name == null || attrs.alt == null)
 			throwTagError("Image tag requires name and alt attributes")
 
-		def mkp = new groovy.xml.MarkupBuilder(out)
-		mkp.img(src: resource(dir: pluginContextPath, file:"images/${attrs.name}"), alt: "$attrs.alt", width: attrs.size ?: '', height: attrs.size ?: '')
+		new MarkupBuilder(out).img(src: resource(dir: pluginContextPath, file:"images/${attrs.name}"),
+		                           alt: "$attrs.alt", width: attrs.size ?: '', height: attrs.size ?: '')
 	}
 
 	/**
@@ -124,8 +126,7 @@ class NimbleTagLib {
 		if(attrs.alt == null || attrs.name == null || attrs.size == null)
 			throwTagError("Social image tag requires size, name and alt attributes")
 
-		def mkp = new groovy.xml.MarkupBuilder(out)
-		mkp.img(src: resource(dir: pluginContextPath, file:"images/social/$attrs.size/${attrs.name}.png"), alt: "$attrs.alt")
+		new MarkupBuilder(out).img(src: resource(dir: pluginContextPath, file:"images/social/$attrs.size/${attrs.name}.png"), alt: "$attrs.alt")
 	}
 
 	/**
@@ -139,12 +140,10 @@ class NimbleTagLib {
 	}
 
 	// Allows UI developers to request verification of contents of a field using onBlur
-	def verifyfield = { attrs, body ->
+	def verifyfield = { attrs ->
 		if(attrs.id == null || attrs.controller == null || attrs.action == null || attrs.name == null || attrs.validmsg == null || attrs.invalidmsg == null)
 			throwTagError("verifyfield tag requires id, controller, action, name, validmsg and invalidmsg attributes")
 
 		out << render(template: "/templates/tags/verifyfield", contextPath: pluginContextPath, model: [id:attrs.id, cssclass: attrs.class, required:attrs.required, controller:attrs.controller, action:attrs.action, name:attrs.name, value:attrs.value, validmsg:attrs.validmsg, invalidmsg:attrs.invalidmsg] )
 	}
-
 }
-

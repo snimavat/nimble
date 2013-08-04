@@ -16,108 +16,93 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.LoginRecord;
-import grails.plugin.nimble.core.UserBase;
-import grails.test.*
+import grails.test.GrailsUnitTestCase
 
 /**
  * @author Bradley Beddoes
  */
 class LoginRecordTests extends GrailsUnitTestCase {
-    def remoteAddr
-    def remoteHost
-    def userAgent 
-    def dateCreated 
-    def owner 
+	private remoteAddr = '1.1.1.1'
+	private remoteHost = 'remote.host'
+	private userAgent = 'userAgent'
+	private dateCreated = new Date()
+	private owner = new UserBase()
 
-    protected void setUp() {
-        super.setUp()
-        remoteAddr = '1.1.1.1'
-        remoteHost = 'remote.host'
-        userAgent = 'userAgent'
-        dateCreated = new Date()
-        owner = new UserBase()
-    }
+	private LoginRecord createValidLoginRecord() {
+		new LoginRecord(owner:owner, remoteAddr:remoteAddr, remoteHost:remoteHost, userAgent:userAgent, dateCreated:dateCreated)
+	}
 
-    protected void tearDown() {
-        super.tearDown()
-    }
+	void testLoginRecordCreation() {
+		def loginRecord = createValidLoginRecord()
 
-    LoginRecord createValidLoginRecord() {
-        def loginRecord = new LoginRecord(owner:owner, remoteAddr:remoteAddr, remoteHost:remoteHost, userAgent:userAgent, dateCreated:dateCreated)
-    }
+		assertEquals remoteAddr, loginRecord.remoteAddr
+		assertEquals remoteHost, loginRecord.remoteHost
+		assertEquals userAgent, loginRecord.userAgent
+		assertEquals dateCreated, loginRecord.dateCreated
+		assertEquals owner, loginRecord.owner
+	}
 
-    void testLoginRecordCreation() {
-        def loginRecord = createValidLoginRecord()
-        
-        assertEquals remoteAddr, loginRecord.remoteAddr
-        assertEquals remoteHost, loginRecord.remoteHost
-        assertEquals userAgent, loginRecord.userAgent
-        assertEquals dateCreated, loginRecord.dateCreated
-        assertEquals owner, loginRecord.owner
-    }
+	void testRemoteAddrConstraint() {
+		mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-    void testRemoteAddrConstraint() {
-        mockForConstraintsTests(LoginRecord)
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
+		loginRecord.remoteAddr = ""
+		assertFalse loginRecord.validate()
 
-        loginRecord.remoteAddr = ""
-        assertFalse loginRecord.validate()
+		loginRecord.remoteAddr = null
+		assertFalse loginRecord.validate()
+	}
 
-        loginRecord.remoteAddr = null
-        assertFalse loginRecord.validate()
-    }
+	void testRemoteHostConstraint() {
+		mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-    void testRemoteHostConstraint() {
-        mockForConstraintsTests(LoginRecord)
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
+		loginRecord.remoteHost = ""
+		assertFalse loginRecord.validate()
 
-        loginRecord.remoteHost = ""
-        assertFalse loginRecord.validate()
+		loginRecord.remoteHost = null
+		assertFalse loginRecord.validate()
+	}
 
-        loginRecord.remoteHost = null
-        assertFalse loginRecord.validate()
-    }
+	void testUserAgentConstraint() {
+		mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-    void testUserAgentConstraint() {
-        mockForConstraintsTests(LoginRecord)
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
+		loginRecord.userAgent = ""
+		assertFalse loginRecord.validate()
 
-        loginRecord.userAgent = ""
-        assertFalse loginRecord.validate()
+		loginRecord.userAgent = null
+		assertFalse loginRecord.validate()
+	}
 
-        loginRecord.userAgent = null
-        assertFalse loginRecord.validate()
-    }
+	void testDateCreatedConstraint() {
+		mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-    void testDateCreatedConstraint() {
-        mockForConstraintsTests(LoginRecord)
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
+		loginRecord.dateCreated = null
+		assertTrue loginRecord.validate()
+	}
 
-        loginRecord.dateCreated = null
-        assertTrue loginRecord.validate()
-    }
+	void testLastUpdatedConstraint() {
+		mockForConstraintsTests(LoginRecord)
 
-    void testLastUpdatedConstraint() {
-        mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
+		loginRecord.lastUpdated = null
+		assertTrue loginRecord.validate()
+	}
 
-        loginRecord.lastUpdated = null
-        assertTrue loginRecord.validate()
-    }
+	void testOwnerConstraint() {
+		mockForConstraintsTests(LoginRecord)
+		def loginRecord = createValidLoginRecord()
+		assertTrue loginRecord.validate()
 
-    void testOwnerConstraint() {
-        mockForConstraintsTests(LoginRecord)
-        def loginRecord = createValidLoginRecord()
-        assertTrue loginRecord.validate()
-
-        loginRecord.owner = null
-        assertFalse loginRecord.validate()
-    }
+		loginRecord.owner = null
+		assertFalse loginRecord.validate()
+	}
 }

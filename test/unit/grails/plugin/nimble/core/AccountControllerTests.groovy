@@ -16,262 +16,213 @@
  */
 package grails.plugin.nimble.core
 
-import grails.plugin.nimble.core.RecaptchaService;
-import grails.plugin.nimble.core.UserService;
-import grails.plugin.nimble.core.UserBase;
-import grails.test.*
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
 
 import org.apache.shiro.SecurityUtils
-import org.apache.shiro.subject.Subject
 import org.apache.shiro.crypto.hash.Sha256Hash
-import org.springframework.validation.ObjectError
+import org.apache.shiro.subject.Subject
+import org.junit.After
+import org.junit.Before
 
-class AccountControllerTests extends ControllerUnitTestCase {
-    def suMock
-    def pass
-    def passConfirm
-    def currentPassword
+@TestFor(AccountController)
+@Mock(UserBase)
+class AccountControllerTests {
 
-    protected void setUp() {
-        super.setUp()
+	private suMock
+	private pass = 'pass'
+	private passConfirm = pass
+	private currentPassword = 'currentPassword'
 
-        mockLogging(AccountController, true)
-        pass = 'pass'
-        passConfirm = pass
-        currentPassword = 'currentPassword'
-    }
+	@Before
+	void setUp() {
+		AccountController.metaClass.getAuthenticatedUser = { ->
+			def principal = SecurityUtils.getSubject()?.getPrincipal()
+			if (!principal) {
+				return null
+			}
 
-    protected void tearDown() {
-        super.tearDown()
-        suMock?.verify()
-        suMock = null
-    }
+			def authUser = UserBase.get(principal)
+			if (!authUser) {
+				throw new RuntimeException("User was not able to be obtained for id $principal")
+			}
+			return authUser
+		}
+	}
 
-    def createValidUser() {
-        def pwEnc = new Sha256Hash(currentPassword)
-        def crypt = pwEnc.toHex()
+	@After
+	void tearDown() {
+		suMock?.verify()
+	}
 
+	private createValidUser() {
+		def crypt = new Sha256Hash(currentPassword).toHex()
 
-        //further fill out user....
+		//further fill out user....
 
-        def user = new UserBase(id:1, username:'username', passwordHash:crypt, profile: new ProfileBase())
-        mockDomain(UserBase, [user])
+		def user = new UserBase(username:'username', passwordHash:crypt, profile: new ProfileBase())
+		mockDomain UserBase, [user]
+		user
+	}
 
-        return user
-    }
+	private createValidRecaptchaMock() {
+		def rsMock = mockFor(RecaptchaService)
+		rsMock.demand.verifyAnswer {session, request, params -> true }
+		controller.recaptchaService = rsMock.createMock()
 
-    def createValidRecaptchaMock() {
-        def rsMock = mockFor(RecaptchaService)
-        rsMock.demand.verifyAnswer {session, request, params ->
-            assertEquals mockSession, session
-            assertEquals mockRequest.getRemoteAddr(), request
+		return rsMock
+	}
 
-            return true
-        }
-        controller.recaptchaService = rsMock.createMock()
+	private createValidUserServiceMock() {
+		mockFor(UserService)
+	}
 
-        return rsMock
-    }
+	void testAllowedMethods() {
+		def post = 'POST'
 
-    def createValidUserServiceMock() {
-        def usMock = mockFor(UserService)
-        return usMock
-    }
+		assertNull controller.allowedMethods.createuser
+		assertNull controller.allowedMethods.createduser
+		assertNull controller.allowedMethods.validateuser
+		assertNull controller.allowedMethods.forgottenpassword
+		assertNull controller.allowedMethods.forgottenpasswordcomplete
+		assertNull controller.allowedMethods.changepassword
 
-    void testAllowedMethods() {
-        def get = 'GET'
-        def post = 'POST'
-        
-        assertEquals get, controller.allowedMethods.get('createuser')
-        assertEquals get, controller.allowedMethods.get('createduser')
-        assertEquals get, controller.allowedMethods.get('validateuser')
-        assertEquals get, controller.allowedMethods.get('forgottenpassword')
-        assertEquals get, controller.allowedMethods.get('forgottenpasswordcomplete')
-        assertEquals get, controller.allowedMethods.get('changepassword')
+		assertEquals post, controller.allowedMethods.saveuser
+		assertEquals post, controller.allowedMethods.validusername
+		assertEquals post, controller.allowedMethods.forgottenpasswordprocess
+		assertEquals post, controller.allowedMethods.updatepassword
+	}
 
-        assertEquals post, controller.allowedMethods.get('saveuser')
-        assertEquals post, controller.allowedMethods.get('validusername')
-        assertEquals post, controller.allowedMethods.get('forgottenpasswordprocess')
-        assertEquals post, controller.allowedMethods.get('updatepassword')
-    }
+	void testChangePasswordComplete() {
 
-    void testChangePasswordComplete() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
+		def user = createValidUser()
 
-        def user = new UserBase(id:1)
-        mockDomain(UserBase, [user])
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-        def model = controller.changepassword()
+		def model = controller.changepassword()
+		assertEquals user, model.user
+	}
 
-        assertEquals user, model.user
+	void testUpdatePasswordComplete() {
+		def user = createValidUser()
 
-        suMock.verify()
-    }
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-    void testChangePasswordNoAuth() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> null}
+		def rsMock = createValidRecaptchaMock()
 
-        def user = new UserBase(id:1)
-        mockDomain(UserBase, [user])
+		def usMock = createValidUserServiceMock()
+		usMock.demand.validatePass { u, boolean b -> true }
 
-        def model = controller.changepassword()
+		usMock.demand.changePassword{u ->
+			assertEquals user, u
+			assertEquals pass, u.pass
+			assertEquals passConfirm, u.passConfirm
+			return user
+		}
+		controller.userService = usMock.createMock()
 
-        assertEquals 403, mockResponse.status
-        assertEquals null, model
+		controller.updatepassword(currentPassword, pass, passConfirm)
 
-        suMock.verify()
-    }
+		assertEquals '/account/changedpassword', response.redirectedUrl
 
-    void testUpdatePasswordComplete() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
-        
-        def user = createValidUser()
-        def rsMock = createValidRecaptchaMock()
-        
+		rsMock.verify()
+		usMock.verify()
+	}
 
-        def usMock = createValidUserServiceMock()
-        usMock.demand.changePassword{u ->
-            assertEquals user, u
-            assertEquals pass, u.pass
-            assertEquals passConfirm, u.passConfirm
-            return user
-        }
-        controller.userService = usMock.createMock()
-        
-        mockParams.putAll( [pass:pass, passConfirm:passConfirm, currentPassword:currentPassword] )
-        
-        controller.updatepassword()
-        
-        assertEquals 200, mockResponse.status
-        assertEquals 'changedpassword', controller.redirectArgs.action
+	void testUpdatePasswordNoCurrent() {
 
-        rsMock.verify()
-        usMock.verify()
-        suMock.verify()
-    }
+		def user = createValidUser()
+		assertFalse user.hasErrors()
 
-    void testUpdatePasswordNoAuth() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> null}
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-        def user = new UserBase(id:1)
-        mockDomain(UserBase, [user])
+		def pass = 'pass'
+		def passConfirm = pass
+		def currentPassword = 'currentPassword'
 
-        def model = controller.updatepassword()
+		controller.updatepassword(null, pass, passConfirm)
 
-        assertEquals 403, mockResponse.status
-        assertEquals null, model
+		assertEquals user, model.user
+		assertEquals '/account/changepassword', view
+		assertTrue user.hasErrors()
+	}
 
-        suMock.verify()
-    }
+	void testUpdatePasswordNotHuman() {
+		def user = createValidUser()
+		assertFalse user.hasErrors()
 
-    void testUpdatePasswordNoCurrent() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-        def pass = 'pass'
-        def passConfirm = pass
-        def currentPassword = 'currentPassword'
+		def rsMock = mockFor(RecaptchaService)
+		rsMock.demand.verifyAnswer { session, request, params -> false }
+		controller.recaptchaService = rsMock.createMock()
 
-        mockLogging(AccountController, true)
+		controller.updatepassword(currentPassword, pass, passConfirm)
 
-        mockParams.putAll( [pass:pass, passConfirm:passConfirm] )
+		assertEquals user, model.user
+		assertEquals '/account/changepassword', view
+		assertTrue user.hasErrors()
 
-        def user = createValidUser()
-        assertFalse user.hasErrors()
-        
-        def model = controller.updatepassword()
+		rsMock.verify()
+	}
 
-        assertEquals user, controller.renderArgs.model.user
-        assertEquals 'changepassword', controller.renderArgs.view
-        assertTrue user.hasErrors()
-    }
+	void testUpdatePasswordEmptyCurrent() {
+		def user = createValidUser()
+		assertFalse user.hasErrors()
 
-    void testUpdatePasswordNotHuman() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-        def rsMock = mockFor(RecaptchaService)
-        rsMock.demand.verifyAnswer {session, request, params ->
-            assertEquals mockSession, session
-            assertEquals mockRequest.getRemoteAddr(), request
+		controller.updatepassword('', pass, passConfirm)
 
-            return false
-        }
-        controller.recaptchaService = rsMock.createMock()
+		assertEquals user, model.user
+		assertEquals '/account/changepassword', view
+		assertTrue user.hasErrors()
+	}
 
-        def user = createValidUser()
-        assertFalse user.hasErrors()
+	void testUpdatePasswordInvalidPass() {
+		def user = createValidUser()
 
-        mockParams.putAll( [pass:pass, passConfirm:passConfirm, currentPassword:currentPassword] )
-        controller.updatepassword()
+		suMock = mockFor(SecurityUtils)
+		suMock.demand.static.getSubject {-> [getPrincipal: { -> user.id }] as Subject}
 
-        assertEquals user, controller.renderArgs.model.user
-        assertEquals 'changepassword', controller.renderArgs.view
-        assertTrue user.hasErrors()
+		def rsMock = createValidRecaptchaMock()
 
-        rsMock.verify()
-    }
+		def usMock = createValidUserServiceMock()
+		usMock.demand.validatePass { u, boolean b ->
+			assertEquals user, u
+			assertEquals 'notvalid', u.pass
+			assertEquals passConfirm, u.passConfirm
+			u.errors.rejectValue('pass', 'user.password.xyz')
+			false
+		}
+		controller.userService = usMock.createMock()
 
-    void testUpdatePasswordEmptyCurrent() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
+		assertFalse user.hasErrors()
 
-        def user = createValidUser()
-        assertFalse user.hasErrors()
+		controller.updatepassword(currentPassword, 'notvalid', passConfirm)
 
-        mockParams.putAll( [pass:pass, passConfirm:passConfirm, currentPassword:''] )
-        controller.updatepassword()
+		assertEquals user, model.user
+		assertEquals '/account/changepassword', view
+		assertTrue user.hasErrors()
 
-        assertEquals user, controller.renderArgs.model.user
-        assertEquals 'changepassword', controller.renderArgs.view
-        assertTrue user.hasErrors()
-    }
+		usMock.verify()
+		rsMock.verify()
+	}
 
-    void testUpdatePasswordInvalidPass() {
-        suMock = mockFor(SecurityUtils)
-        suMock.demand.static.getSubject {-> [getPrincipal:{return 1}] as Subject}
-        
-        def user = createValidUser()
-        def rsMock = createValidRecaptchaMock()
+	void testCreateUserComplete() {
 
-        def usMock = createValidUserServiceMock()
-        usMock.demand.changePassword{u ->
-            assertEquals user, u
-            assertEquals 'notvalid', u.pass
-            assertEquals passConfirm, u.passConfirm
-            u.errors.rejectValue('pass', 'user.password.xyz')
-            return u
-        }
-        controller.userService = usMock.createMock()
-        
-        assertFalse user.hasErrors()
+		controller.grailsApplication.config.nimble.localusers.registration.enabled = true
 
-        mockParams.putAll( [pass:'notvalid', passConfirm:passConfirm, currentPassword:currentPassword] )
-        controller.updatepassword()
+		def model = controller.createuser()
+		assertNotNull model.user
+	}
 
-        assertEquals user, controller.renderArgs.model.user
-        assertEquals 'changepassword', controller.renderArgs.view
-        assertTrue user.hasErrors()
-
-        usMock.verify()
-        rsMock.verify()
-    }
-
-    void testCreateUserComplete() {
-        mockDomain(UserBase, [])
-        
-        // Mock the application configuration.
-        controller.grailsApplication = new Expando(config: [nimble: [localusers: [registration: [enabled: true]]]])
-        
-        def model = controller.createuser()
-        assertNotNull model.user
-    }
-
-    void testSaveUserComplete() {
-        def user = createValidUser()
-    }
+	void testSaveUserComplete() {
+		createValidUser()
+	}
 }

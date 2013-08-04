@@ -16,16 +16,12 @@
  */
 package grails.plugin.nimble.core
 
+import grails.plugin.nimble.auth.CorePermissions
+
 import javax.servlet.http.HttpServletRequest
 
-import org.apache.shiro.crypto.hash.Sha256Hash
 import org.apache.shiro.SecurityUtils
-
-import grails.plugin.nimble.auth.CorePermissions
-import grails.plugin.nimble.core.LoginRecord
-import grails.plugin.nimble.core.Permission
-import grails.plugin.nimble.core.Role
-import grails.plugin.nimble.core.UserBase
+import org.apache.shiro.crypto.hash.Sha256Hash
 
 /**
  * Provides methods for interacting with Nimble users.
@@ -34,9 +30,7 @@ import grails.plugin.nimble.core.UserBase
  */
 class UserService {
 
-	public static String USER_ROLE = "USER"
-
-	boolean transactional = true
+	public static final String USER_ROLE = "USER"
 
 	def grailsApplication
 	def permissionService
@@ -50,7 +44,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def enableUser(UserBase user) {
+	UserBase enableUser(UserBase user) {
 		user.enabled = true
 
 		def savedUser = user.save()
@@ -72,7 +66,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def disableUser(UserBase user) {
+	UserBase disableUser(UserBase user) {
 		user.enabled = false
 
 		def savedUser = user.save()
@@ -94,7 +88,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def enableRemoteApi(UserBase user) {
+	UserBase enableRemoteApi(UserBase user) {
 		user.remoteapi = true
 
 		def savedUser = user.save()
@@ -116,7 +110,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def disableRemoteApi(UserBase user) {
+	UserBase disableRemoteApi(UserBase user) {
 		user.remoteapi = false
 
 		def savedUser = user.save()
@@ -141,7 +135,7 @@ class UserService {
 	 *
 	 * @return The user object, with errors populated if change problem occured
 	 */
-	def changePassword(UserBase user) {
+	UserBase changePassword(UserBase user) {
 		user.validate()
 		validatePass(user)
 
@@ -170,7 +164,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def createUser(UserBase user) {
+	UserBase createUser(UserBase user) {
 		user.validate()
 
 		if (!user.external) {
@@ -221,7 +215,6 @@ class UserService {
 
 				log.info("Successfully created user [$user.id]$user.username")
 				return savedUser
-
 			}
 		}
 
@@ -241,7 +234,7 @@ class UserService {
 	 *
 	 * @throws RuntimeException When internal state requires transaction rollback
 	 */
-	def updateUser(UserBase user) {
+	UserBase updateUser(UserBase user) {
 
 		def updatedUser = user.save()
 		if (updatedUser) {
@@ -263,7 +256,7 @@ class UserService {
 	 * @pre Passed user object must have been validated to ensure
 	 * that hibernate does not auto persist the object to the repository prior to service invocation
 	 */
-	def generateValidationHash(UserBase user) {
+	void generateValidationHash(UserBase user) {
 		String input = user.username + user.profile?.fullName + user.profile?.email + System.currentTimeMillis()
 
 		def enc = new Sha256Hash(input)
@@ -279,7 +272,7 @@ class UserService {
 	 * @pre Passed user object must have been validated to ensure
 	 * that hibernate does not auto persist the object to the repository prior to service invocation
 	 */
-	def setRandomPassword(UserBase user) {
+	void setRandomPassword(UserBase user) {
 		String input = user.username + user.profile?.fullName + user.profile?.email + System.currentTimeMillis()
 
 		def enc = new Sha256Hash(input)
@@ -301,14 +294,12 @@ class UserService {
 		log.debug("Assigned random password to user [$user.id]$user.username")
 	}
 
-
 	/**
 	 * Stores details of a successful login by a user.
 	 */
-	def createLoginRecord(HttpServletRequest request) {
+	void createLoginRecord(HttpServletRequest request) {
 		def user = UserBase.get(SecurityUtils.getSubject()?.getPrincipal())
-		if(!user)
-		{
+		if(!user) {
 			log.error("Attempt to create login record for unauthenticated session")
 			throw new RuntimeException("Attempt to create login record for unauthenticated session")
 		}
@@ -350,10 +341,11 @@ class UserService {
 	 * object. If the pass is valid it is encrypted and set as the value of user.passwd and
 	 * added to the password history
 	 */
-	public def validatePass(UserBase user) {
-		return validatePass(user, false)
+	boolean validatePass(UserBase user) {
+		validatePass(user, false)
 	}
-	public def validatePass(UserBase user, boolean checkOnly) {
+
+	boolean validatePass(UserBase user, boolean checkOnly) {
 		log.debug("Validating user entered password")
 
 		if (user.pass == null || user.pass.length() < grailsApplication.config.nimble.passwords.minlength) {

@@ -16,85 +16,82 @@
  */
 package grails.plugin.nimble.core
 
-import javax.servlet.http.Cookie
-
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.AuthenticationException
-import org.apache.shiro.authc.UsernamePasswordToken
-import org.apache.shiro.authc.IncorrectCredentialsException
 import org.apache.shiro.authc.DisabledAccountException
-
-import grails.plugin.nimble.auth.AccountCreatedException
+import org.apache.shiro.authc.IncorrectCredentialsException
+import org.apache.shiro.authc.UsernamePasswordToken
 
 /**
  * @author Bradley Beddoes
  */
 class AuthController {
 
-	private static String TARGET = 'grails.plugin.nimble.controller.AuthController.TARGET'
+	private static final String TARGET = 'grails.plugin.nimble.controller.AuthController.TARGET'
 
 	def shiroSecurityManager
 	def userService
-	def grailsApplication
 
 	static Map allowedMethods = [ signin: 'POST' ]
 
-	def index = { redirect(action: 'login', params: params) }
+	static defaultAction = 'list'
 
-	def login = {
-		def local = grailsApplication.config.nimble.localusers.authentication.enabled
-		def registration = grailsApplication.config.nimble.localusers.registration.enabled
+	def login(String targetUri, String username, rememberMe) {
+		def local = nimbleConfig.localusers.authentication.enabled
+		def registration = nimbleConfig.localusers.registration.enabled
 
-		if(params.targetUri) {
-			session.setAttribute(AuthController.TARGET, params.targetUri)
+		if(targetUri) {
+			session.setAttribute(AuthController.TARGET, targetUri)
 		}
 
-		render(template: "/templates/nimble/login/login", model: [local: local, registration: registration, username: params.username, rememberMe: (params.rememberMe != null), targetUri: params.targetUri])
+		render(template: "/templates/nimble/login/login",
+		       model: [local: local, registration: registration, username: username, rememberMe: (rememberMe != null), targetUri: targetUri])
 	}
 
-	def signin = {
-		def authToken = new UsernamePasswordToken(params.username, params.password)
+	def signin(String username, String password, rememberme) {
+		def authToken = new UsernamePasswordToken(username, password)
 
-		if (params.rememberme) {
+		if (rememberme) {
 			authToken.rememberMe = true
 		}
 
-		log.info("Attempting to authenticate user, $params.username. RememberMe is $authToken.rememberMe")
+		log.info("Attempting to authenticate user, $username. RememberMe is $authToken.rememberMe")
 
 		try {
 			SecurityUtils.subject.login(authToken)
-			this.userService.createLoginRecord(request)
+			userService.createLoginRecord(request)
 
 			def targetUri = session.getAttribute(AuthController.TARGET) ?: "/"
 			session.removeAttribute(AuthController.TARGET)
 
-			log.info("Authenticated user, $params.username.")
+			log.info("Authenticated user, $username")
 			if (userService.events["login"]) {
 				log.info("Executing login callback")
 				def newUri = userService.events["login"](authenticatedUser, targetUri, request)
-				if (newUri != null)
+				if (newUri != null) {
 					targetUri = newUri
+				}
 			}
 			log.info("Directing to content $targetUri")
 			redirect(uri: targetUri)
 			return
 		}
 		catch (IncorrectCredentialsException e) {
-			log.info "Credentials failure for user '${params.username}'."
+			log.info "Credentials failure for user '${username}'."
 			log.debug(e)
 
 			flash.type = 'error'
 			flash.message = message(code: "nimble.login.failed.credentials")
 		}
 		catch (DisabledAccountException e) {
-			log.info "Attempt to login to disabled account for user '${params.username}'."
+			log.info "Attempt to login to disabled account for user '${username}'."
 			log.debug(e)
 
 			flash.type = 'error'
 			flash.message = message(code: "nimble.login.failed.disabled")
 		}
 		catch (AuthenticationException e) {
-			log.info "General authentication failure for user '${params.username}'."
+			log.info "General authentication failure for user '${username}'."
 			log.debug(e)
 
 			flash.type = 'error'
@@ -103,9 +100,9 @@ class AuthController {
 		redirect(action: 'login')
 	}
 
-	def logout = { signout() }
+	def logout() { signout() }
 
-	def signout = {
+	def signout() {
 		log.info("Signing out user ${authenticatedUser?.username}")
 
 		if(userService.events["logout"]) {
@@ -117,5 +114,9 @@ class AuthController {
 		redirect(uri: '/')
 	}
 
-	def unauthorized = { response.sendError(403) }
+	def unauthorized() { response.sendError(403) }
+
+	private getNimbleConfig() {
+		grailsApplication.config.nimble
+	}
 }

@@ -18,7 +18,7 @@ package grails.plugin.nimble.core
 
 class MainController {
 
-	def index = {
+	def index() {
 
 		log.debug 'grails.plugin.nimble.MainController - index - executed'
 
