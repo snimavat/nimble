@@ -33,7 +33,7 @@ target (jackBeNimble: 'Sets up a new project with a common Nimble base environme
 	if(new File(basedir, "grails-app/conf/NimbleConfig.groovy").exists()) {
 		println "Existing NimbleConfig.groovy located"
 		println "This script does not currently manage Nimble upgrades, please see release documentation for any required changed to NimbleConfig.groovy or other components"
-		System.exit(1)
+		exit(1)
 	}
 
 	def (pack, user, profile) = parseArgs()
@@ -83,7 +83,7 @@ def parseArgs() {
 
 private void usage() {
 	println "Usage:\n${USAGE}"
-	System.exit(1)
+	exit(1)
 }
 
 setDefaultTarget 'jackBeNimble'

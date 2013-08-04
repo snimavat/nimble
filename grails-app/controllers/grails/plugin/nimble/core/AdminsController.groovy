@@ -45,7 +45,7 @@ class AdminsController {
 		[currentAdmin:authenticatedUser, admins: adminAuthority?.users]
 	}
 
-	def create(id) {
+	def create(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id $id was not located")
@@ -67,7 +67,7 @@ class AdminsController {
 		render message(code: 'nimble.admin.grant.failed', args: [user.username])
 	}
 
-	def delete(id) {
+	def delete(Long id) {
 		def user = UserBase.get(id)
 
 		if (!user) {

@@ -36,7 +36,7 @@ class AuthController {
 
 	static defaultAction = 'list'
 
-	def login(String targetUri, String username, rememberMe) {
+	def login(String targetUri, String username, String rememberMe) {
 		def local = nimbleConfig.localusers.authentication.enabled
 		def registration = nimbleConfig.localusers.registration.enabled
 
@@ -48,7 +48,7 @@ class AuthController {
 		       model: [local: local, registration: registration, username: username, rememberMe: (rememberMe != null), targetUri: targetUri])
 	}
 
-	def signin(String username, String password, rememberme) {
+	def signin(String username, String password, String rememberme) {
 		def authToken = new UsernamePasswordToken(username, password)
 
 		if (rememberme) {

@@ -46,7 +46,7 @@ class UserController {
 		[users: UserBase.list(params)]
 	}
 
-	def show(id) {
+	def show(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -60,7 +60,7 @@ class UserController {
 		[user: user]
 	}
 
-	def edit(id) {
+	def edit(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -75,7 +75,7 @@ class UserController {
 		[user: user]
 	}
 
-	def update(id) {
+	def update(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -134,7 +134,7 @@ class UserController {
 		redirect action: 'show', id: user.id
 	}
 
-	def changepassword(id) {
+	def changepassword(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -156,7 +156,7 @@ class UserController {
 		[user: user]
 	}
 
-	def changelocalpassword(id) {
+	def changelocalpassword(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -178,7 +178,7 @@ class UserController {
 		[user: user]
 	}
 
-	def savepassword(id) {
+	def savepassword(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -203,7 +203,7 @@ class UserController {
 	}
 
 	// AJAX related actions
-	def enable(id) {
+	def enable(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -217,7 +217,7 @@ class UserController {
 		render message(code: 'nimble.user.enable.success', args: [user.username])
 	}
 
-	def disable(id) {
+	def disable(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -231,7 +231,7 @@ class UserController {
 		render message(code: 'nimble.user.disable.success', args: [user.username])
 	}
 
-	def enableapi(id) {
+	def enableapi(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -245,7 +245,7 @@ class UserController {
 		render message(code: 'nimble.user.enableapi.success', args: [user.username])
 	}
 
-	def disableapi(id) {
+	def disableapi(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -276,7 +276,7 @@ class UserController {
 		render message(code: 'nimble.user.username.valid')
 	}
 
-	def listlogins(id) {
+	def listlogins(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -295,7 +295,7 @@ class UserController {
 		render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, ownerID: user.id])
 	}
 
-	def listgroups(id) {
+	def listgroups(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -308,7 +308,7 @@ class UserController {
 		render(template: '/templates/admin/groups_list', model: [groups: user.groups, ownerID: user.id])
 	}
 
-	def searchgroups(id, String q) {
+	def searchgroups(Long id, String q) {
 		q = "%" + q + "%"
 		log.debug("Performing search for groups matching $q")
 		def user = UserBase.get(id)
@@ -331,7 +331,7 @@ class UserController {
 		render(template: '/templates/admin/groups_search', contextPath: pluginContextPath, model: [groups: nonMembers, ownerID: user.id])
 	}
 
-	def grantgroup(id, groupID) {
+	def grantgroup(Long id, Long groupID) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -360,7 +360,7 @@ class UserController {
 		render message(code: 'nimble.group.addmember.success', args: [group.name, user.username])
 	}
 
-	def removegroup(id, groupID) {
+	def removegroup(Long id, Long groupID) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -389,7 +389,7 @@ class UserController {
 		render message(code: 'nimble.group.removemember.success', args: [group.name, user.username])
 	}
 
-	def listpermissions(id) {
+	def listpermissions(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -402,7 +402,7 @@ class UserController {
 		render(template: '/templates/admin/permissions_list', contextPath: pluginContextPath, model: [permissions: user.permissions, parent: user])
 	}
 
-	def createpermission(id, first, second, third, fourth, fifth, sixth) {
+	def createpermission(Long id, String first, String second, String third, String fourth, String fifth, String sixth) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -427,7 +427,7 @@ class UserController {
 		render message(code: 'nimble.permission.create.success', args: [user.username])
 	}
 
-	def removepermission(id, permID) {
+	def removepermission(Long id, Long permID) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -449,7 +449,7 @@ class UserController {
 		render message(code: 'nimble.permission.remove.success', args: [user.username])
 	}
 
-	def listroles(id) {
+	def listroles(Long id) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -462,7 +462,7 @@ class UserController {
 		render(template: '/templates/admin/roles_list', contextPath: pluginContextPath, model: [roles: user.roles, ownerID: user.id])
 	}
 
-	def searchroles(id, String q) {
+	def searchroles(Long id, String q) {
 		q = "%" + q + "%"
 		log.debug("Performing search for roles matching $q")
 		def user = UserBase.get(id)
@@ -485,7 +485,7 @@ class UserController {
 		render(template: '/templates/admin/roles_search', contextPath: pluginContextPath, model: [roles: respRoles, ownerID: user.id])
 	}
 
-	def grantrole(id, roleID) {
+	def grantrole(Long id, Long roleID) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")
@@ -514,7 +514,7 @@ class UserController {
 		render message(code: 'nimble.role.addmember.success', args: [role.name, user.username])
 	}
 
-	def removerole(id, roleID) {
+	def removerole(Long id, Long roleID) {
 		def user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id '$id' was not located")

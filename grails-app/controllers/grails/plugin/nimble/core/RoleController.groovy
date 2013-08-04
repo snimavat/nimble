@@ -38,7 +38,7 @@ class RoleController {
 		[roles: Role.list(params)]
 	}
 
-	def show(id) {
+	def show(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -72,7 +72,7 @@ class RoleController {
 		redirect action: 'show', params: [id: createdRole.id]
 	}
 
-	def edit(id) {
+	def edit(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -86,7 +86,7 @@ class RoleController {
 		[role: role]
 	}
 
-	def update(id) {
+	def update(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -128,7 +128,7 @@ class RoleController {
 		redirect action: 'show', params: [id: role.id]
 	}
 
-	def delete(id) {
+	def delete(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -171,7 +171,7 @@ class RoleController {
 		render message(code: 'nimble.role.name.valid', args: [val])
 	}
 
-	def listmembers(id) {
+	def listmembers(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -185,11 +185,11 @@ class RoleController {
 		       model: [parent:role, users: role.users, groups: role.groups, protect: role.protect, groupmembers: true])
 	}
 
-	def addmember(id, roleID, userID) {
+	def addmember(Long id, Long userID) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
-			render message(code: 'nimble.role.nonexistant', args: [roleID])
+			render message(code: 'nimble.role.nonexistant', args: [id])
 			response.status = 500
 			return
 		}
@@ -214,7 +214,7 @@ class RoleController {
 		render message(code: 'nimble.role.addmember.success', args: [role.name, user.username])
 	}
 
-	def removemember(id, userID) {
+	def removemember(Long id, Long userID) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -243,7 +243,7 @@ class RoleController {
 		render message(code: 'nimble.role.removemember.success', args: [role.name, user.username])
 	}
 
-	def addgroupmember(id, groupID) {
+	def addgroupmember(Long id, Long groupID) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -279,7 +279,7 @@ class RoleController {
 		render message(code: 'nimble.role.addmember.success', args: [role.name, group.name])
 	}
 
-	def removegroupmember(id, groupID) {
+	def removegroupmember(Long id, Long groupID) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -315,7 +315,7 @@ class RoleController {
 		render message(code: 'nimble.role.removemember.success', args: [role.name, group.name])
 	}
 
-	def searchnewmembers(id, String q) {
+	def searchnewmembers(Long id, String q) {
 		q = "%" + q + "%"
 		log.debug("Performing search for users matching $q")
 
@@ -348,7 +348,7 @@ class RoleController {
 		render(template: '/templates/admin/members_search', contextPath: pluginContextPath, model: [parent: role, users: nonMembers])
 	}
 
-	def searchnewgroupmembers(id, String q) {
+	def searchnewgroupmembers(Long id, String q) {
 		q = "%" + q + "%"
 		log.debug("Performing search for groups matching $q")
 
@@ -373,7 +373,7 @@ class RoleController {
 		render(template: '/templates/admin/members_group_search', contextPath: pluginContextPath, model: [parent: role, groups: nonMembers])
 	}
 
-	def listpermissions(id) {
+	def listpermissions(Long id) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -386,7 +386,7 @@ class RoleController {
 		render(template: '/templates/admin/permissions_list', contextPath: pluginContextPath, model: [permissions: role.permissions, parent: role])
 	}
 
-	def createpermission(id, first, second, third, fourth, fifth, sixth) {
+	def createpermission(Long id, String first, String second, String third, String fourth, String fifth, String sixth) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")
@@ -418,7 +418,7 @@ class RoleController {
 		render message(code: 'nimble.permission.create.success', args: [role.name])
 	}
 
-	def removepermission(id, permID) {
+	def removepermission(Long id, Long permID) {
 		def role = Role.get(id)
 		if (!role) {
 			log.warn("Role identified by id '$id' was not located")

@@ -41,7 +41,7 @@ class GroupController {
 		[groups: Group.list(params)]
 	}
 
-	def show(id) {
+	def show(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -78,7 +78,7 @@ class GroupController {
 		redirect action: 'show', params: [id: createdGroup.id]
 	}
 
-	def edit(id) {
+	def edit(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -91,7 +91,7 @@ class GroupController {
 		[group: group]
 	}
 
-	def update(id) {
+	def update(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -125,7 +125,7 @@ class GroupController {
 		redirect action: 'show', params: [id: updatedGroup.id]
 	}
 
-	def delete(id) {
+	def delete(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -167,7 +167,7 @@ class GroupController {
 		render message(code: 'nimble.group.name.valid', args: [val])
 	}
 
-	def listmembers(id) {
+	def listmembers(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -180,7 +180,7 @@ class GroupController {
 		render(template: '/templates/admin/members_list', contextPath: pluginContextPath, model: [parent: group, users: group.users, protect: group.protect, groupmembers: false])
 	}
 
-	def addmember(id, userID) {
+	def addmember(Long id, Long userID) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -209,7 +209,7 @@ class GroupController {
 		render message(code: 'nimble.group.addmember.success', args: [group.name, user.username])
 	}
 
-	def removemember(id, userID) {
+	def removemember(Long id, Long userID) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -238,7 +238,7 @@ class GroupController {
 		render message(code: 'nimble.group.removemember.success', args: [group.name, user.username])
 	}
 
-	def searchnewmembers(id, String q) {
+	def searchnewmembers(Long id, String q) {
 		q = "%" + q + "%"
 
 		def group = Group.get(id)
@@ -271,7 +271,7 @@ class GroupController {
 		render(template: '/templates/admin/members_search', contextPath: pluginContextPath, model: [parent: group, users: nonMembers])
 	}
 
-	def listpermissions(id) {
+	def listpermissions(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -283,7 +283,7 @@ class GroupController {
 		render(template: '/templates/admin/permissions_list', contextPath: pluginContextPath, model: [permissions: group.permissions, parent: group])
 	}
 
-	def createpermission(id, first, second, third, fourth, fifth, sixth) {
+	def createpermission(Long id, String first, String second, String third, String fourth, String fifth, String sixth) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -315,7 +315,7 @@ class GroupController {
 		render message(code: 'nimble.permission.create.success', args: [group.name])
 	}
 
-	def removepermission(id, permID) {
+	def removepermission(Long id, Long permID) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -336,7 +336,7 @@ class GroupController {
 		render message(code: 'nimble.permission.remove.success', args: [group.name])
 	}
 
-	def listroles(id) {
+	def listroles(Long id) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' wass not located")
@@ -348,7 +348,7 @@ class GroupController {
 		render(template: '/templates/admin/roles_list', contextPath: pluginContextPath, model: [roles: group.roles, ownerID: group.id])
 	}
 
-	def searchroles(id, String q) {
+	def searchroles(Long id, String q) {
 		q = "%" + q + "%"
 
 		def group = Group.get(id)
@@ -371,7 +371,7 @@ class GroupController {
 		render(template: '/templates/admin/roles_search', contextPath: pluginContextPath, model: [roles: respRoles, ownerID: group.id])
 	}
 
-	def grantrole(id, roleID) {
+	def grantrole(Long id, Long roleID) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
@@ -407,7 +407,7 @@ class GroupController {
 		render message(code: 'nimble.role.addmember.success', args: [role.name, group.name])
 	}
 
-	def removerole(id, roleID) {
+	def removerole(Long id, Long roleID) {
 		def group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")

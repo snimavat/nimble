@@ -183,7 +183,7 @@ class AccountController {
 		render(view: 'createduser', useractive: nimbleConfig.localusers.provision.active)
 	}
 
-	def validateuser(id, activation) {
+	def validateuser(long id, String activation) {
 		def user = UserBase.get(id)
 
 		if (!user) {
