@@ -11,7 +11,9 @@
   <tbody>
   <g:each in="${admins}" status="i" var="user">
     <tr>
-        <td class="center">${user.id}</td>
+        <td class="center">
+        	<g:link controller="user" action="show" id="${user.id}">${user.id}</g:link>
+        </td>
       	<g:if test="${user.username.length() > 50}">
         	<td>${user.username?.substring(0,50).encodeAsHTML()}...</td>
 		</g:if>
