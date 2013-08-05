@@ -1,0 +1,10 @@
+/bin
+/target
+/.settings
+/target
+/target-eclipse
+/test
+/grails-nimble*.zip
+/grails-nimble*sha1
+plugin.xml
+.project
