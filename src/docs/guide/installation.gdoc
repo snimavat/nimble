@@ -1,0 +1,48 @@
+Nimble can be installed in any grails project by declaring plugin dependency in BuildConfig.groovy as show below.
+
+h3. Step 1: Install nimble plugin
+{code:groovy}
+    plugins {
+      compile "\:nimble\:0.5.1"
+    }
+{code} 
+
+{note}
+For new projects, we recommend that you use the latest release of plugin. See [Nimble plugin|http://grails.org/plugin/nimble] for latest version. 
+{note}
+
+h3. Step 2: Inject nimble into host application
+inject Nimble into your host application so that you can customize various components as necessary for your use case. Execute the following command:
+
+{code:groovy}
+grails jack-be-nimble <package> <User Class Name> <Profile Class Name>
+
+Example:
+
+grails jack-be-nimble com.example.domain User Profile
+{code}
+
+This is a very non-invasive procedure as far as the host application is concerned. One of the main goals of the Nimble project is to make it as invisible as possible when installed in a host application so as not to clutter up your business logic. 
+Once complete, You will have following files in your copied into your project.
+
+# conf/NimbleConfig.groovy
+# conf/NimbleBootStrap.groovy
+# conf/NimbleSecurityFilters.groovy
+# conf/NimbleUrlMappings.groovy
+# domain/<package>/<User class>.groovy
+# domain/<package><Profile class>.groovy
+# views/templates/nimble/mail templates
+# i18n/messages-nimble.properties
+
+At this point you are ready to start using nimble. Launch you application using @grails run-app@ command.
+Open you browser and navigate to @<app_url>/main@ and you will be asked to login.
+
+By default Nimble creates two user accounts automatically, one with user rights and one with Administration rights.
+
+You can login as:
+# user/useR123!
+# admin/admiN123!
+
+The admin user will be able to access the full UI.
+
+Congratulations Nimble is now fully activated within your application and you're ready to start wiring up your business logic.

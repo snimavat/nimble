@@ -28,7 +28,6 @@ nimble {
 	layout {
 		application = 'app'
 		administration = 'admin'
-		login = 'app'
 	}
 
 	localusers {
@@ -40,10 +39,8 @@ nimble {
 		enabled = false
 
 		registration { subject = "Your new account is ready!" }
-		passwordreset {
-			subject = "Your password has been reset"
-			external.subject = "Your password reset request"
-		}
+		passwordreset { subject = "Your password has been reset" }
+		changeemail { subject = "Your email address has been changed" }
 
 		mail {
 			from = "App <app@company.com>"

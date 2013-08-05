@@ -85,8 +85,9 @@ class UserController {
 			return
 		}
 
-		def fields = nimbleConfig.fields.admin.user
+		def fields = nimbleConfig.fields.admin.user		
 		user.properties[fields] = params
+		
 		if (!user.validate()) {
 			log.debug("Updated details for user [$user.id]$user.username are invalid")
 			render view: 'edit', model: [user: user]
@@ -94,6 +95,7 @@ class UserController {
 		}
 
 		def updatedUser = userService.updateUser(user)
+		
 		log.info("Successfully updated details for user [$user.id]$user.username")
 		flash.type = "success"
 		flash.message = message(code: 'nimble.user.update.success', args: [user.username])

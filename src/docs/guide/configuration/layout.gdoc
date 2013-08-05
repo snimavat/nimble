@@ -1,0 +1,12 @@
+Default layouts used by nimble views can be changed as shown below:
+
+{code}
+
+nimble {
+  layout {
+    application = 'app' 
+    administration = 'admin' //layout used by nimble administration portal.
+  }
+}
+
+{code} 

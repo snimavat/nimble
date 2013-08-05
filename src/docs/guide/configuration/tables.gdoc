@@ -1,0 +1,39 @@
+It is possible to change the table names for domain classes provided by nimble.
+
+Currently the following Nimble domain classes have been setup to utilize configurable table names
+
+# User
+# Profile
+# Role
+# Group
+# Permission
+# LevelPermission
+# LoginRecord
+# Url
+
+Default table names specified in @DefaultNimbleConfig.groovy@ is as below:
+
+# user =  "_user"
+# role =  "_role"
+# group =  "_group"
+# profilebase = "profile_base"
+# loginrecord = "login_record"
+# permission = "permission"
+# levelpermission = "level_permission"
+# url = "url"
+
+You can change default table names by overriding it in @conf/NimbleConfig.groovy@ as shown below:
+
+{code:groovy}
+
+nimble {
+  tablenames {
+    user =  "user_master"
+    role =  "role_master"
+    group =  "group_master"
+   }
+}
+
+{code}
+
+You don't have to override all table names, you can choose to override just selected.

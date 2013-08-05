@@ -1,0 +1,18 @@
+Nimble can be configured to send emails for registration, password reset and email address change. By default mails are disabled. It can be configured to enable mails, and subjects of mails.
+
+{code:groovy}
+nimble {
+  messaging {
+    enabled = true
+    registration { subject = "Your new account is ready!" }
+    passwordreset { subject = "Your password has been reset" }
+    changeemail { subject = "Your email address has been changed" }
+  }
+}
+
+{code}
+
+{note}
+Nimble depends on Grails [mail plugin:http://grails.org/plugin/mail] for sending mails. You must configure mail plugin properly if you enable messaging in nimble.
+{note}
+

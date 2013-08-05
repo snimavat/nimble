@@ -1,0 +1,23 @@
+Host application can customize many aspects of the Nimble plugin by overriding various components. This is not nimble specific, Standard Grails overriding conventions apply.
+
+h4. Overriding layout
+Default layouts used by nimble are @app.gsp@ and @admin.gsp@. The layout can be overridden by creating files with same name in grails-app/views/layout directory of host application.
+
+{note}
+Instead of overriding you may want to [configure|guide:layout] layout names in @NimbleConfig.groovy@
+{note}
+
+h4. Overriding styles and Javascript
+Nimble uses Grails [resources plugin|http://grails.org/plugin/resources]. 
+Host application can override CSS/Javascript provided by Nimble plugin by overriding the resource bundles provided by nimble.
+
+See [NimblePluginResources.groovy|https://github.com/snimavat/nimble/blob/master/grails-app/conf/NimblePluginResources.groovy] to find out resource bundles. 
+
+h4. Modifying Nimble side menu
+Nimble side menu can be modified by copying @_sidenavigation.gsp@ to @grails-app/view/templates/nimble/navigation@
+
+h4. Email templates
+During installation, Nimble copies email templates into @grails-app/views/templates/nimble/mail@.
+These templates can be modified to change the content of emails.
+
+

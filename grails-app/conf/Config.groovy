@@ -5,3 +5,9 @@ log4j = {
 			'net.sf.ehcache.hibernate'
 	debug 'grails.plugin.aspectj'
 }
+
+
+//doc configurations
+grails.doc.title = "Nimble Plugin"
+grails.doc.authors = "Sudhir Nimavat"
+grails.doc.licence = "Apache License 2.0"

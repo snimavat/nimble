@@ -1,0 +1,27 @@
+
+introduction:
+  title: Introduction
+  overview: Overview
+installation:
+  title: Installation
+configuration:
+  title: Configuration
+  tables: Configuring table names
+  users: User account configuration
+  passwords: Password requirements
+  mail: Email Settings
+  layout: UI Layout
+customization:
+  title: Customizing Nimble
+leverage:
+  title: Leveraging Nimble in your application
+  accesscontrol:
+    title: Access control
+    filters: Enforcing access control using filters
+    incode: Enforcing access control directly in code
+  dynamicmethods: Dynamic methods provided by Nimble
+  tags:
+    title: GSP tags provided by Nimble
+    auth: Authentication and authorization tags
+    ui: Utility and UI tags      
+  

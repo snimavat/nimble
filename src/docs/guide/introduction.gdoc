@@ -1,0 +1,13 @@
+Nimble is an extensive application base for [Grails|http://grails.org] powered softwares. 
+
+Nimble can save you months of development cost by providing common components that most of web applications require.
+Nimble provides beautiful UI and ready to use functionality for login, user registration, password reset, Users, Roles, Groups and permission management.
+Nimble provides administration portal from where all of the above stuff can be managed. Its possible to extends nimble administration portal to add other administration functionality for your application.
+
+
+
+
+
+ 
+
+ 

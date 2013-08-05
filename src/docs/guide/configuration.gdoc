@@ -1,0 +1,2 @@
+Nimble configuration is devided into two files, @DefaultNimbleConfig.groovy@ which is packaged inside plugin and @NimbleConfig.groovy@ which resides into conf directory of host application.
+Values in @DefaultNimbleConfig.groovy@ are all considered to be sensible defaults for most usage of Nimble, however all of these values an be overridden by simply redefining them in @NimbleConfig.groovy@

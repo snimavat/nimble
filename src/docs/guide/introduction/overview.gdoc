@@ -1,0 +1,9 @@
+The following components make up the core of what Nimble provides to developers
+
+h3. Authentication
+By utilizing [Shiro Plugin|http://grails.org/plugin/shiro] Nimble provides built in support authentication using locally managed accounts.
+Nimble provides ready to use UI for login, registration, password reset, user management, user login history.
+
+h3. Fine grained access control
+By combining the three core access control concepts of users, groups and roles with the permissions engine exposed by Apache Shiro your application can achieve fine grained access control across controllers, views, services, GSPs and native Java logic.
+Permissions can be applied to users, roles and groups. Users can be members of an unlimited number of groups. Both users and groups are able to be assigned roles. Enabling permissions to cascade through this structure is where Nimble gains its real access control flexibility. This process is also dynamic. If you remove or apply a permission that ultimately applies to a currently active Nimble based user session that user obtains or loses access without needing to terminate their session.  

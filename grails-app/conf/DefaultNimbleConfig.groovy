@@ -28,15 +28,9 @@ nimble {
 		url = "url"
 	}
 
-	fieldnames {
-		uid = "uid"
-		number = "number"
-	}
-
 	layout {
 		application = 'app'
-		administration = 'admin'
-		customcss = ''
+		administration = 'admin'		
 	}
 
 	localusers {

@@ -1,0 +1,16 @@
+You can configure things like whether to allow new user registration, username requirements, and whether new user account is enabled after successful registration as shown below.
+
+{code:groovy}
+
+nimble{
+  localusers {
+    usernames {
+      minlength = 4
+      validregex = '[a-zA-Z0-9]*' //regex that should be used for validating username
+   }
+   provision { active = false } //whether new user accoutn should be enabled or disabled after registration
+   registration { enabled = true } //Allow new users to register or now
+  }
+}
+
+{code}
