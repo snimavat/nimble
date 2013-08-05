@@ -1,0 +1,5 @@
+DefaultPackage
+grails.plugin.nimble
+grails.plugin.nimble.auth
+grails.plugin.nimble.core
+grails.plugin.nimble.security

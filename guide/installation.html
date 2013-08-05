@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2 Installation 0.5.1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/leverage.html"><strong>5</strong><span>Leveraging Nimble in your application</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>Nimble is an extensive application base environment for Grails.</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2 Installation - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Sudhir Nimavat</p>
+
+                    <p><strong>Version:</strong> 0.5.1</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="installation">2 Installation</h1>
+Nimble can be installed in any grails project by declaring plugin dependency in BuildConfig.groovy as show below.<p class="paragraph"/><h3>Step 1: Install nimble plugin</h3>
+<div class="code"><pre>plugins &#123;
+      compile <span class="java&#45;quote">"&#58;nimble&#58;0.5.1"</span>
+    &#125;</pre></div><p class="paragraph"/><blockquote class="note">
+For new projects, we recommend that you use the latest release of plugin. See <a href="http://grails.org/plugin/nimble" target="blank">Nimble plugin</a> for latest version. 
+</blockquote><p class="paragraph"/><h3>Step 2: Inject nimble into host application</h3>
+inject Nimble into your host application so that you can customize various components as necessary for your use case. Execute the following command:<p class="paragraph"/><div class="code"><pre>grails jack&#45;be&#45;nimble &#60;<span class="java&#45;keyword">package</span>&#62; &#60;User <span class="java&#45;object">Class</span> Name&#62; &#60;Profile <span class="java&#45;object">Class</span> Name&#62;<p class="paragraph"/>Example:<p class="paragraph"/>grails jack&#45;be&#45;nimble com.example.domain User Profile</pre></div><p class="paragraph"/>This is a very non-invasive procedure as far as the host application is concerned. One of the main goals of the Nimble project is to make it as invisible as possible when installed in a host application so as not to clutter up your business logic. 
+Once complete, You will have following files in your copied into your project.
+<ol>
+<li>conf/NimbleConfig.groovy</li>
+<li>conf/NimbleBootStrap.groovy</li>
+<li>conf/NimbleSecurityFilters.groovy</li>
+<li>conf/NimbleUrlMappings.groovy</li>
+<li>domain/&#60;package&#62;/&#60;User class&#62;.groovy</li>
+<li>domain/&#60;package&#62;&#60;Profile class&#62;.groovy</li>
+<li>views/templates/nimble/mail templates</li>
+<li>i18n/messages-nimble.properties</li>
+</ol><p class="paragraph"/>At this point you are ready to start using nimble. Launch you application using <code>grails run-app</code> command.
+Open you browser and navigate to <code>&#60;app_url&#62;/main</code> and you will be asked to login.<p class="paragraph"/>By default Nimble creates two user accounts automatically, one with user rights and one with Administration rights.<p class="paragraph"/>You can login as:
+<ol>
+<li>user/useR123!</li>
+<li>admin/admiN123!</li>
+</ol><p class="paragraph"/>The admin user will be able to access the full UI.<p class="paragraph"/>Congratulations Nimble is now fully activated within your application and you're ready to start wiring up your business logic.
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

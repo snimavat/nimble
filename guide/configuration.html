@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 Configuration 0.5.1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/leverage.html"><strong>5</strong><span>Leveraging Nimble in your application</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>Nimble is an extensive application base environment for Grails.</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 Configuration - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Sudhir Nimavat</p>
+
+                    <p><strong>Version:</strong> 0.5.1</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#tables"><strong>3.1</strong><span>Configuring table names</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#users"><strong>3.2</strong><span>User account configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#passwords"><strong>3.3</strong><span>Password requirements</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#mail"><strong>3.4</strong><span>Email Settings</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#layout"><strong>3.5</strong><span>UI Layout</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="configuration">3 Configuration</h1>
+Nimble configuration is devided into two files, <code>DefaultNimbleConfig.groovy</code> which is packaged inside plugin and <code>NimbleConfig.groovy</code> which resides into conf directory of host application.
+Values in <code>DefaultNimbleConfig.groovy</code> are all considered to be sensible defaults for most usage of Nimble, however all of these values an be overridden by simply redefining them in <code>NimbleConfig.groovy</code>
+
+
+<h2 id="tables">3.1 Configuring table names</h2>
+It is possible to change the table names for domain classes provided by nimble.<p class="paragraph"/>Currently the following Nimble domain classes have been setup to utilize configurable table names
+<ol>
+<li>User</li>
+<li>Profile</li>
+<li>Role</li>
+<li>Group</li>
+<li>Permission</li>
+<li>LevelPermission</li>
+<li>LoginRecord</li>
+<li>Url</li>
+</ol><p class="paragraph"/>Default table names specified in <code>DefaultNimbleConfig.groovy</code> is as below:
+<ol>
+<li>user =  "_user"</li>
+<li>role =  "_role"</li>
+<li>group =  "_group"</li>
+<li>profilebase = "profile_base"</li>
+<li>loginrecord = "login_record"</li>
+<li>permission = "permission"</li>
+<li>levelpermission = "level_permission"</li>
+<li>url = "url"</li>
+</ol><p class="paragraph"/>You can change default table names by overriding it in <code>conf/NimbleConfig.groovy</code> as shown below:<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  tablenames &#123;
+    user =  <span class="java&#45;quote">"user_master"</span>
+    role =  <span class="java&#45;quote">"role_master"</span>
+    group =  <span class="java&#45;quote">"group_master"</span>
+   &#125;
+&#125;</pre></div><p class="paragraph"/>You don't have to override all table names, you can choose to override just selected.
+
+
+<h2 id="users">3.2 User account configuration</h2>
+You can configure things like whether to allow new user registration, username requirements, and whether new user account is enabled after successful registration as shown below.<p class="paragraph"/><div class="code"><pre>nimble&#123;
+  localusers &#123;
+    usernames &#123;
+      minlength = 4
+      validregex = '&#91;a&#45;zA&#45;Z0&#45;9&#93;&#42;' //regex that should be used <span class="java&#45;keyword">for</span> validating username
+   &#125;
+   provision &#123; active = <span class="java&#45;keyword">false</span> &#125; //whether <span class="java&#45;keyword">new</span> user accoutn should be enabled or disabled after registration
+   registration &#123; enabled = <span class="java&#45;keyword">true</span> &#125; //Allow <span class="java&#45;keyword">new</span> users to register or now
+  &#125;
+&#125;</pre></div>
+
+
+<h2 id="passwords">3.3 Password requirements</h2>
+Nimble has password requirements for new user registration. Default is as shown below:<p class="paragraph"/><div class="code"><pre>nimble&#123;
+  passwords &#123;
+    mustcontain &#123;
+      lowercase = <span class="java&#45;keyword">true</span>
+      uppercase = <span class="java&#45;keyword">true</span>
+      numbers = <span class="java&#45;keyword">true</span>
+      symbols = <span class="java&#45;keyword">true</span>
+    &#125;
+    minlength = 8
+  &#125;
+&#125;</pre></div><p class="paragraph"/>It can be overridden in <code>NimbleConfig.groovy</code>
+
+
+<h2 id="mail">3.4 Email Settings</h2>
+Nimble can be configured to send emails for registration, password reset and email address change. By default mails are disabled. It can be configured to enable mails, and subjects of mails.<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  messaging &#123;
+    enabled = <span class="java&#45;keyword">true</span>
+    registration &#123; subject = <span class="java&#45;quote">"Your <span class="java&#45;keyword">new</span> account is ready!"</span> &#125;
+    passwordreset &#123; subject = <span class="java&#45;quote">"Your password has been reset"</span> &#125;
+    changeemail &#123; subject = <span class="java&#45;quote">"Your email address has been changed"</span> &#125;
+  &#125;
+&#125;</pre></div><p class="paragraph"/><blockquote class="note">
+Nimble depends on Grails <a href="mail plugin:http://grails.org/plugin/mail" target="blank"></a> for sending mails. You must configure mail plugin properly if you enable messaging in nimble.
+</blockquote><p class="paragraph"/>
+
+
+<h2 id="layout">3.5 UI Layout</h2>
+Default layouts used by nimble views can be changed as shown below:<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  layout &#123;
+    application = 'app' 
+    administration = 'admin' //layout used by nimble administration portal.
+  &#125;
+&#125;</pre></div> 
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

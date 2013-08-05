@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Nimble Plugin 0.5.1</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+    </head>
+
+    <body class="body" onload="addJsClass();">
+        <div id="navigation">
+            <ul>
+                <li>
+                    <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                        <a href="../guide/index.html" class="button">Table of contents</a>
+                        <div id="nav-summary-childs" style="display:none;">
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#configuration"><strong>3</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#customization"><strong>4</strong><span>Customizing Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#leverage"><strong>5</strong><span>Leveraging Nimble in your application</span></a></div>
+                            
+                        </div>
+                    </div>
+                </li>
+                <li class="separator selected">
+                    <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+                </li>
+            </ul>
+        </div>
+        <div id="header">
+            <div class="images clearfix">
+                
+                
+            </div>
+            <p>Nimble is an extensive application base environment for Grails.</p>
+        </div>
+
+
+        <table id="colset" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="col1">
+                    <div id="main" class="corner-all">
+
+                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                        <div class="project">
+                            <h1>Nimble Plugin - Reference Documentation</h1>
+                            <p><strong>Authors:</strong> Sudhir Nimavat</p>
+                            <p><strong>Version:</strong> 0.5.1</p>
+                            
+                        </div>
+
+                        
+                        <div id="table-of-content">
+                            <h2>Table of Contents</h2>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#overview"><strong>1.1</strong><span>Overview</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#configuration"><strong>3</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#tables"><strong>3.1</strong><span>Configuring table names</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#users"><strong>3.2</strong><span>User account configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#passwords"><strong>3.3</strong><span>Password requirements</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#mail"><strong>3.4</strong><span>Email Settings</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#layout"><strong>3.5</strong><span>UI Layout</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#customization"><strong>4</strong><span>Customizing Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#leverage"><strong>5</strong><span>Leveraging Nimble in your application</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#accesscontrol"><strong>5.1</strong><span>Access control</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="#filters"><strong>5.1.1</strong><span>Enforcing access control using filters</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="#incode"><strong>5.1.2</strong><span>Enforcing access control directly in code</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#dynamicmethods"><strong>5.2</strong><span>Dynamic methods provided by Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#tags"><strong>5.3</strong><span>GSP tags provided by Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="#auth"><strong>5.3.1</strong><span>Authentication and authorization tags</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="#ui"><strong>5.3.2</strong><span>Utility and UI tags</span></a></div>
+                            
+                            <div style="clear:both" ></div>
+                        </div>
+                        
+                        
+
+<h1 id="introduction">1 Introduction</h1>
+Nimble is an extensive application base for <a href="http://grails.org" target="blank">Grails</a> powered softwares.<p class="paragraph"/>Nimble can save you months of development cost by providing common components that most of web applications require.
+Nimble provides beautiful UI and ready to use functionality for login, user registration, password reset, Users, Roles, Groups and permission management.
+Nimble provides administration portal from where all of the above stuff can be managed. Its possible to extends nimble administration portal to add other administration functionality for your application.<p class="paragraph"/><p class="paragraph"/><p class="paragraph"/><p class="paragraph"/> 
+
+
+<h2 id="overview">1.1 Overview</h2>
+The following components make up the core of what Nimble provides to developers<p class="paragraph"/><h3>Authentication</h3>
+By utilizing <a href="http://grails.org/plugin/shiro" target="blank">Shiro Plugin</a> Nimble provides built in support authentication using locally managed accounts.
+Nimble provides ready to use UI for login, registration, password reset, user management, user login history.<p class="paragraph"/><h3>Fine grained access control</h3>
+By combining the three core access control concepts of users, groups and roles with the permissions engine exposed by Apache Shiro your application can achieve fine grained access control across controllers, views, services, GSPs and native Java logic.
+Permissions can be applied to users, roles and groups. Users can be members of an unlimited number of groups. Both users and groups are able to be assigned roles. Enabling permissions to cascade through this structure is where Nimble gains its real access control flexibility. This process is also dynamic. If you remove or apply a permission that ultimately applies to a currently active Nimble based user session that user obtains or loses access without needing to terminate their session.  
+
+
+<h1 id="installation">2 Installation</h1>
+Nimble can be installed in any grails project by declaring plugin dependency in BuildConfig.groovy as show below.<p class="paragraph"/><h3>Step 1: Install nimble plugin</h3>
+<div class="code"><pre>plugins &#123;
+      compile <span class="java&#45;quote">"&#58;nimble&#58;0.5.1"</span>
+    &#125;</pre></div><p class="paragraph"/><blockquote class="note">
+For new projects, we recommend that you use the latest release of plugin. See <a href="http://grails.org/plugin/nimble" target="blank">Nimble plugin</a> for latest version. 
+</blockquote><p class="paragraph"/><h3>Step 2: Inject nimble into host application</h3>
+inject Nimble into your host application so that you can customize various components as necessary for your use case. Execute the following command:<p class="paragraph"/><div class="code"><pre>grails jack&#45;be&#45;nimble &#60;<span class="java&#45;keyword">package</span>&#62; &#60;User <span class="java&#45;object">Class</span> Name&#62; &#60;Profile <span class="java&#45;object">Class</span> Name&#62;<p class="paragraph"/>Example:<p class="paragraph"/>grails jack&#45;be&#45;nimble com.example.domain User Profile</pre></div><p class="paragraph"/>This is a very non-invasive procedure as far as the host application is concerned. One of the main goals of the Nimble project is to make it as invisible as possible when installed in a host application so as not to clutter up your business logic. 
+Once complete, You will have following files in your copied into your project.
+<ol>
+<li>conf/NimbleConfig.groovy</li>
+<li>conf/NimbleBootStrap.groovy</li>
+<li>conf/NimbleSecurityFilters.groovy</li>
+<li>conf/NimbleUrlMappings.groovy</li>
+<li>domain/&#60;package&#62;/&#60;User class&#62;.groovy</li>
+<li>domain/&#60;package&#62;&#60;Profile class&#62;.groovy</li>
+<li>views/templates/nimble/mail templates</li>
+<li>i18n/messages-nimble.properties</li>
+</ol><p class="paragraph"/>At this point you are ready to start using nimble. Launch you application using <code>grails run-app</code> command.
+Open you browser and navigate to <code>&#60;app_url&#62;/main</code> and you will be asked to login.<p class="paragraph"/>By default Nimble creates two user accounts automatically, one with user rights and one with Administration rights.<p class="paragraph"/>You can login as:
+<ol>
+<li>user/useR123!</li>
+<li>admin/admiN123!</li>
+</ol><p class="paragraph"/>The admin user will be able to access the full UI.<p class="paragraph"/>Congratulations Nimble is now fully activated within your application and you're ready to start wiring up your business logic.
+
+
+<h1 id="configuration">3 Configuration</h1>
+Nimble configuration is devided into two files, <code>DefaultNimbleConfig.groovy</code> which is packaged inside plugin and <code>NimbleConfig.groovy</code> which resides into conf directory of host application.
+Values in <code>DefaultNimbleConfig.groovy</code> are all considered to be sensible defaults for most usage of Nimble, however all of these values an be overridden by simply redefining them in <code>NimbleConfig.groovy</code>
+
+
+<h2 id="tables">3.1 Configuring table names</h2>
+It is possible to change the table names for domain classes provided by nimble.<p class="paragraph"/>Currently the following Nimble domain classes have been setup to utilize configurable table names
+<ol>
+<li>User</li>
+<li>Profile</li>
+<li>Role</li>
+<li>Group</li>
+<li>Permission</li>
+<li>LevelPermission</li>
+<li>LoginRecord</li>
+<li>Url</li>
+</ol><p class="paragraph"/>Default table names specified in <code>DefaultNimbleConfig.groovy</code> is as below:
+<ol>
+<li>user =  "_user"</li>
+<li>role =  "_role"</li>
+<li>group =  "_group"</li>
+<li>profilebase = "profile_base"</li>
+<li>loginrecord = "login_record"</li>
+<li>permission = "permission"</li>
+<li>levelpermission = "level_permission"</li>
+<li>url = "url"</li>
+</ol><p class="paragraph"/>You can change default table names by overriding it in <code>conf/NimbleConfig.groovy</code> as shown below:<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  tablenames &#123;
+    user =  <span class="java&#45;quote">"user_master"</span>
+    role =  <span class="java&#45;quote">"role_master"</span>
+    group =  <span class="java&#45;quote">"group_master"</span>
+   &#125;
+&#125;</pre></div><p class="paragraph"/>You don't have to override all table names, you can choose to override just selected.
+
+
+<h2 id="users">3.2 User account configuration</h2>
+You can configure things like whether to allow new user registration, username requirements, and whether new user account is enabled after successful registration as shown below.<p class="paragraph"/><div class="code"><pre>nimble&#123;
+  localusers &#123;
+    usernames &#123;
+      minlength = 4
+      validregex = '&#91;a&#45;zA&#45;Z0&#45;9&#93;&#42;' //regex that should be used <span class="java&#45;keyword">for</span> validating username
+   &#125;
+   provision &#123; active = <span class="java&#45;keyword">false</span> &#125; //whether <span class="java&#45;keyword">new</span> user accoutn should be enabled or disabled after registration
+   registration &#123; enabled = <span class="java&#45;keyword">true</span> &#125; //Allow <span class="java&#45;keyword">new</span> users to register or now
+  &#125;
+&#125;</pre></div>
+
+
+<h2 id="passwords">3.3 Password requirements</h2>
+Nimble has password requirements for new user registration. Default is as shown below:<p class="paragraph"/><div class="code"><pre>nimble&#123;
+  passwords &#123;
+    mustcontain &#123;
+      lowercase = <span class="java&#45;keyword">true</span>
+      uppercase = <span class="java&#45;keyword">true</span>
+      numbers = <span class="java&#45;keyword">true</span>
+      symbols = <span class="java&#45;keyword">true</span>
+    &#125;
+    minlength = 8
+  &#125;
+&#125;</pre></div><p class="paragraph"/>It can be overridden in <code>NimbleConfig.groovy</code>
+
+
+<h2 id="mail">3.4 Email Settings</h2>
+Nimble can be configured to send emails for registration, password reset and email address change. By default mails are disabled. It can be configured to enable mails, and subjects of mails.<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  messaging &#123;
+    enabled = <span class="java&#45;keyword">true</span>
+    registration &#123; subject = <span class="java&#45;quote">"Your <span class="java&#45;keyword">new</span> account is ready!"</span> &#125;
+    passwordreset &#123; subject = <span class="java&#45;quote">"Your password has been reset"</span> &#125;
+    changeemail &#123; subject = <span class="java&#45;quote">"Your email address has been changed"</span> &#125;
+  &#125;
+&#125;</pre></div><p class="paragraph"/><blockquote class="note">
+Nimble depends on Grails <a href="mail plugin:http://grails.org/plugin/mail" target="blank"></a> for sending mails. You must configure mail plugin properly if you enable messaging in nimble.
+</blockquote><p class="paragraph"/>
+
+
+<h2 id="layout">3.5 UI Layout</h2>
+Default layouts used by nimble views can be changed as shown below:<p class="paragraph"/><div class="code"><pre>nimble &#123;
+  layout &#123;
+    application = 'app' 
+    administration = 'admin' //layout used by nimble administration portal.
+  &#125;
+&#125;</pre></div> 
+
+
+<h1 id="customization">4 Customizing Nimble</h1>
+Host application can customize many aspects of the Nimble plugin by overriding various components. This is not nimble specific, Standard Grails overriding conventions apply.<p class="paragraph"/><h4>Overriding layout</h4>
+Default layouts used by nimble are <code>app.gsp</code> and <code>admin.gsp</code>. The layout can be overridden by creating files with same name in grails-app/views/layout directory of host application.<p class="paragraph"/><blockquote class="note">
+Instead of overriding you may want to <a href="../guide/single.html#layout" class="guide">configure</a> layout names in <code>NimbleConfig.groovy</code>
+</blockquote><p class="paragraph"/><h4>Overriding styles and Javascript</h4>
+Nimble uses Grails <a href="http://grails.org/plugin/resources" target="blank">resources plugin</a>. 
+Host application can override CSS/Javascript provided by Nimble plugin by overriding the resource bundles provided by nimble.<p class="paragraph"/>See <a href="https://github.com/snimavat/nimble/blob/master/grails-app/conf/NimblePluginResources.groovy" target="blank">NimblePluginResources.groovy</a> to find out resource bundles.<p class="paragraph"/><h4>Modifying Nimble side menu</h4>
+Nimble side menu can be modified by copying <code>_sidenavigation.gsp</code> to <code>grails-app/view/templates/nimble/navigation</code><p class="paragraph"/><h4>Email templates</h4>
+During installation, Nimble copies email templates into <code>grails-app/views/templates/nimble/mail</code>.
+These templates can be modified to change the content of emails.<p class="paragraph"/>
+
+
+
+<h1 id="leverage">5 Leveraging Nimble in your application</h1>
+Nimble provides host of functionalities that can be leveraged by host applications, including dynamic methods and gsp tags.
+
+
+<h2 id="accesscontrol">5.1 Access control</h2>
+@TODO
+
+
+<h2 id="filters">5.1.1 Enforcing access control using filters</h2>
+@TODO
+
+
+<h2 id="incode">5.1.2 Enforcing access control directly in code</h2>
+@TODO
+
+
+<h2 id="dynamicmethods">5.2 Dynamic methods provided by Nimble</h2>
+@TODO
+
+
+<h2 id="tags">5.3 GSP tags provided by Nimble</h2>
+@TODO
+
+
+<h2 id="auth">5.3.1 Authentication and authorization tags</h2>
+@TODO
+
+
+<h2 id="ui">5.3.2 Utility and UI tags</h2>
+@TODO
+
+                    </div>
+                </td>
+                <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+            </tr>
+        </table>
+
+        <div id="footer">
+            
+            
+        </div>
+
+
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+    </body>
+</html>

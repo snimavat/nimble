@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Nimble Plugin 0.5.1</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+    </head>
+
+    <body class="body" onload="addJsClass();">
+        <div id="navigation">
+            <ul>
+                <li>
+                    <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                        <a href="../guide/index.html" class="button">Table of contents</a>
+                        <div id="nav-summary-childs" style="display:none;">
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="../guide/leverage.html"><strong>5</strong><span>Leveraging Nimble in your application</span></a></div>
+                            
+                        </div>
+                    </div>
+                </li>
+                <li class="separator selected">
+                    <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+                </li>
+            </ul>
+        </div>
+        <div id="header">
+            <div class="images clearfix">
+                
+                
+            </div>
+            <p>Nimble is an extensive application base environment for Grails.</p>
+        </div>
+
+
+        <table id="colset" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="col1">
+                    <div id="main" class="corner-all">
+
+                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                        <div class="project">
+                            <h1>Nimble Plugin - Reference Documentation</h1>
+                            <p><strong>Authors:</strong> Sudhir Nimavat</p>
+                            <p><strong>Version:</strong> 0.5.1</p>
+                            
+                        </div>
+
+                        
+                        <div id="table-of-content">
+                            <h2>Table of Contents</h2>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/introduction.html#overview"><strong>1.1</strong><span>Overview</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="../guide/configuration.html"><strong>3</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/configuration.html#tables"><strong>3.1</strong><span>Configuring table names</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/configuration.html#users"><strong>3.2</strong><span>User account configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/configuration.html#passwords"><strong>3.3</strong><span>Password requirements</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/configuration.html#mail"><strong>3.4</strong><span>Email Settings</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/configuration.html#layout"><strong>3.5</strong><span>UI Layout</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="../guide/customization.html"><strong>4</strong><span>Customizing Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="../guide/leverage.html"><strong>5</strong><span>Leveraging Nimble in your application</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/leverage.html#accesscontrol"><strong>5.1</strong><span>Access control</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="../guide/leverage.html#filters"><strong>5.1.1</strong><span>Enforcing access control using filters</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="../guide/leverage.html#incode"><strong>5.1.2</strong><span>Enforcing access control directly in code</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/leverage.html#dynamicmethods"><strong>5.2</strong><span>Dynamic methods provided by Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="../guide/leverage.html#tags"><strong>5.3</strong><span>GSP tags provided by Nimble</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="../guide/leverage.html#auth"><strong>5.3.1</strong><span>Authentication and authorization tags</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:20px"><a href="../guide/leverage.html#ui"><strong>5.3.2</strong><span>Utility and UI tags</span></a></div>
+                            
+                            <div style="clear:both" ></div>
+                        </div>
+                        
+                        
+                    </div>
+                </td>
+                <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+            </tr>
+        </table>
+
+        <div id="footer">
+            
+            
+        </div>
+
+
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+    </body>
+</html>
