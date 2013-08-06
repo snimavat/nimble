@@ -305,9 +305,14 @@ class UserService {
 		}
 
 		log.debug("Creating new record for user [$user.id]$user.username login")
+		
 		def record = new LoginRecord()
-
-		record.remoteAddr = request.getRemoteAddr()
+		
+		String ip = request.getRemoteAddr()				 
+		//it will be different then ip if request was forwarded by a proxy
+		String resolvedIp = getClientIpAddress(request) 
+						
+		record.remoteAddr = resolvedIp
 		record.remoteHost = request.getRemoteHost()
 		record.userAgent = request.getHeader("User-Agent")
 
@@ -319,7 +324,6 @@ class UserService {
 		if (record.hasErrors()) {
 			log.error("Unable to save login record for user [$user.id]$user.username")
 			record.errors.each { log.error(it) }
-
 			throw new RuntimeException("Unable to save login record for user [$user.id]$user.username")
 		}
 
@@ -333,6 +337,38 @@ class UserService {
 		}
 
 		log.info("User [$user.id]$user.username logged in successfully from remote host $record.remoteHost with UA $record.userAgent")
+	}
+
+	/**
+	 * Get Original ip address based on forward header if request is forwarded by a proxy
+	 * 
+	 * @param request
+	 * @return String ip
+	 */
+	private String getClientIpAddress(request) {
+		String ip = request.getHeader("X-Forwarded-For")
+		if(isNullOrUnknown(ip)) {
+			ip = request.getHeader("Proxy-Client-IP")
+		}
+		if(isNullOrUnknown(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP")
+		}
+		if(isNullOrUnknown(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR")
+		}
+		if(isNullOrUnknown(ip)) {
+			ip = request.getRemoteAddr()
+		}
+
+		if(ip.contains(",")) {
+			ip = ip.split(",")[0]
+		}
+
+		return ip
+	}
+
+	private boolean isNullOrUnknown(String str) {
+		(null == str || str.trim().length() == 0 || "unknown".equalsIgnoreCase(str))
 	}
 
 	/**
