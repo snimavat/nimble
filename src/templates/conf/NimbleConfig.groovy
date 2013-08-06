@@ -31,8 +31,9 @@ nimble {
 	}
 
 	localusers {
-		authentication { enabled = true }
+		authentication { enabled = true } 
 		registration { enabled = true }
+		provision { active = false }
 	}
 
 	messaging {

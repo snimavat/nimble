@@ -63,9 +63,8 @@
             </div>
          </div>
       </div>
-      <!-- Main container ends -->      
-      <n:sessionterminated />
-      <g:javascript library="application"/>
+      <!-- Main container ends -->
+      <%--  <n:sessionterminated /> --%>
       <r:layoutResources />
    </body>
 </html>
