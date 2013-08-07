@@ -46,8 +46,6 @@ class UserBase implements Serializable {
 	static hasMany = [
 		passwdHistory: String,
 		loginRecords: LoginRecord,
-		follows: UserBase,
-		followers: UserBase,
 		roles: Role,
 		groups: Group,
 		permissions: Permission
