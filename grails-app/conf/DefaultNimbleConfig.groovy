@@ -67,6 +67,7 @@ nimble {
 			symbols = true
 		}
 		minlength = 8
+		allowreuse = false
 	}
 
 	messaging {

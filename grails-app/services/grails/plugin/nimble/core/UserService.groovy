@@ -32,9 +32,8 @@ class UserService {
 
 	public static final String USER_ROLE = "USER"
 
-	def grailsApplication
 	def permissionService
-
+	def grailsApplication
 	def events = [:]
 
 	/**
@@ -284,6 +283,7 @@ class UserService {
 		user.addToPasswdHistory(crypt)
 
 		user.save()
+
 		if (user.hasErrors()) {
 			log.error("Unable to assign random password to user [$user.id]$user.username")
 			user.errors.each { log.error(it) }
@@ -305,13 +305,10 @@ class UserService {
 		}
 
 		log.debug("Creating new record for user [$user.id]$user.username login")
-		
+
 		def record = new LoginRecord()
-		
-		String ip = request.getRemoteAddr()				 
-		//it will be different then ip if request was forwarded by a proxy
-		String resolvedIp = getClientIpAddress(request) 
-						
+		String resolvedIp = getClientIpAddress(request)
+
 		record.remoteAddr = resolvedIp
 		record.remoteHost = request.getRemoteHost()
 		record.userAgent = request.getHeader("User-Agent")
@@ -329,7 +326,7 @@ class UserService {
 
 		user.save()
 
-		if (record.hasErrors()) {
+		if (user.hasErrors()) {
 			log.error("Unable to update user [$user.id]$user.username with new login record")
 			user.errors.each { log.error(it) }
 
@@ -384,15 +381,14 @@ class UserService {
 	boolean validatePass(UserBase user, boolean checkOnly) {
 		log.debug("Validating user entered password")
 
-		if (user.pass == null || user.pass.length() < grailsApplication.config.nimble.passwords.minlength) {
+		if (user.pass == null || user.pass.length() < nimbleConfig.passwords.minlength) {
 			log.debug("Password to short")
 			user.errors.rejectValue('pass', 'nimble.user.password.required')
 			return false
 		}
 
-		if (user.passConfirm == null || user.passConfirm.length() < grailsApplication.config.nimble.passwords.minlength) {
+		if (user.passConfirm == null || user.passConfirm.length() < nimbleConfig.passwords.minlength) {
 			log.debug("Confirmation password to short")
-
 			user.errors.rejectValue('passConfirm', 'nimble.user.passconfirm.required')
 			return false
 		}
@@ -403,25 +399,25 @@ class UserService {
 			return false
 		}
 
-		if (grailsApplication.config.nimble.passwords.mustcontain.lowercase && !(user.pass =~ /^.*[a-z].*$/)) {
+		if (nimbleConfig.passwords.mustcontain.lowercase && !(user.pass =~ /^.*[a-z].*$/)) {
 			log.debug("Password does not contain lower case letters")
 			user.errors.rejectValue('pass', 'nimble.user.password.no.lowercase')
 			return false
 		}
 
-		if (grailsApplication.config.nimble.passwords.mustcontain.uppercase && !(user.pass =~ /^.*[A-Z].*$/)) {
+		if (nimbleConfig.passwords.mustcontain.uppercase && !(user.pass =~ /^.*[A-Z].*$/)) {
 			log.debug("Password does not contain uppercase letters")
 			user.errors.rejectValue('pass', 'nimble.user.password.no.uppercase')
 			return false
 		}
 
-		if (grailsApplication.config.nimble.passwords.mustcontain.numbers && !(user.pass =~ /^.*[0-9].*$/)) {
+		if (nimbleConfig.passwords.mustcontain.numbers && !(user.pass =~ /^.*[0-9].*$/)) {
 			log.debug("Password does not contain numbers")
 			user.errors.rejectValue('pass', 'nimble.user.password.no.numbers')
 			return false
 		}
 
-		if (grailsApplication.config.nimble.passwords.mustcontain.symbols && !(user.pass =~ /^.*\W.*$/)) {
+		if (nimbleConfig.passwords.mustcontain.symbols && !(user.pass =~ /^.*\W.*$/)) {
 			log.debug("Password does not contain symbols")
 			user.errors.rejectValue('pass', 'nimble.user.password.no.symbols')
 			return false
@@ -430,10 +426,12 @@ class UserService {
 		def pwEnc = new Sha256Hash(user.pass)
 		def crypt = pwEnc.toHex()
 
-		if (user.passwdHistory != null && user.passwdHistory.contains(crypt)) {
-			log.debug("Password was previously utilized")
-			user.errors.rejectValue('pass', 'nimble.user.password.duplicate')
-			return false
+		if(!nimbleConfig.passwords.allowreuse) {
+			if (user.passwdHistory != null && user.passwdHistory.contains(crypt)) {
+				log.debug("Password was previously utilized")
+				user.errors.rejectValue('pass', 'nimble.user.password.duplicate')
+				return false
+			}
 		}
 
 		if (!user.hasErrors() && !checkOnly) {
@@ -443,4 +441,9 @@ class UserService {
 
 		return true
 	}
+
+	private getNimbleConfig() {
+		grailsApplication.config.nimble
+	}
+
 }

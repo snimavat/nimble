@@ -100,28 +100,32 @@ class AdminsController {
 
 		log.debug("Performing search for users matching $q")
 
-		def users = UserBase.findAllByUsernameIlike(q)
-		def profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q)
+		def users = UserBase.findAllByUsernameIlike(q, [max:50])
+		def profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q, [max:50, sort:"fullName"])
 		def nonAdmins = []
 
 		users.each {
 			boolean admin = false
 			it.roles.each { role ->
-				if(role.name == AdminsService.ADMIN_ROLE)
+				if(role.name == AdminsService.ADMIN_ROLE) {
 					admin = true
+				}
 			}
-			if(!admin)
+			if(!admin) {
 				nonAdmins.add(it)
+			}
 		}
 
 		profiles.each {
 			boolean admin = false
 			it.owner.roles.each { role ->
-				if(role.name == AdminsService.ADMIN_ROLE)
+				if(role.name == AdminsService.ADMIN_ROLE) {
 					admin = true
+				}
 			}
-			if(!admin && !nonAdmins.contains(it.owner))
+			if(!admin && !nonAdmins.contains(it.owner)) {
 				nonAdmins.add(it.owner)
+			}
 		}
 
 		log.info("Search for new administrators complete, returning $nonAdmins.size records")
