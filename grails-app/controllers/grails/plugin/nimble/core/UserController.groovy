@@ -39,8 +39,8 @@ class UserController {
 	def list() {
 		params.max = Math.min(params.max ? params.int('max') : 10,100)
 		params.offset = params.offset ?: 0
-		params.sort = params.sort ?: "username"
-		params.order = params.order ?: "asc"
+		params.sort = params.sort ?: "dateCreated"
+		params.order = params.order ?: "desc"
 
 		log.debug("Listing users")
 		[users: UserBase.list(params)]
@@ -191,6 +191,7 @@ class UserController {
 		}
 
 		user.properties['pass', 'passConfirm'] = params
+		
 		if (!user.validate() || !userService.validatePass(user, true)) {
 			log.debug("Password change for [$user.id]$user.username was invalid")
 			render view: 'changepassword', model: [user: user]
@@ -291,7 +292,7 @@ class UserController {
 		def c = LoginRecord.createCriteria()
 		def logins = c.list {
 			eq("owner", user)
-			order("dateCreated")
+			order("dateCreated", "desc")
 			maxResults(20)
 		}
 		render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, ownerID: user.id])
