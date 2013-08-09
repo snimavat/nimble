@@ -1,27 +1,32 @@
 Nimble grails plugin
 --------------------
+Nimble is a Grails plugin and provides kickstart authentication and authorization functionality to any Grails application.
+Nimble provides beautiful UI and ready to use functionality for login, user registration, password reset, Users, Roles, 
+Groups and permission management. Nimble provides administration portal from where all of the above stuff can be managed. 
+Its possible to extends nimble administration portal to add other administration functionality for your application.
+
+Nimble is based on Apache shiro security framework
+
+## Features
+- Out of the box support for authentication and authorization
+- Login
+- Registration
+- Forgot password
+- UI for managing Administrators
+- UI for managing users
+- UI for managing user groups
+- UI for managing roles
+- UI for assigning roles and permissions to users and groups 
+
+And much more 
+
+Demo : http://nimble.ap01.aws.af.cm/
 
 Documentation: 
 
+- http://snimavat.github.io/nimble/index.html
 - http://grails.org/plugin/nimble
-- http://sites.google.com/site/nimbledoc/
-
-What has changed
----------------------
-- The plugin has been upgraded to work with grails 2.x, and shiro plugin 1.1.4
-- The UI has been reworked to use twitter bootstrap, dependency on jquery ui has been removed
-
-
-#### plugin dependencies
-- shiro 1.1.4 > *
-- mail 1.0 > *
-- twitter-bootstrap 2.3.0 > *
-- resources 1.1.6 > *
-- fields 1.2 > *
-jquery:'1.7.1 > *'
-
 
 ## Roadmap
 - Improve test coverage
 - Add support for impersonating users
-
