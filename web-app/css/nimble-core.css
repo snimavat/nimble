@@ -6,6 +6,7 @@ body {
  
 
 .navbar .navbar-inner {
+	filter: none;
     background: none repeat scroll 0 0 #6F8FAF;   
     border-radius: 0 0 0 0;
     border: 0;
@@ -84,17 +85,20 @@ body {
 	color: #6e6e6e;  
 	text-shadow: 1px 1px 0px #fff;
 	font-weight: 600;
+	display:inline-block;
+	padding: 11px 0 11px 26px;;
+	width: 190px;	
 }
 
-#sidebar .nav-list li.active {  
-	
+#sidebar .nav-list li > i {
+	display: none;
 }
 
-#sidebar .nav-list li.active a {
-  border: 0px;
+#sidebar .nav-list li.active-menu-item > i {
+	display: inline-block;
 }
 
-#sidebar .nav-list li:hover {
+#sidebar .nav-list li:hover, #sidebar .nav-list li.active-menu-item {
   background: #e8e8e8;
   border-bottom: 1px solid #cccccc;
   border-top: 1px solid #cccccc;         
