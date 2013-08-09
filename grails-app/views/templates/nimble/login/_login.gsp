@@ -4,22 +4,6 @@
       <title>
          <g:message code="nimble.template.login.title" />
       </title>
-      <r:script disposition='head'>
-         $(function() {
-         $(".loginmethod").hide();
-         $("#loginfacebookcontinue").hide();
-         var active = jQuery.url.param("active")
-         if (active) {
-         changeLogin(active);
-         }
-         else {
-         changeLogin('local');
-         }
-         $("#loginlocal").show();
-         $(".flash").show();
-         $("#username").focus();
-         });
-      </r:script>
       <r:require modules="nimble-login"/>
       <r:layoutResources/>
    </head>

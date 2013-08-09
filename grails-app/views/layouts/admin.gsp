@@ -21,7 +21,7 @@
       <div class="navbar" id="top-header">
          <div class="navbar-inner">
             <div class="container-fluid">
-               <a class="brand" href="#">Nimble</a>               
+               <g:link controller="admins" class="brand">Nimble</g:link>              
                <ul class="nav pull-right">
                   <li class="profile dropdown">
                      <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown">

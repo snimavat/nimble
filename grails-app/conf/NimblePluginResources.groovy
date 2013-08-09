@@ -32,23 +32,13 @@ modules = {
 		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.jgrowl_minimized.js'] , disposition:'head', nominify: true
 	}
 
-	'jquery-url' {
-		dependsOn 'jquery'
-		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.url.packed.js'], disposition:'head'
-	}
-
-	'jquery-bt' {
-		dependsOn 'jquery'
-		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.bt.js'], disposition:'head'
-	}
-
 	'jquery-pstrength' {
 		dependsOn 'jquery'
 		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.pstrength.js']
 	}
 
 	'nimble-admin' {
-		dependsOn 'jquery, jgrawl, jquery-url, jquery-bt, jquery-pstrength'
+		dependsOn 'jquery, jgrawl, jquery-pstrength'
 		dependsOn 'nimble-ui, nimble-core'
 		dependsOn 'bootstrap-css, bootstrap-responsive-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'
 	}

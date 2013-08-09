@@ -75,13 +75,6 @@ $(function() {
 	*/
 });
 
-function changeLogin(ident) {
-  $(".flash").hide();
-  $(".loginselector").removeClass("current");
-  $(".loginmethod").hide();
-  $("#" + ident).show("highlight");
-}
-
 // Session Termination
 $(function() {
 	$(document).ajaxError(function (event, xhr, ajaxOptions, thrownError) {	
