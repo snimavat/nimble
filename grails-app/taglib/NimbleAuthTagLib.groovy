@@ -57,7 +57,7 @@ class NimbleAuthTagLib {
 	def principalLink = {attrs, body ->
 		def user = getUser()
 		if (user) {
-			new MarkupBuilder(out).a('href': createLink(controller: 'user', action: 'show', id: id), 'class': 'icon icon_user', body()) {}
+			new MarkupBuilder(out).a('href': createLink(controller: 'user', action: 'show', id: user.id), body()) {}
 		}
 	}
 

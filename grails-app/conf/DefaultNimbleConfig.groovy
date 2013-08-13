@@ -39,6 +39,11 @@ nimble {
 			validregex = '[a-zA-Z0-9]*'
 		}
 		provision { active = false }
+		
+		authentication { 
+			postLoginUrl = "/" 
+		}
+		
 	}
 
 	fields {

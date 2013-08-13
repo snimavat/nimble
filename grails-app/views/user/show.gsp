@@ -28,16 +28,16 @@
                      <g:message code="nimble.link.edit" />
                   </g:link>
                   <g:if test="${user.external}">
-                     <g:link controller="user" action="changelocalpassword" id="${user.id}" class="btn btn-small btn-info">
+                     <g:link controller="user" action="changelocalpassword" id="${user.id}" class="btn btn-small btn-success">
                         <g:message code="nimble.link.changelocalpassword" />
                      </g:link>
                   </g:if>
                   <g:else>
-                     <g:link controller="user" action="changepassword" id="${user.id}" class="btn btn-small btn-info">
+                     <g:link controller="user" action="changepassword" id="${user.id}" class="btn btn-small btn-success">
                         <g:message code="nimble.link.changepassword" />
                      </g:link>
                   </g:else>
-                  <a href="#" class="btn btn-warning btn-small dropdown-toggle" data-toggle="dropdown">
+                  <a href="#" class="btn btn-info btn-small dropdown-toggle" data-toggle="dropdown">
                      <g:message code="nimble.link.more" default="More"/>
                      <span class="caret"></span>
                   </a>

@@ -61,7 +61,7 @@ class AuthController {
 			SecurityUtils.subject.login(authToken)
 			userService.createLoginRecord(request)
 
-			def targetUri = session.getAttribute(AuthController.TARGET) ?: "/"
+			def targetUri = session.getAttribute(AuthController.TARGET) ?: nimbleConfig.localusers.authentication.postLoginUrl
 			session.removeAttribute(AuthController.TARGET)
 
 			log.info("Authenticated user, $username")
