@@ -9,17 +9,15 @@ import org.springframework.mail.javamail.JavaMailSenderImpl
 class NimbleGrailsPlugin {
 	def version = "0.5.2"
 	def grailsVersion = "2.0.1 > *"
-
 	def title = "Nimble"
 	def author = "Sudhir Nimavat"
 	def authorEmail = "sudhir@nimavat.me"
 	def description = "Nimble is an extensive application base environment for Grails."
-
-	def documentation = "http://sites.google.com/site/nimbledoc/"
-	def license = "APACHE"
+	def documentation = "http://snimavat.github.io/nimble/index.html"	
 	def issueManagement = [ system: "GITHUB", url: "https://github.com/snimavat/nimble/issues" ]
 	def scm = [system: 'GitHub', url: 'https://github.com/snimavat/nimble']
-
+	def license = "APACHE"
+	
 	def observe = [
 		'controllers',
 		'services',
