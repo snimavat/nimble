@@ -1,7 +1,7 @@
 <g:if test="${logins?.size() > 0}">
 
   <p>
-	<g:message code="nimble.template.logins.list.heading" args="[logins.size()]"/>
+	<g:message code="nimble.template.logins.list.heading" args="[logins.size(), totalCount]"/>
   </p>
 
   <table class="table table-striped">

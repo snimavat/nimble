@@ -290,12 +290,14 @@ class UserController {
 
 		log.debug("Listing login events for user [$user.id]$user.username")
 		def c = LoginRecord.createCriteria()
-		def logins = c.list {
+		def logins = c.list(max:20, offset:0) {
 			eq("owner", user)
-			order("dateCreated", "desc")
-			maxResults(20)
+			order("dateCreated", "desc")			
 		}
-		render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, ownerID: user.id])
+		
+		def totalCount = logins.totalCount
+		
+		render(template: '/templates/admin/logins_list', contextPath: pluginContextPath, model: [logins: logins, totalCount:totalCount, ownerID: user.id])
 	}
 
 	def listgroups(Long id) {
