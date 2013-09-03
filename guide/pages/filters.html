@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.1.1 Enforcing access control using filters 0.5.1</title>
+    <title>5.1.1 Enforcing access control using filters 0.5.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -75,7 +75,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Sudhir Nimavat</p>
 
-                    <p><strong>Version:</strong> 0.5.1</p>
+                    <p><strong>Version:</strong> 0.5.2</p>
 
                     
                 </div>
@@ -85,7 +85,22 @@ function addJsClass() {
                 
 
 <h2 id="filters">5.1.1 Enforcing access control using filters</h2>
-@TODO
+One of the easiest methods for adding security to your host application is by configuring grails filters to control access to controllers and actions.
+Host application can call <code>accessControl</code> closure from within filters to authorize requests.<p class="paragraph"/>The following example shows the usage of the accessControl closure in filters.<p class="paragraph"/>Securing controller actions that require an authenticated user.
+<div class="code"><pre>secure(controller:<span class="java&#45;quote">"product"</span>, action:<span class="java&#45;quote">"edit"</span>) &#123;
+	  before = &#123;
+	  	accessControl &#123;
+	  		<span class="java&#45;keyword">true</span>
+	  	&#125;
+	  &#125;
+	&#125;</pre></div><p class="paragraph"/>Securing controllers/actions that require a specific role or permission<p class="paragraph"/><div class="code"><pre>secure(controller:<span class="java&#45;quote">"product"</span>, action:<span class="java&#45;quote">"delete"</span>) &#123;
+	  before = &#123;
+	  	accessControl &#123;
+	  		role(<span class="java&#45;quote">"product&#45;admin"</span>) || permission(<span class="java&#45;quote">"book:delete"</span>)
+	  	&#125;
+	  &#125;
+	&#125;</pre></div>
+
 
 
                 <div style="clear:both;margin-top:15px;"></div>

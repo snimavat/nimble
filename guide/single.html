@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Nimble Plugin 0.5.1</title>
+        <title>Nimble Plugin 0.5.2</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -60,7 +60,7 @@ function addJsClass(el) {
                         <div class="project">
                             <h1>Nimble Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Sudhir Nimavat</p>
-                            <p><strong>Version:</strong> 0.5.1</p>
+                            <p><strong>Version:</strong> 0.5.2</p>
                             
                         </div>
 
@@ -251,19 +251,52 @@ Nimble provides host of functionalities that can be leveraged by host applicatio
 
 
 <h2 id="accesscontrol">5.1 Access control</h2>
-@TODO
+One of the core functionality that nimble brings to any host application is support for authorization.
+Nimble utilizes Apache Shiro for access control process.<p class="paragraph"/>Access control in host applications is verified in one of two ways:
+<ol>
+<li>By the host application making a direct call to subject.isPermitted(), subject.hasAllRoles() or subject.hasRole()</li>
+<li>By a grails filter invoking accessControl closure.</li>
+</ol><p class="paragraph"/>
 
 
 <h2 id="filters">5.1.1 Enforcing access control using filters</h2>
-@TODO
+One of the easiest methods for adding security to your host application is by configuring grails filters to control access to controllers and actions.
+Host application can call <code>accessControl</code> closure from within filters to authorize requests.<p class="paragraph"/>The following example shows the usage of the accessControl closure in filters.<p class="paragraph"/>Securing controller actions that require an authenticated user.
+<div class="code"><pre>secure(controller:<span class="java&#45;quote">"product"</span>, action:<span class="java&#45;quote">"edit"</span>) &#123;
+	  before = &#123;
+	  	accessControl &#123;
+	  		<span class="java&#45;keyword">true</span>
+	  	&#125;
+	  &#125;
+	&#125;</pre></div><p class="paragraph"/>Securing controllers/actions that require a specific role or permission<p class="paragraph"/><div class="code"><pre>secure(controller:<span class="java&#45;quote">"product"</span>, action:<span class="java&#45;quote">"delete"</span>) &#123;
+	  before = &#123;
+	  	accessControl &#123;
+	  		role(<span class="java&#45;quote">"product&#45;admin"</span>) || permission(<span class="java&#45;quote">"book:delete"</span>)
+	  	&#125;
+	  &#125;
+	&#125;</pre></div>
+
 
 
 <h2 id="incode">5.1.2 Enforcing access control directly in code</h2>
-@TODO
+Checking for permissions or roles in Java code as same as <a href="http://shiro.apache.org/java-authorization-guide.html" target="blank">Shiro</a>.<p class="paragraph"/><strong class="bold">hasRole()</strong> - Checking if user has a role.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.hasRole(<span class="java&#45;quote">"administrator"</span>)) &#123;
+‏
+&#125;</pre></div><p class="paragraph"/>
+<strong class="bold">hasAllRoles(Collection&#60;String&#62; roleIdentifiers)</strong> - Check if Subject has all of the specified roles.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.hasAllRoles(&#91;<span class="java&#45;quote">"manager"</span>, <span class="java&#45;quote">"supervisor"</span>&#93;)) &#123;
+‏
+&#125;</pre></div><p class="paragraph"/><strong class="bold">isPermitted(String permission)</strong> - Check if subject has specified permission.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.isPermitted(<span class="java&#45;quote">"book:delete"</span>)) &#123;
+‏
+&#125;</pre></div>
+
 
 
 <h2 id="dynamicmethods">5.2 Dynamic methods provided by Nimble</h2>
-@TODO
+Nimble adds two dynamic methods <code>getAuthenticatedUser</code> and <code>getAuthenticatedSubject</code> to all Filter,controller and Service artefacts.<p class="paragraph"/><strong class="bold">getAuthenticatedUser</strong> Returns currently logged in user or null if user is not logged in.<p class="paragraph"/><div class="code"><pre>def sampleAction() &#123;
+	log.debug(<span class="java&#45;quote">"current user : $authenticatedUser"</span>)
+&#125;</pre></div><p class="paragraph"/><strong class="bold">getAuthenticatedSubject</strong> Returns current subject, or null if user is not logged in. It is same as calling SecurityUtils.getSubject()  
 
 
 <h2 id="tags">5.3 GSP tags provided by Nimble</h2>

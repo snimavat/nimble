@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.1.2 Enforcing access control directly in code 0.5.1</title>
+    <title>5.1.2 Enforcing access control directly in code 0.5.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -75,7 +75,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Sudhir Nimavat</p>
 
-                    <p><strong>Version:</strong> 0.5.1</p>
+                    <p><strong>Version:</strong> 0.5.2</p>
 
                     
                 </div>
@@ -85,7 +85,18 @@ function addJsClass() {
                 
 
 <h2 id="incode">5.1.2 Enforcing access control directly in code</h2>
-@TODO
+Checking for permissions or roles in Java code as same as <a href="http://shiro.apache.org/java-authorization-guide.html" target="blank">Shiro</a>.<p class="paragraph"/><strong class="bold">hasRole()</strong> - Checking if user has a role.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.hasRole(<span class="java&#45;quote">"administrator"</span>)) &#123;
+‏
+&#125;</pre></div><p class="paragraph"/>
+<strong class="bold">hasAllRoles(Collection&#60;String&#62; roleIdentifiers)</strong> - Check if Subject has all of the specified roles.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.hasAllRoles(&#91;<span class="java&#45;quote">"manager"</span>, <span class="java&#45;quote">"supervisor"</span>&#93;)) &#123;
+‏
+&#125;</pre></div><p class="paragraph"/><strong class="bold">isPermitted(String permission)</strong> - Check if subject has specified permission.<p class="paragraph"/><div class="code"><pre>Subject currentUser = SecurityUtils.subject;
+<span class="java&#45;keyword">if</span> (currentUser.isPermitted(<span class="java&#45;quote">"book:delete"</span>)) &#123;
+‏
+&#125;</pre></div>
+
 
 
                 <div style="clear:both;margin-top:15px;"></div>
