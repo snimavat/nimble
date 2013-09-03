@@ -1,1 +1,31 @@
-@TODO
+One of the easiest methods for adding security to your host application is by configuring grails filters to control access to controllers and actions.
+Host application can call @accessControl@ closure from within filters to authorize requests.
+
+The following example shows the usage of the accessControl closure in filters.
+
+Securing controller actions that require an authenticated user.
+{code}
+
+	secure(controller:"product", action:"edit") {
+	  before = {
+	  	accessControl {
+	  		true
+	  	}
+	  }
+	}
+	
+{code}
+
+Securing controllers/actions that require a specific role or permission
+
+{code}
+
+	secure(controller:"product", action:"delete") {
+	  before = {
+	  	accessControl {
+	  		role("product-admin") || permission("book:delete")
+	  	}
+	  }
+	}
+	
+{code}

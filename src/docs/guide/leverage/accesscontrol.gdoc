@@ -1,1 +1,6 @@
-@TODO
+One of the core functionality that nimble brings to any host application is support for authorization.
+Nimble utilizes Apache Shiro for access control process.
+
+Access control in host applications is verified in one of two ways:
+# By the host application making a direct call to subject.isPermitted(), subject.hasAllRoles() or subject.hasRole()
+# By a grails filter invoking accessControl closure.

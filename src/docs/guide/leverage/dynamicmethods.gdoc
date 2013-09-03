@@ -1,1 +1,13 @@
-@TODO
+Nimble adds two dynamic methods @getAuthenticatedUser@ and @getAuthenticatedSubject@ to all Filter,controller and Service artefacts.
+
+*getAuthenticatedUser* Returns currently logged in user or null if user is not logged in.
+
+{code}
+
+def sampleAction() {
+	log.debug("current user : $authenticatedUser")
+}
+ 
+{code}
+
+*getAuthenticatedSubject* Returns current subject, or null if user is not logged in. It is same as calling SecurityUtils.getSubject()  

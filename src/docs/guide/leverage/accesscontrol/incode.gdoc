@@ -1,1 +1,29 @@
-@TODO
+Checking for permissions or roles in Java code as same as [Shiro|http://shiro.apache.org/java-authorization-guide.html]. 
+
+*hasRole()* - Checking if user has a role.
+
+{code}
+Subject currentUser = SecurityUtils.subject;
+if (currentUser.hasRole("administrator")) {
+‏
+}
+{code}
+
+
+*hasAllRoles(Collection<String> roleIdentifiers)* - Check if Subject has all of the specified roles.
+
+{code}
+Subject currentUser = SecurityUtils.subject;
+if (currentUser.hasAllRoles(["manager", "supervisor"])) {
+‏
+}
+{code}
+
+*isPermitted(String permission)* - Check if subject has specified permission.
+
+{code}
+Subject currentUser = SecurityUtils.subject;
+if (currentUser.isPermitted("book:delete")) {
+‏
+}
+{code}
