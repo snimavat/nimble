@@ -59,7 +59,6 @@ class UserTests extends GrailsUnitTestCase {
 		external:external, federated:federated, remoteapi:remoteapi, expiration:expiration,
 		profile:profile, roles:[role1, role2],
 		groups:[group1, group2], passwdHistory:[pw1, pw2], loginRecords:[login1, login2],
-		follows:[follows1, follows2], followers:[follower1, follower2],
 		dateCreated:dateCreated, lastUpdated:lastUpdated)
 	}
 
@@ -82,8 +81,6 @@ class UserTests extends GrailsUnitTestCase {
 		assertTrue user.groups.containsAll([group1, group2])
 		assertTrue user.passwdHistory.containsAll([pw1, pw2])
 		assertTrue user.loginRecords.containsAll([login1, login2])
-		assertTrue user.follows.containsAll([follows1, follows2])
-		assertTrue user.followers.containsAll([follower1, follower2])
 	}
 
 	void testUsernameConstraint() {
