@@ -1,5 +1,4 @@
-<g:if test="${radio == 'true'}">
-      
+<g:if test="${radio == 'true'}">      
      <label class="radio inline">    
          <g:radio name="${property}" value="true" checked="${value }"/>&nbsp; <g:message code="nimble.label.true" />
      </label>
