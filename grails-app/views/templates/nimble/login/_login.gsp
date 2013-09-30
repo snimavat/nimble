@@ -14,29 +14,17 @@
                <g:message code="nimble.label.login.signin" />
             </h2>          
             <n:flashembed/>  
-            <g:if test="${registration}">
-               <div class="login-options">
-                  <h4>
-                     <g:message code="nimble.label.login.signup.heading"/>
-                  </h4>
-                  <g:message code="nimble.label.login.signup.descriptive"/>
-                  <g:link controller="account" action="createuser">
-                     <g:message code="nimble.link.login.signup"/>
-                  </g:link>
-               </div>
-               <div style="text-align: center; margin-bottom: 3px;">-- OR --</div>
-            </g:if>
             <g:form action="signin" name="login-form" method="post">
                <div class="login-input">
                   <div class="control-group">
                      <div class="controls ">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <input type="text" name="username" id="username" placeholder="user@example.com">                           
+                        <input type="text" name="username" id="username" placeholder="${message(code: 'nimble.label.username')}">                           
                      </div>
                   </div>
                   <div class="control-group">
                      <div class="controls">
-                        <input type="password" name="password" id="password" placeholder="password">
+                        <input type="password" name="password" id="password" placeholder="${message(code: 'nimble.label.password')}">
                      </div>
                   </div>
                </div>
@@ -56,10 +44,21 @@
                      <g:message code="nimble.label.login.forgottenpassword.heading" />
                   </h4>                  
                   <g:message code="nimble.label.login.forgottenpassword.descriptive" />
-                  <g:link controller="account" action="forgottenpassword" style="text-transform:lowercase;">
+                  <g:link controller="account" action="forgottenpassword">
                      <g:message code="nimble.link.resetpassword" />
                   </g:link>
                </div>
+               <g:if test="${registration}">
+                  <div class="login-options">
+                     <h4>
+                        <g:message code="nimble.label.login.signup.heading"/>
+                     </h4>
+                     <g:message code="nimble.label.login.signup.descriptive"/>
+                     <g:link controller="account" action="createuser">
+                        <g:message code="nimble.link.login.signup"/>
+                     </g:link>
+                  </div>
+               </g:if>
             </g:form>
          </div>
       </div>
