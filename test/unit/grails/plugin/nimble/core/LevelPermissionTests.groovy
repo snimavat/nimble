@@ -33,7 +33,7 @@ class LevelPermissionTests extends GroovyTestCase {
 	private owner = new Expando(name: "Test owner")
 
 	private LevelPermission createValidLevelPermission() {
-		def p = new LevelPermission(first:first, second:second, third:third, fourth:fourth, fifth:fifth, sixth:sixth)
+		def p = new LevelPermission(tokenFirst:first, tokenSecond:second, tokenThird:third, tokenFourth:fourth, tokenFifth:fifth, tokenSixth:sixth)
 		p.owner = owner
 		p.buildTarget()
 		p
@@ -42,20 +42,20 @@ class LevelPermissionTests extends GroovyTestCase {
 	void testLevelPermissionCreation() {
 		def levelPermission = createValidLevelPermission()
 
-		assertTrue levelPermission.first.containsAll(first)
-		assertTrue levelPermission.second.containsAll(second)
-		assertTrue levelPermission.third.containsAll(third)
-		assertTrue levelPermission.fourth.containsAll(fourth)
-		assertTrue levelPermission.fifth.containsAll(fifth)
-		assertTrue levelPermission.sixth.containsAll(sixth)
+		assertTrue levelPermission.tokenFirst.containsAll(first)
+		assertTrue levelPermission.tokenSecond.containsAll(second)
+		assertTrue levelPermission.tokenThird.containsAll(third)
+		assertTrue levelPermission.tokenFourth.containsAll(fourth)
+		assertTrue levelPermission.tokenFifth.containsAll(fifth)
+		assertTrue levelPermission.tokenSixth.containsAll(sixth)
 
 		// Do some random checks to ensure there isn't any contamination
-		assertFalse levelPermission.first.contains(sixth)
-		assertFalse levelPermission.second.contains(fifth)
-		assertFalse levelPermission.third.contains(fourth)
-		assertFalse levelPermission.fourth.contains(third)
-		assertFalse levelPermission.fifth.contains(second)
-		assertFalse levelPermission.sixth.contains(first)
+		assertFalse levelPermission.tokenFirst.contains(sixth)
+		assertFalse levelPermission.tokenSecond.contains(fifth)
+		assertFalse levelPermission.tokenThird.contains(fourth)
+		assertFalse levelPermission.tokenFourth.contains(third)
+		assertFalse levelPermission.tokenFifth.contains(second)
+		assertFalse levelPermission.tokenSixth.contains(first)
 
 		assertEquals levelPermission.type, Permission.defaultPerm
 	}
@@ -65,15 +65,15 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.first = ['localtarget']
+		levelPermission.tokenFirst = ['localtarget']
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 
-		levelPermission.first = []
+		levelPermission.tokenFirst = []
 		levelPermission.buildTarget()
 		assertFalse levelPermission.validate()
 
-		levelPermission.first = null
+		levelPermission.tokenFirst = null
 		levelPermission.buildTarget()
 		assertFalse levelPermission.validate()
 	}
@@ -83,7 +83,7 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.second = null
+		levelPermission.tokenSecond = null
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 	}
@@ -93,7 +93,7 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.third = null
+		levelPermission.tokenThird = null
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 	}
@@ -103,7 +103,7 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.fourth = null
+		levelPermission.tokenFourth = null
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 	}
@@ -113,7 +113,7 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.fifth = null
+		levelPermission.tokenFifth = null
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 	}
@@ -123,7 +123,7 @@ class LevelPermissionTests extends GroovyTestCase {
 
 		assertTrue levelPermission.validate()
 
-		levelPermission.sixth = null
+		levelPermission.tokenSixth = null
 		levelPermission.buildTarget()
 		assertTrue levelPermission.validate()
 	}
@@ -139,7 +139,7 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = createValidLevelPermission()
 		String expected = 'token01,token02'
 
-		levelPermission.second = null
+		levelPermission.tokenSecond = null
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected
@@ -149,7 +149,7 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = createValidLevelPermission()
 		String expected = 'token01,token02:token03,token04'
 
-		levelPermission.third = null
+		levelPermission.tokenThird = null
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected
@@ -159,7 +159,7 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = createValidLevelPermission()
 		String expected = 'token01,token02:token03,token04:token05,token06'
 
-		levelPermission.fourth = null
+		levelPermission.tokenFourth = null
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected
@@ -169,7 +169,7 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = createValidLevelPermission()
 		String expected = 'token01,token02:token03,token04:token05,token06:token07,token08'
 
-		levelPermission.fifth = null
+		levelPermission.tokenFifth = null
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected
@@ -179,7 +179,7 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = createValidLevelPermission()
 		String expected = 'token01,token02:token03,token04:token05,token06:token07,token08:token09,token10'
 
-		levelPermission.sixth = null
+		levelPermission.tokenSixth = null
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected
@@ -189,9 +189,9 @@ class LevelPermissionTests extends GroovyTestCase {
 		def levelPermission = new LevelPermission()
 		String expected = 'token01:token02,token03,token04:token05,token06'
 
-		levelPermission.first = ['token01']
-		levelPermission.second = ['token02','token03','token04']
-		levelPermission.third = ['token05','token06']
+		levelPermission.tokenFirst = ['token01']
+		levelPermission.tokenSecond = ['token02','token03','token04']
+		levelPermission.tokenThird = ['token05','token06']
 		levelPermission.buildTarget()
 
 		assertEquals levelPermission.target, expected

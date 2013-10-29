@@ -16,8 +16,7 @@
  */
 package grails.plugin.nimble.core
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
-
+import grails.util.Holders as ConfigurationHolder // Since Grails 2.x ConfigurationHolder is deprecated 
 /**
  * Represents a grouping of users in a Nimble based appication
  *

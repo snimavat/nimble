@@ -16,7 +16,7 @@
  */
 package grails.plugin.nimble.core
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders as ConfigurationHolder // Since Grails 2.x ConfigurationHolder is deprecated 
 
 /**
  * Represents a WildcardPermission in the data repository.
@@ -31,12 +31,12 @@ class LevelPermission extends Permission {
 	private static final String levelSep = ":"
 
 	static hasMany = [
-		first: String,
-		second: String,
-		third: String,
-		fourth: String,
-		fifth: String,
-		sixth: String
+		tokenFirst: String,
+		tokenSecond: String,
+		tokenThird: String,
+		tokenFourth: String,
+		tokenFifth: String,
+		tokenSixth: String
 	]
 
 	static mapping = {
@@ -45,12 +45,12 @@ class LevelPermission extends Permission {
 	}
 
 	static constraints = {
-		first(minSize: 1)
-		second(nullable: true)
-		third(nullable: true)
-		fourth(nullable: true)
-		fifth(nullable: true)
-		sixth(nullable: true)
+		tokenFirst(minSize: 1)
+		tokenSecond(nullable: true)
+		tokenThird(nullable: true)
+		tokenFourth(nullable: true)
+		tokenFifth(nullable: true)
+		tokenSixth(nullable: true)
 	}
 
 	LevelPermission() {
@@ -60,18 +60,18 @@ class LevelPermission extends Permission {
 	void buildTarget() {
 		StringBuilder target = new StringBuilder()
 
-		if (first) {
-			addTokens first, target, false
-			if (second) {
-				addTokens second, target
-				if (third) {
-					addTokens third, target
-					if (fourth) {
-						addTokens fourth, target
-						if (fifth) {
-							addTokens fifth, target
-							if (sixth) {
-								addTokens sixth, target
+		if (tokenFirst) {
+			addTokens tokenFirst, target, false
+			if (tokenSecond) {
+				addTokens tokenSecond, target
+				if (tokenThird) {
+					addTokens tokenThird, target
+					if (tokenFourth) {
+						addTokens tokenFourth, target
+						if (tokenFifth) {
+							addTokens tokenFifth, target
+							if (tokenSixth) {
+								addTokens tokenSixth, target
 							}
 						}
 					}
@@ -116,42 +116,42 @@ class LevelPermission extends Permission {
 			return
 		}
 
-		this.first = splitByTokenSep(first)
+		this.tokenFirst = splitByTokenSep(first)
 
 		if (second) {
 			if (containsLevelSep(second, 'second')) {
 				return
 			}
 
-			this.second = splitByTokenSep(second)
+			this.tokenSecond = splitByTokenSep(second)
 
 			if (third) {
 				if (containsLevelSep(third, 'third')) {
 					return
 				}
 
-				this.third = splitByTokenSep(third)
+				this.tokenThird = splitByTokenSep(third)
 
 				if (fourth) {
 					if (containsLevelSep(fourth, 'fourth')) {
 						return
 					}
 
-					this.fourth = splitByTokenSep(fourth)
+					this.tokenFourth = splitByTokenSep(fourth)
 
 					if (fifth) {
 						if (containsLevelSep(fifth, 'fifth')) {
 							return
 						}
 
-						this.fifth = splitByTokenSep(fifth)
+						this.tokenFifth = splitByTokenSep(fifth)
 
 						if (sixth) {
 							if (containsLevelSep(sixth, 'sixth')) {
 								return
 							}
 
-							this.sixth = splitByTokenSep(sixth)
+							this.tokenSixth = splitByTokenSep(sixth)
 						}
 					}
 				}
