@@ -28,8 +28,8 @@ modules = {
 
 	'jgrawl' {
 		dependsOn 'jquery'
-		resource id:'css', url:[plugin:'nimble', dir:'css', file:'jquery.jgrowl.css'], disposition:'head'
-		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.jgrowl_minimized.js'] , disposition:'head', nominify: true
+		resource id:'css', url:[plugin:'nimble', dir:'css', file:'jquery.jgrowl.min.css'], disposition:'head', nominify: true
+		resource id:'js', url:[plugin:'nimble', dir:'js/jquery', file:'jquery.jgrowl-1.2.13.min.js'] , disposition:'head', nominify: true
 	}
 
 	'jquery-pstrength' {
