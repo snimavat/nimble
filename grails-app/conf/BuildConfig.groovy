@@ -20,7 +20,7 @@ grails.project.dependency.resolution = {
 		runtime ":resources:1.2"
 		runtime ":fields:1.2"
 		runtime ":jquery:1.9.0"
-		compile ":shiro:1.1.4"
+		compile ":shiro:1.2.0"
 		compile ":mail:1.0.1"
 
 		build ':release:2.2.1', ':rest-client-builder:1.0.3', {
