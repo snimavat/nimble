@@ -17,7 +17,7 @@
 package grails.plugin.nimble.core
 
 import org.apache.shiro.crypto.hash.Md5Hash
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders as ConfigurationHolder // Since Grails 2.x ConfigurationHolder is deprecated 
 
 /**
  * Represents generic details about users that are useful to many applications
