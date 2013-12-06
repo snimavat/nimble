@@ -42,7 +42,7 @@ class AdminsController {
 			return
 		}
 
-		[currentAdmin:authenticatedUser, admins: adminAuthority?.users]
+		render(template: '/templates/admin/admins_list', model: [currentAdmin:authenticatedUser, admins: adminAuthority?.users])
 	}
 
 	def create(Long id) {
