@@ -114,13 +114,6 @@
                   <g:message code="nimble.label.extendedinformation" />
                </a>
             </li>
-            <g:if test="${user.federated}">
-               <li>
-                  <a href="#tab-federation" class="icon icon_world" data-toggle="tab">
-                     <g:message code="nimble.label.federatedaccount" />
-                  </a>
-               </li>
-            </g:if>
             <li>
                <a href="#tab-permissions" class="icon icon_lock" data-toggle="tab">
                   <g:message code="nimble.label.permissions" />
@@ -146,11 +139,6 @@
             <div id="tab-extendedinfo" class="tab-pane active">
                <g:render template="/templates/nimble/user/extendedinformation" contextPath="/" model="[user:user]" />
             </div>
-            <g:if test="${user.federated}">
-               <div id="tab-federation" class="tab-pane">
-                  <g:render template="/templates/nimble/user/federationinformation" contextPath="/" model="[user:user]" />
-               </div>
-            </g:if>
             <div id="tab-permissions" class="tab-pane">
                <g:render template="/templates/admin/permissions" contextPath="${pluginContextPath}" model="[parent:user]" />
             </div>

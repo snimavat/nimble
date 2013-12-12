@@ -16,8 +16,6 @@
       <g:form action="update" class="form-horizontal">
          <f:with bean="user">
             <f:field property="username" label="nimble.label.username" />
-            <f:field property="external" input-radio="true" label="nimble.label.externalaccount" />
-            <f:field property="federated" input-radio="true" label="nimble.label.federatedaccount" />
             <input type="hidden" name="id" value="${user.id}" />
             <input type="hidden" name="version" value="${user.version}" />
          </f:with>

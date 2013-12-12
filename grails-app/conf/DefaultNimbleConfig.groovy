@@ -49,9 +49,7 @@ nimble {
 	fields {
 		admin {
 			user = [
-				'username',
-				'external',
-				'federated'
+				'username'
 			]
 		}
 		enduser {
