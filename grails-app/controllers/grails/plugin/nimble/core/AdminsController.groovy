@@ -42,7 +42,7 @@ class AdminsController {
 			return
 		}
 
-		[currentAdmin:authenticatedUser, admins: adminAuthority?.users]
+		render(template:'list', model:[currentAdmin:authenticatedUser, admins: adminAuthority?.users])
 	}
 
 	def create(Long id) {
@@ -129,6 +129,6 @@ class AdminsController {
 		}
 
 		log.info("Search for new administrators complete, returning $nonAdmins.size records")
-		[users: nonAdmins]   // Should always be the case
+		render template:"search", model:[users: nonAdmins]   // Should always be the case
 	}
 }
