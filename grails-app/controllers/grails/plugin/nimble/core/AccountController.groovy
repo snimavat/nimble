@@ -98,7 +98,7 @@ class AccountController {
 		user.profile = InstanceGenerator.profile(grailsApplication)
 
 		log.debug("Starting new user creation")
-		[user: user]
+		render template:"createuser", model:[user: user]
 	}
 
 	def saveuser() {
@@ -136,7 +136,7 @@ class AccountController {
 			user.errors.each { log.debug it }
 
 			resetNewUser(user)
-			render(view: 'createuser', model: [user: user])
+			render(template: 'createuser', model: [user: user])
 			return
 		}
 
@@ -148,7 +148,7 @@ class AccountController {
 			if (savedUser.hasErrors()) {
 				log.debug("UserService returned invalid account details when attempting account creation")
 				resetNewUser(user)
-				render(view: 'createuser', model: [user: user])
+				render(template: 'createuser', model: [user: user])
 				return
 			}
 		}
@@ -156,7 +156,7 @@ class AccountController {
 			log.debug("Captcha entry was invalid for user account creation")
 			resetNewUser(user)
 			user.errors.reject('nimble.invalid.captcha')
-			render(view: 'createuser', model: [user: user])
+			render(template: 'createuser', model: [user: user])
 			return
 		}
 

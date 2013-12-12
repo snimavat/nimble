@@ -57,7 +57,7 @@ class NimbleTagLib {
 		if (bean)
 			out << render(template: "/templates/errors", contextPath: pluginContextPath, model: [bean: bean])
 		else
-			out << render("Error: Details not supplied to generate error content")
+			out << render(text:"Error: Details not supplied to generate error content")
 	}
 
 	/**
