@@ -16,7 +16,7 @@
  */
 package grails.plugin.nimble.core
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders as ConfigurationHolder
 
 /**
  * Represents a web based url with extended information for display purposes.

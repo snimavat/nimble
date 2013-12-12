@@ -16,7 +16,7 @@
  */
 package grails.plugin.nimble.core
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders as ConfigurationHolder
 
 /**
  * Our permission object encapsulates details that a normal Shiro deployment
