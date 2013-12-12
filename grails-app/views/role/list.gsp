@@ -17,6 +17,9 @@
                   <g:message code="nimble.link.createrole" />
                </g:link>
             </div>
+            <div class="pagination-info pull-right">
+               <n:pageinfo list="${roles}" total="${Role.count()}" name="Roles"/>
+            </div>            
             <table class="table table-striped table-bordered table-white">
                <thead>
                   <tr>

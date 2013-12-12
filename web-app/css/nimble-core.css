@@ -16,7 +16,7 @@ body {
 }
 
 .navbar .brand {
-    font-size: 26px;    
+   font-size: 26px;    
 	color:#4A6784;
 	text-shadow: 1px 1px 0px #96AEC6;
 	font-weight: 700;
@@ -61,7 +61,6 @@ body {
     border-bottom: 0;    
     border-left: 0;            
 }
-
 
 #sidebar {
     background: none repeat scroll 0 0 #dddddd;
@@ -117,16 +116,22 @@ dl dt {
 	background:#5f9be3;
 	color:#fff;
 		
-    margin-right:10px; 
+   margin-right:10px; 
 	padding:8px;
 	width:100px;
 		            
-    font-weight:bold;           
-    text-align: right;
+   font-weight:bold;           
+   text-align: right;
 }
  
 dl dd {
     border-bottom: 1px dotted #5f9be3;
+}
+
+.pagination-info {
+   color: #6e6e6e;  
+   text-shadow: 1px 1px 0px #eee;
+   font-weight: 600;
 }
 
 #right header {

@@ -17,6 +17,9 @@
                   <g:message code="nimble.link.createuser" />
                </g:link>
             </div>
+            <div class="pagination-info pull-right">
+               <n:pageinfo list="${users}" total="${UserBase.count()}" name="Users"/>
+            </div>
             <table class="table table-striped table-bordered table-white">
                <thead>
                   <tr>

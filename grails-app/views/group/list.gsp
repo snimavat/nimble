@@ -19,7 +19,9 @@
                </g:link>
             </div>         
          </div>
-          
+         <div class="pagination-info pull-right">
+            <n:pageinfo list="${groups}" total="${Group.count()}" name="Groups"/>
+         </div>          
          <table class="table table-striped table-bordered table-white">
             <thead>
                <tr>
@@ -60,7 +62,7 @@
             </tbody>
          </table>
          <div class="paginateButtons">
-            <g:paginate total="${Group.count().encodeAsHTML()}"/>
+            <g:paginate total="${Group.count()}"/>
          </div>
       </div>
    </div>

@@ -146,4 +146,18 @@ class NimbleTagLib {
 
 		out << render(template: "/templates/tags/verifyfield", contextPath: pluginContextPath, model: [id:attrs.id, cssclass: attrs.class, required:attrs.required, controller:attrs.controller, action:attrs.action, name:attrs.name, value:attrs.value, validmsg:attrs.validmsg, invalidmsg:attrs.invalidmsg] )
 	}
+	
+	def pageinfo = {attrs ->
+		if(attrs.total == null) {
+			throwTagError("pageinfo tag requires offset and max to be set in params, and total and list to be passed as tag attributes")
+		}
+		attrs.list = attrs.list ?: []
+		attrs.name = attrs.name ?: "records"
+		attrs.from = (params.offset ?: 0)
+		attrs.max = params.max ?: 10						
+		attrs.to = attrs.list.size() < attrs.max ? attrs.list.size() + attrs.from : attrs.from + attrs.max
+		
+		out << render(template:"/templates/tags/paginationinfo", model:attrs)
+		
+	}
 }
