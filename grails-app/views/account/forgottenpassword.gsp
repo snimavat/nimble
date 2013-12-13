@@ -24,7 +24,7 @@
                <div class="login-input">
                   <div class="control-group">
                      <div class="controls "> 
-                        <input type="text" size="30" name="email" id="email" placeholder="user@example.com">
+                        <input type="text" size="30" name="email" id="email" placeholder="${message(code: 'nimble.label.email')}">
                      </div>
                   </div>
                </div>
