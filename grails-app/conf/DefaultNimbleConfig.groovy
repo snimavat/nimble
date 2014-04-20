@@ -78,4 +78,6 @@ nimble {
 		passwordreset { subject = "Your password has been reset" }
 		changeemail { subject = "Your email address has been changed" }
 	}
+
+    exposeUserId = true;
 }
