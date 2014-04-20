@@ -1,68 +1,77 @@
 <!doctype html>
 <html>
-   <head>
-      <title>
-         <g:message code="nimble.template.login.title" />
-      </title>
-      <r:require modules="nimble-login"/>
-      <r:layoutResources/>
-   </head>
-   <body>
-      <div class="login-container">
-         <div class="login-content">
-            <h2 class="border-bottom">
-               <g:message code="nimble.label.login.signin" />
-            </h2>          
-            <n:flashembed/>  
-            <g:if test="${registration}">
-               <div class="login-options">
-                  <h4>
-                     <g:message code="nimble.label.login.signup.heading"/>
-                  </h4>
-                  <g:message code="nimble.label.login.signup.descriptive"/>
-                  <g:link controller="account" action="createuser">
-                     <g:message code="nimble.link.login.signup"/>
-                  </g:link>
-               </div>
-               <div style="text-align: center; margin-bottom: 3px;">-- OR --</div>
-            </g:if>
+<head>
+    <title>
+        <g:message code="nimble.template.login.title"/>
+    </title>
+    <r:require modules="nimble-login"/>
+    <r:layoutResources/>
+</head>
+
+<body>
+
+<div class="container" style="margin-top:40px;">
+
+    <div class="col-md-4 col-md-offset-4">
+
+        <!-- Sign in -->
+        <div class="col-md-12">
+
+            <h2><g:message code="nimble.label.login.signin"/></h2>
+            <n:flashembed/>
             <g:form action="signin" name="login-form" method="post">
-               <div class="login-input">
-                  <div class="control-group">
-                     <div class="controls ">
-                        <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <input type="text" name="username" id="username" placeholder="user@example.com">                           
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <div class="controls">
-                        <input type="password" name="password" id="password" placeholder="password">
-                     </div>
-                  </div>
-               </div>
-               <div class="login-actions">
-                  <label class="checkbox" style="display: inline-block;">
-                     <input type="checkbox" name="rememberme">
-                     <g:message code="nimble.label.rememberme" />
-                  </label>
-                  <span class="pull-right clearfix">
-                     <button type="submit" class="btn btn-primary">
-                        <g:message code="nimble.link.login.basic" />
-                     </button>
-                  </span>
-               </div>
-               <div class="login-options border-top">
-                  <h4>
-                     <g:message code="nimble.label.login.forgottenpassword.heading" />
-                  </h4>                  
-                  <g:message code="nimble.label.login.forgottenpassword.descriptive" />
-                  <g:link controller="account" action="forgottenpassword" style="text-transform:lowercase;">
-                     <g:message code="nimble.link.resetpassword" />
-                  </g:link>
-               </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="targetUri" value="${targetUri}"/>
+                    <input class="form-control" type="text" name="username" id="username"
+                           placeholder="${message(code: 'nimble.label.username')}">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" id="password"
+                           placeholder="${message(code: 'nimble.label.password')}">
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" name="rememberme">
+                        <g:message code="nimble.label.rememberme"/>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn-block btn btn-primary">
+                        <g:message code="nimble.link.login.basic"/>
+                    </button>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="row center-block">
+                        <div class="col-md-6">
+                            <g:link controller="account" action="createuser">
+                                <b><g:message code="nimble.link.login.signup"/></b>
+                            </g:link>
+                        </div>
+
+                        <div class="col-md-6">
+                            <g:link controller="account" action="forgottenpassword">
+                                <b><g:message code="nimble.link.resetpassword"/></b>
+                            </g:link>
+                        </div>
+                    </div>
+
+                </div>
+
             </g:form>
-         </div>
-      </div>
-      <r:layoutResources/>
-   </body>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<r:layoutResources/>
+</body>
 </html>

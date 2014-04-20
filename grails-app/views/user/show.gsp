@@ -11,13 +11,9 @@
    </r:script>
 </head>
 <body>
-   <h3>
-      <g:message code="nimble.view.user.show.heading" args="[user.username?.encodeAsHTML()]" />
-      <span>
-      </span>
-   </h3>
-   <div class="row-fluid">
-      <div class="span5">
+   <h3><g:message code="nimble.view.user.show.heading" args="[user.username?.encodeAsHTML()]" /></h3>
+   <div class="row">
+      <div class="col-md-8">
          <div class="box-generic">
             <header>
                <h2>
