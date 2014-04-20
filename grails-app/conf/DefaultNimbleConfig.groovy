@@ -79,5 +79,9 @@ nimble {
 		changeemail { subject = "Your email address has been changed" }
 	}
 
+    admin {
+        header.title = "Nimble"
+    }
+
     exposeUserId = true;
 }
