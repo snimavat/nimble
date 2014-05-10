@@ -121,10 +121,12 @@ class AccountController {
 		log.debug("Attempting to create new user account identified as $user.username")
 
 		// Enforce username restrictions on local accounts, letters + numbers only
+		/*
+		This is causing duplicate error messages to be shown for an empty username
 		if (user.username == null || user.username.length() < nimbleConfig.localusers.usernames.minlength || !user.username.matches(nimbleConfig.localusers.usernames.validregex)) {
 			log.debug("Supplied username of $user.username does not meet requirements for local account usernames")
 			user.errors.rejectValue('username', 'nimble.user.username.invalid')
-		}
+		}*/
 
 		// Enforce email address for account registrations
 		if (user.profile.email == null || user.profile.email.length() == 0) {
