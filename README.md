@@ -25,3 +25,4 @@ Changes in this fork are:
 
 * Added configuration for the administration layout header title. Use nimble.admin.header.title to set the header
 * Do not expose the user id in activation emails. Set nimble.exposeUserId = false to remove id
+* Added annotation [@NimbleAuth](https://github.com/rohitkumbhar/nimble/blob/master/src/groovy/grails/plugin/nimble/auth/NimbleAuth.groovy) to enforce authentication and optionally check for role and permission 
