@@ -18,11 +18,11 @@
                <td>${role.description?.encodeAsHTML()}</td>
                <td>
                   <g:link controller="role" action="show" id="${role.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-tag icon-white"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <a onClick="grantRole('${ownerID.encodeAsHTML()}', '${role.id.encodeAsHTML()}');" class="btn btn-success btn-mini">
-                     <i class="icon-question-sign icon-white"></i>
+                     <i class="glyphicon glyphicon-question-sign"></i>
                      <g:message code="nimble.link.assign" />
                   </a>
                </td>

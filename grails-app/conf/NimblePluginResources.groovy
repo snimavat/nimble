@@ -1,7 +1,7 @@
 modules = {
 	'nimble-core' {
-		dependsOn "nimble-layout-css, nimble-widgets-css, nimble-typography-css"
-		resource id:'core-css', url:[plugin:'nimble', dir:'css', file:'nimble-core.css'], disposition:'head'
+		//dependsOn "nimble-layout-css, nimble-widgets-css, nimble-typography-css"
+		//resource id:'core-css', url:[plugin:'nimble', dir:'css', file:'nimble-core.css'], disposition:'head'
 		resource id:'core-js', url:[plugin:'nimble', dir:'js', file:'nimblecore.js'], disposition:'head'
 	}
 
@@ -40,7 +40,7 @@ modules = {
 	'nimble-admin' {
 		dependsOn 'jquery, jgrawl, jquery-pstrength'
 		dependsOn 'nimble-ui, nimble-core'
-		dependsOn 'bootstrap-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'
+		dependsOn 'bootstrap-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown, bootstrap-collapse'
 	}
 
 	'nimble-login' { dependsOn 'nimble-login-css, jquery, bootstrap-css' }
