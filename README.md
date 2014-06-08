@@ -18,15 +18,11 @@ Nimble is based on Apache shiro security framework
 - UI for managing roles
 - UI for assigning roles and permissions to users and groups 
 
-And much more 
 
-Demo : http://nimble.ap01.aws.af.cm/
+**This is a fork of [snimavat/nimble](https://github.com/snimavat/nimble)**
 
-Documentation: 
+Changes in this fork are:
 
-- http://snimavat.github.io/nimble/index.html
-- http://grails.org/plugin/nimble
-
-## Roadmap
-- Improve test coverage
-- Add support for impersonating users
+* Added configuration for the administration layout header title. Use nimble.admin.header.title to set the header
+* Do not expose the user id in activation emails. Set nimble.exposeUserId = false to remove id
+* Added annotation [@NimbleAuth](https://github.com/rohitkumbhar/nimble/blob/master/src/groovy/grails/plugin/nimble/auth/NimbleAuth.groovy) to enforce authentication and optionally check for role and permission 
