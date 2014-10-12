@@ -12,9 +12,10 @@
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
+    <asset:javascript src="nimble.js"/>
+    <asset:stylesheet src="nimble-admin.css"/>
     <g:layoutHead/>
-    <r:require modules="nimble-admin"/>
-    <r:layoutResources/>
+
 </head>
 
 <body>
@@ -80,6 +81,6 @@
 </div>
 <!-- Main container ends -->
 <%--  <n:sessionterminated /> --%>
-<r:layoutResources/>
+
 </body>
 </html>

@@ -3,15 +3,17 @@
     <title>
         <g:message code="nimble.view.admins.title"/>
     </title>
-    <r:script disposition='head'>
-      var adminListEndpoint = "${createLink(controller: 'admins', action: 'list')}";
+
+    <asset:script type="text/javascript">
+        var adminListEndpoint = "${createLink(controller: 'admins', action: 'list')}";
       var adminSearchEndpoint = "${createLink(action: 'search')}";
       var adminDeleteEndpoint = "${createLink(action: 'delete')}";
       var adminGrantEndpoint = "${createLink(action: 'create')}";
-      $(function() {      
+      $(function() {
         listAdministrators();
       });
-    </r:script>
+    </asset:script>
+
 </head>
 
 <body>
@@ -32,4 +34,5 @@
 </form>
 
 <div id="user-searchresponse" class=""></div>
+<asset:deferredScripts />
 </body>

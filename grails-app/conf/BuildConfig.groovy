@@ -1,5 +1,5 @@
 grails.project.work.dir = 'target'
-
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
 
 	inherits 'global'
@@ -17,18 +17,16 @@ grails.project.dependency.resolution = {
 
 	plugins {
 
-	    compile ":scaffolding:2.0.3"
+	    runtime ":twitter-bootstrap:3.2.0.2"
+		runtime ":jquery:1.11.1"
 
-		runtime ":twitter-bootstrap:3.1.1"
-		runtime ":resources:1.2.7"
-		runtime ":fields:1.3"
-		runtime ":jquery:1.11.0.1"
+        compile ":asset-pipeline:1.9.9"
+        compile ":mail:1.0.7"
 		compile (":shiro:1.2.1") {
 			excludes "servlet-api"
 		}
-		compile ":mail:1.0.4"
 
-		build ':release:3.0.1', ':rest-client-builder:2.0.1', {
+		build ':release:3.0.1', ':rest-client-builder:2.0.3', {
 			export = false
 		}
 	}

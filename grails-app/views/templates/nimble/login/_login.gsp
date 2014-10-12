@@ -4,8 +4,8 @@
     <title>
         <g:message code="nimble.template.login.title"/>
     </title>
-    <r:require modules="nimble-login"/>
-    <r:layoutResources/>
+    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="nimble-login.css"/>
 </head>
 
 <body>
@@ -70,8 +70,5 @@
 
 </div>
 
-
-
-<r:layoutResources/>
 </body>
 </html>

@@ -3,10 +3,10 @@
     <title>
         <g:message code="nimble.view.role.show.title" args="[role.name.encodeAsHTML()]"/>
     </title>
-    <r:script>
+    <asset:script>
         <njs:permission parent="${role}"/>
         <njs:member parent="${role}"/>
-    </r:script>
+    </asset:script>
 </head>
 
 <body>
@@ -90,4 +90,5 @@
     <g:hiddenField name="id" value="${role.id.encodeAsHTML()}"/>
 </g:form>
 <n:confirm/>
+<asset:deferredScripts/>
 </body>

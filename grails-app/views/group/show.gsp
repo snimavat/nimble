@@ -4,11 +4,12 @@
     <title>
         <g:message code="nimble.view.group.show.title" args="[group.name.encodeAsHTML()]"/>
     </title>
-    <r:script>
+
+    <asset:script>
         <njs:permission parent="${group}"/>
         <njs:role parent="${group}"/>
         <njs:member parent="${group}"/>
-    </r:script>
+    </asset:script>
 </head>
 
 <body>
@@ -96,6 +97,7 @@
     <g:hiddenField name="id" value="${group.id.encodeAsHTML()}"/>
 </g:form>
 <n:confirm/>
+<asset:deferredScripts/>
 </div>
 </body>
 </html>
