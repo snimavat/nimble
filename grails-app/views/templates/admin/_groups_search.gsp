@@ -18,11 +18,11 @@
                <td>${group.description?.encodeAsHTML()}</td>
                <td>
                   <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-tag"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <a onClick="grantGroup('${ownerID.encodeAsHTML()}', '${group.id.encodeAsHTML()}');" class="btn btn-warning btn-mini">
-                     <i class="icon-plus icon-white"></i>
+                     <i class="glyphicon glyphicon-plus"></i>
                      <g:message code="nimble.link.assign" />
                   </a>
                </td>

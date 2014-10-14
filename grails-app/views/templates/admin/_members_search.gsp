@@ -23,11 +23,11 @@
                <td>${user?.profile?.fullName.encodeAsHTML()}</td>
                <td>
                   <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-user"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <a onClick="addMember('${parent.id.encodeAsHTML()}', '${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="btn btn-success btn-mini">
-                     <i class="icon-ok icon-white"></i>
+                     <i class="glyphicon glyphicon-ok"></i>
                      <g:message code="nimble.link.grant" />
                   </a>
                </td>
@@ -37,7 +37,7 @@
    </table>
 </g:if>
 <g:else>
-   <div class="info">
+   <div class="alert alert-info">
       <strong>
          <g:message code="nimble.template.members.add.user.noresults" />
       </strong>

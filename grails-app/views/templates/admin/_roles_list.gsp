@@ -17,13 +17,13 @@
                <td>${role.name?.encodeAsHTML()}</td>
                <td>${role.description?.encodeAsHTML()}</td>
                <td>
-                  <g:link controller="role" action="show" id="${role.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                  <g:link controller="role" action="show" id="${role.id.encodeAsHTML()}" class="btn btn-info btn-xs">
+                     <i class="glyphicon glyphicon-user"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <g:if test="${role.protect == false}">
-                     <button onClick="removeRole('${ownerID.encodeAsHTML()}', '${role.id.encodeAsHTML()}');" class="btn btn-danger btn-mini">
-                        <i class="icon-remove icon-white"></i>
+                     <button onClick="removeRole('${ownerID.encodeAsHTML()}', '${role.id.encodeAsHTML()}');" class="btn btn-danger btn-xs">
+                        <i class="glyphicon glyphicon-remove"></i>
                         <g:message code="nimble.link.remove" />
                      </button>
                   </g:if>

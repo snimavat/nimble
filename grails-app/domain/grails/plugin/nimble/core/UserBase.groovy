@@ -53,7 +53,7 @@ class UserBase implements Serializable {
 	}
 
 	static constraints = {
-		username(blank: false, unique: true, minSize: 4, maxSize: 255)
+		username(blank: false, unique: true, size:4..255)
 		passwordHash(nullable: true, blank: false)
 		actionHash(nullable: true, blank: false)
 		realm(nullable: true, blank: false)

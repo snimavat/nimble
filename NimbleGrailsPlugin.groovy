@@ -1,9 +1,11 @@
+import grails.plugin.nimble.auth.NimbleAuthAspect
 import grails.plugin.nimble.core.UserBase
 import grails.util.Environment
 
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.credential.Sha256CredentialsMatcher
 import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
 import org.springframework.mail.javamail.JavaMailSenderImpl
 
 class NimbleGrailsPlugin {
@@ -34,6 +36,11 @@ class NimbleGrailsPlugin {
 	def doWithSpring = {
 		loadNimbleConfig(application)
 		credentialMatcher(Sha256CredentialsMatcher) { storedCredentialsHexEncoded = true }
+
+        nimbleAuthAspect(NimbleAuthAspect)
+        autoProxyCreator(AnnotationAwareAspectJAutoProxyCreator) {
+            proxyTargetClass = true
+        }
 
 		// Redefine mailSender
 		def mailConfig = application.config.nimble.messaging.mail

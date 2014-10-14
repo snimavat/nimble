@@ -18,12 +18,12 @@
                <td>${group.description?.encodeAsHTML()}</td>
                <td>
                   <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-user"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <g:if test="${group.protect == false}">
                      <a onClick="removeGroup('${ownerID.encodeAsHTML()}', '${group.id.encodeAsHTML()}');" class="btn btn-danger btn-mini">
-                        <i class="icon-remove icon-white"></i>
+                        <i class="glyphicon glyphicon-remove"></i>
                         <g:message code="nimble.link.remove" />
                      </a>
                   </g:if>

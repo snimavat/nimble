@@ -2,7 +2,7 @@
 
   $(function() {
     $("#usernamepolicy").hide();
-    $('#usernamepolicybtn').popover({animation:true, placement:'bottom', title:'A title', content:$('#usernamepolicy').html()})
+    $('#usernamepolicybtn').popover({animation:true, placement:'bottom', html:true, title:'A title', content:$('#usernamepolicy').html()})
 
   });
 </script>
