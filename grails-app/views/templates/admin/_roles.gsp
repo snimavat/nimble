@@ -1,11 +1,8 @@
-<h3>
-   <g:message code="nimble.template.roles.heading" />
-</h3>
 <div id="assignedroles">
 </div>
 <div id="showaddroles">
    <a id="showaddrolesbtn" class="btn btn-success btn-small">
-      <i class="icon-plus icon-white"></i>
+      <i class="glyphicon glyphicon-plus"></i>
       <g:message code="nimble.link.addroles" />
    </a>
 </div>
@@ -15,9 +12,11 @@
       <span><g:message code="nimble.template.roles.add.descriptive" /></span>
    </h4>
    <form class="well form-inline">
-      <g:textField name="qroles" class="span3" placeholder="search roles"/>
+      <div class="form-group">
+        <g:textField name="qroles" class="col-md-3 form-control" placeholder="Search roles"/>
+      </div>
       <button type="button" onClick="searchRoles(${parent.id.encodeAsHTML()});" class="btn btn-primary btn-small">
-         <i class="icon-search icon-white"></i>
+         <i class="glyphicon glyphicon-search"></i>
          <g:message code="nimble.link.search" />
       </button>
       <button type="button" id="closerolesearchbtn" class="btn btn-warning btn-small">

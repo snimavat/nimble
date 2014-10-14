@@ -1,36 +1,44 @@
 <html>
-   <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-      <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
-      <title>
-         <g:message code="nimble.view.role.create.title" />
-      </title>
-   </head>
-   <body>
-      <h3>
-         <g:message code="nimble.view.role.create.heading" />
-         <span>
-            <g:message code="nimble.view.role.create.descriptive" />
-         </span>
-      </h3>
-      <div class="box-generic">
-         <n:errors bean="${role}"/>
-         <g:form action="save" class="form-horizontal">
-            <f:with bean="role">
-               <f:field property="name" label="nimble.label.name" />
-               <f:field property="description" label="nimble.label.description" />
-            </f:with>
-            <div class="form-actions">
-               <button type="submit" class="btn btn-primary">
-                  <i class="icon-ok icon-white"></i>
-                  <g:message code="nimble.link.createrole" />
-               </button>
-               <g:link action="list" class="btn btn-warning">
-                  <i class="icon-arrow-left icon-white"></i>
-                  <g:message code="nimble.link.cancel" />
-               </g:link>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="${grailsApplication.config.nimble.layout.administration}"/>
+    <title>
+        <g:message code="nimble.view.role.create.title"/>
+    </title>
+</head>
+
+<body>
+<div class="panel panel-primary">
+    <div class="panel-heading"><g:message code="nimble.view.role.create.heading"/></div>
+
+    <div class="panel-body">
+        <n:errors bean="${role}"/>
+        <g:form method="post" action="save" role="form">
+            <input type="hidden" name="id" value="${role.id.encodeAsHTML()}"/>
+
+            <div class="form-group">
+                <label for="name"><g:message code="nimble.label.name"/></label>
+                <g:textField name="name" class="form-control" id="name" value="${role?.name}"/>
             </div>
-         </g:form>
-      </div>
-   </body>
+
+            <div class="form-group">
+                <label for="name"><g:message code="nimble.label.description"/></label>
+                <g:textField name="description" class="form-control" id="description" value="${role?.description}"/>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    <g:message code="nimble.link.updaterole"/>
+                </button>
+                <g:link action="show" id="${role.id}" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    <g:message code="nimble.link.cancel"/>
+                </g:link>
+
+            </div>
+        </g:form>
+    </div>
+</div>
+</body>
 </html>

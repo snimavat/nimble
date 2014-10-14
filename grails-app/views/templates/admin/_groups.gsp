@@ -1,11 +1,9 @@
 <div id="groups">
-   <h3>
-      <g:message code="nimble.template.groups.heading" />
-   </h3>
+   <br />
    <div id="assignedgroups"> </div>
    <div id="showaddgroups">
       <a id="showaddgroupsbtn" class="btn btn-success btn-small">
-         <i class="icon-plus icon-white"></i>
+         <i class="glyphicon glyphicon-plus"></i>
          <g:message code="nimble.link.addgroups" />
       </a>
    </div>
@@ -17,9 +15,9 @@
          </span>
       </h4>
       <form class="well form-inline">
-         <g:textField name="qgroups" class="span3" placeholder="search groups"/>
-         <button type="button" onClick="searchGroups('${parent.id.encodeAsHTML()}');" class="btn btn-primary btn-small">
-            <i class="icon-search icon-white"></i>
+         <div class="form-group"><g:textField name="qgroups" class="col-md-3 form-control" placeholder="Search groups"/></div>
+         <button type="button" onClick="searchGroups('${parent.id.encodeAsHTML()}');" class="btn btn-primary">
+            <i class="glyphicon glyphicon-search"></i>
             <g:message code="nimble.link.search" />
          </button>
          <button type="button" id="closegroupsearchbtn" class="btn btn-warning btn-small">
