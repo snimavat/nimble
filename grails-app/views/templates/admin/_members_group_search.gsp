@@ -19,7 +19,7 @@
                </g:else>
                <td>
                   <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-user"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <a onClick="addMember('${parent.id.encodeAsHTML()}', '${group.id.encodeAsHTML()}', '${group.name.encodeAsHTML()}');" class="btn btn-success btn-mini">

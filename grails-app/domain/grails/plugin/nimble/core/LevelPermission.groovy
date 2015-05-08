@@ -45,7 +45,7 @@ class LevelPermission extends Permission {
 	}
 
 	static constraints = {
-		first(minSize: 1)
+		first(blank: false)
 		second(nullable: true)
 		third(nullable: true)
 		fourth(nullable: true)

@@ -183,56 +183,79 @@ class AccountController {
 		render(view: 'createduser', useractive: nimbleConfig.localusers.provision.active)
 	}
 
-	def validateuser(long id, String activation) {
-		def user = UserBase.get(id)
-
-		if (!user) {
-			log.warn("User identified as [$id] was not located")
-			flash.type = "error"
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'nimble.user.label'), id])
-			redirect controller: 'auth', action: 'login'
-			return
-		}
-
-		if (!user.enabled && user.actionHash != null && user.actionHash.equals(activation)) {
-			user.enabled = true
-
-			// Reset hash
-			userService.generateValidationHash(user)
-			user.save()
-
-			if (user.hasErrors()) {
-				log.warn("Unable to enable user identified as [$user.id]$user.username after successful action hash validation")
-				user.errors.each { log.debug(it) }
-
-				flash.type = "error"
-				flash.message = message(code: 'nimble.user.validate.error')
-				redirect controller: 'auth', action: 'login'
-				return
-			}
-
-			log.info("Successful validate for user identified as [$user.id]$user.username")
-
-			flash.type = "success"
-			flash.message = message(code: 'nimble.user.validate.success')
-			redirect controller: 'auth', action: 'login'
-
-			return
-		}
-
-		if (!user.enabled)
-			log.warn("Attempt to validate user identified by [$user.id]$user.username and when the account is already active")
-
-		if (!user.actionHash == null)
-			log.warn("Attempt to validate user identified by [$user.id]$user.username and when the account action hash is null")
-
-		if (!user.actionHash.equals(activation))
-			log.warn("Attempt to validate user identified by [$user.id]$user.username but activation action hash did not match data store")
-
-		flash.type = "error"
-		flash.message = message(code: 'nimble.user.validate.error')
-		redirect controller: 'auth', action: 'login'
+	def activateuser(String id) {
+        /* A user instance will not be found if this is a duplicate activation request. */
+		def user = UserBase.findByActionHash(id)
+        activate(user, id)
 	}
+
+    def validateuser(long id, String activation) {
+        def user = UserBase.get(id)
+        activate(user, activation)
+    }
+
+    private void activate(UserBase user, String activation) {
+
+        if (!user) {
+            log.warn("User identified with [$activation] was not located")
+            flash.type = "error"
+            flash.message = message(code: 'nimble.user.validate.error')
+            redirect controller: 'auth', action: 'login'
+            return
+        }
+
+        if(user.enabled){
+
+            log.warn("Re-activation attempt for user identified as [$user.id]$user.username")
+
+            flash.type = "success"
+            flash.message = message(code: 'nimble.user.validate.success')
+            redirect controller: 'auth', action: 'login'
+
+            return
+        }
+
+        if (!user.enabled && user.actionHash != null && user.actionHash.equals(activation)) {
+            user.enabled = true
+
+            // Reset hash
+            userService.generateValidationHash(user)
+            user.save()
+
+            if (user.hasErrors()) {
+                log.warn("Unable to enable user identified as [$user.id]$user.username after successful action hash validation")
+                user.errors.each { log.debug(it) }
+
+                flash.type = "error"
+                flash.message = message(code: 'nimble.user.validate.error')
+                redirect controller: 'auth', action: 'login'
+                return
+            }
+
+            log.info("Successful validate for user identified as [$user.id]$user.username")
+
+            flash.type = "success"
+            flash.message = message(code: 'nimble.user.validate.success')
+            redirect controller: 'auth', action: 'login'
+
+            return
+        }
+
+        if (!user.enabled)
+            log.warn("Attempt to validate user identified by [$user.id]$user.username and when the account is already active")
+
+        if (!user.actionHash == null)
+            log.warn("Attempt to validate user identified by [$user.id]$user.username and when the account action hash is null")
+
+        if (!user.actionHash.equals(activation))
+            log.warn("Attempt to validate user identified by [$user.id]$user.username but activation action hash did not match data store")
+
+        flash.type = "error"
+        flash.message = message(code: 'nimble.user.validate.error')
+        redirect controller: 'auth', action: 'login'
+    }
+
+
 
 	def validusername(String val) {
 		if (val == null || val.length() < nimbleConfig.localusers.usernames.minlength || !val.matches(nimbleConfig.localusers.usernames.validregex)) {

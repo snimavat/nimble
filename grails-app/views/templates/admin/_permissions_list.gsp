@@ -21,7 +21,7 @@
                <td>${perm.target.encodeAsHTML()}</td>
                <td>
                   <g:if test="${perm.managed}">
-                     <span class="icon icon_tick">
+                     <span class="glyphicon glyphicon-check">
                         <g:message code="nimble.label.yes" />
                      </span>
                   </g:if>
@@ -32,7 +32,7 @@
                <td>
                   <g:if test="${!perm.managed}">
                      <a href="javascript:" onClick="removePermission('${parent.id.encodeAsHTML()}', '${g.fieldValue(bean:perm, field:'id')}');" class="btn btn-danger btn-mini">
-                        <i class="icon-remove icon-white"></i>
+                        <i class="glyphicon glyphicon-remove"></i>
                         <g:message code="nimble.link.remove" />
                      </a>
                   </g:if>

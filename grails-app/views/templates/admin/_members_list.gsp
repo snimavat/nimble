@@ -1,6 +1,4 @@
-<h4>
-   <g:message code="nimble.template.members.list.users.heading" />
-</h4>
+<br />
 <g:if test="${users?.size() > 0}">
    <table class="table table-striped">
       <thead>
@@ -31,12 +29,12 @@
                </g:else>
                <td>
                   <g:link controller="user" action="show" id="${user.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                     <i class="icon-user icon-white"></i>
+                     <i class="glyphicon glyphicon-user"></i>
                      <g:message code="nimble.link.view" />
                   </g:link>
                   <g:if test="${!protect}">
                      <a onClick="removeMember('${parent.id.encodeAsHTML()}', '${user.id.encodeAsHTML()}', '${user.username.encodeAsHTML()}');" class="btn btn-danger btn-mini">
-                        <i class="icon-remove icon-white"></i>
+                        <i class="glyphicon glyphicon-remove"></i>
                         <g:message code="nimble.link.remove" />
                      </a>
                   </g:if>
@@ -47,14 +45,12 @@
    </table>
 </g:if>
 <g:else>
-   <p>
-      <g:message code="nimble.template.members.list.users.noresults" />
-   </p>
+   <div class="alert alert-info">
+       <g:message code="nimble.template.members.list.users.noresults" />
+   </div>
 </g:else>
 <g:if test="${groupmembers}">
-   <h4>
-      <g:message code="nimble.template.members.list.groups.heading" />
-   </h4>
+
    <g:if test="${groups?.size() > 0}">
       <table class="table table-striped">
          <thead>
@@ -75,12 +71,12 @@
                   <td>${group.description.encodeAsHTML()}</td>
                   <td>
                      <g:link controller="group" action="show" id="${group.id.encodeAsHTML()}" class="btn btn-info btn-mini">
-                        <i class="icon-user icon-white"></i>
+                        <i class="glyphicon glyphglyphicon glyphicon-user"></i>
                         <g:message code="nimble.link.view" />
                      </g:link>
                      <g:if test="${!protect}">
                         <a onClick="removeGroupMember('${parent.id.encodeAsHTML()}', '${group.id.encodeAsHTML()}', '${group.name.encodeAsHTML()}');" class="btn btn-danger btn-mini">
-                           <i class="icon-remove icon-white"></i>
+                           <i class="glyphicon glyphicon-remove"></i>
                            <g:message code="nimble.link.remove" />
                         </a>
                      </g:if>
@@ -91,8 +87,8 @@
       </table>
    </g:if>
    <g:else>
-      <p>
-         <g:message code="nimble.template.members.list.groups.noresults" />
-      </p>
+      <div class="alert alert-info">
+        <g:message code="nimble.template.members.list.groups.noresults" />
+      </div>
    </g:else>
 </g:if>

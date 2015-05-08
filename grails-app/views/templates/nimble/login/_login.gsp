@@ -4,8 +4,9 @@
       <title>
          <g:message code="nimble.template.login.title" />
       </title>
-      <r:require modules="nimble-login"/>
-      <r:layoutResources/>
+      <asset:stylesheet src="bootstrap" />
+      <asset:stylesheet src="nimble-login" />
+
    </head>
    <body>
       <div class="login-container">
@@ -28,21 +29,17 @@
             </g:if>
             <g:form action="signin" name="login-form" method="post">
                <div class="login-input">
-                  <div class="control-group">
-                     <div class="controls ">
+                  <div class="form-group">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <input type="text" name="username" id="username" placeholder="user@example.com">                           
-                     </div>
+                        <input type="text" name="username" id="username" placeholder="user@example.com" class="form-control">
                   </div>
-                  <div class="control-group">
-                     <div class="controls">
-                        <input type="password" name="password" id="password" placeholder="password">
-                     </div>
+                  <div class="form-group">
+                        <input type="password" name="password" id="password" placeholder="password" class="form-control">
                   </div>
                </div>
                <div class="login-actions">
                   <label class="checkbox" style="display: inline-block;">
-                     <input type="checkbox" name="rememberme">
+                     <input type="checkbox" name="rememberme" style="margin-left: 0; position: relative;">
                      <g:message code="nimble.label.rememberme" />
                   </label>
                   <span class="pull-right clearfix">
