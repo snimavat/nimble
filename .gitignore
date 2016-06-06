@@ -1,6 +1,6 @@
 target/
 plugin.xml
-
+.grails/*
 grails-app/i18n/shiro.properties
 /.settings
 grails-nimble-*.zip

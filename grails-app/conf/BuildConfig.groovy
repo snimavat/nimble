@@ -1,6 +1,8 @@
-grails.project.work.dir = 'target'
+grails.project.work.dir = '.grails'
 
+grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
+
 
 	inherits 'global'
 	log 'warn'
@@ -25,7 +27,7 @@ grails.project.dependency.resolution = {
 		}
 		compile ":mail:1.0.1"
 
-		build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+		build(":release:3.1.2", ":rest-client-builder:2.1.1") {
 			export = false
 		}
 	}
