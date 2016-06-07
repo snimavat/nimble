@@ -40,7 +40,7 @@ modules = {
 	'nimble-admin' {
 		dependsOn 'jquery, jgrawl, jquery-pstrength'
 		dependsOn 'nimble-ui, nimble-core'
-		dependsOn 'bootstrap-css, bootstrap-responsive-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'
+		dependsOn 'bootstrap-css, bootstrap-modal, bootstrap-alert, bootstrap-tab, bootstrap-dropdown'
 	}
 
 	'nimble-login' { dependsOn 'nimble-login-css, jquery, bootstrap-css' }
