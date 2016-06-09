@@ -1,3 +1,5 @@
+//= require jquery
+
 // Admins
 function listAdministrators() {
   $.ajax({

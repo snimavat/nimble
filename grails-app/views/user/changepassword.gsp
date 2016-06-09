@@ -3,7 +3,7 @@
    <title>
       <g:message code="nimble.view.user.changepassword.title" />
    </title>
-   <r:require modules="bootstrap-popover"/>
+   <asset:javascript src="bootstrap-popover"/>
 </head>
 <body>
    <h3>

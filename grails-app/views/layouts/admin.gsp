@@ -13,8 +13,9 @@
       <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
       <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
       <g:layoutHead/>
-      <r:require modules="nimble-admin"/>
-      <r:layoutResources />	
+      <asset:stylesheet src="nimble-admin.css"/>
+      <asset:javascript src="nimble-admin.js"/>
+      <asset:deferredScripts/>
    </head>
    <body>
       <g:set var="currentUser" value="${UserBase.get(SecurityUtils.subject.principal)}" />
@@ -65,6 +66,5 @@
       </div>
       <!-- Main container ends -->
       <%--  <n:sessionterminated /> --%>
-      <r:layoutResources />
    </body>
 </html>

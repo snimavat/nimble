@@ -3,12 +3,12 @@
    <title>
       <g:message code="nimble.view.user.show.title" args="[user.username?.encodeAsHTML()]" />
    </title>
-   <r:script>
+   <asset:script>
       <njs:user user="${user}" />
       <njs:permission parent="${user}" />
       <njs:role parent="${user}" />
       <njs:group parent="${user}" />
-   </r:script>
+   </asset:script>
 </head>
 <body>
    <h3>

@@ -1,3 +1,5 @@
+//= require nimblecore
+
 //Growl
 function growl(type, msg) {
     growl(type, msg, 2000);

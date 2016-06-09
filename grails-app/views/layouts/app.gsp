@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="${grailsApplication.config.nimble.layout.customcss}"/>
   </g:if>
   
-  <r:require modules="nimble-login"/>
-  <r:layoutResources />  
+  <asset:stylesheet src="nimble-login.css"/>
 </head>
 <body>
 
@@ -29,6 +28,6 @@
 
 
 <g:render template="/templates/sessionterminated" contextPath="${pluginContextPath}"/>
-<r:layoutResources />
+<asset:javascript src="jquery"/>
 </body>
 </html>

@@ -4,8 +4,7 @@
       <title>
          <g:message code="nimble.template.login.title" />
       </title>
-      <r:require modules="nimble-login"/>
-      <r:layoutResources/>
+      <asset:stylesheet src="nimble-login.css"/>
    </head>
    <body>
       <div class="login-container">
@@ -63,6 +62,6 @@
             </g:form>
          </div>
       </div>
-      <r:layoutResources/>
+      <asset:javascript src="jquery"/>
    </body>
 </html>

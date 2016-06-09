@@ -1,6 +1,6 @@
 <%@page defaultCodec="none" %>
 <g:javascript src="jquery/jquery.pstrength.js" contextPath="${pluginContextPath}"/>
-<r:script>
+<asset:script>
 
   $(function() {
     $("#passwordpolicy").hide();
@@ -11,7 +11,7 @@
     $('.password').pstrength();
     $('.password').keyup();
   });
-</r:script>
+</asset:script>
 
 <div id="passwordpolicy">
     <div>

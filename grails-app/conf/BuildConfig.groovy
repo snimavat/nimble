@@ -19,7 +19,7 @@ grails.project.dependency.resolution = {
 
 	plugins {
 		compile "org.grails.plugins:twitter-bootstrap:3.3.4"
-		runtime "org.grails.plugins:resources:1.2.14"
+		compile "org.grails.plugins:asset-pipeline:2.13.1"
 		compile "org.grails.plugins:fields:1.5.1"
 		runtime "org.grails.plugins:jquery:1.11.1"
 		compile("org.grails.plugins:shiro:1.2.1") {

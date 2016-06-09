@@ -3,7 +3,7 @@
    <title>
       <g:message code="nimble.view.admins.title" />
    </title>
-   <r:script disposition='head'>
+   <asset:script>
       var adminListEndpoint = "${createLink(controller:'admins', action:'list')}";
       var adminSearchEndpoint = "${createLink(action:'search')}";
       var adminDeleteEndpoint = "${createLink(action:'delete')}";
@@ -11,7 +11,7 @@
       $(function() {      
       listAdministrators();
       });
-   </r:script>
+   </asset:script>
 </head>
 <body>
    <h3>
