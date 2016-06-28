@@ -1,5 +1,6 @@
 <%@page defaultCodec="none" %>
-<g:javascript src="jquery/jquery.pstrength.js" contextPath="${pluginContextPath}"/>
+<asset:javascript src="libs/jquery.pstrength.js" contextPath="${pluginContextPath}"/>
+
 <asset:script>
 
   $(function() {

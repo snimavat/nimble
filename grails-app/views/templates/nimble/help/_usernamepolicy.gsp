@@ -1,11 +1,11 @@
-<script type="text/javascript">
+<asset:script>
 
   $(function() {
     $("#usernamepolicy").hide();
     $('#usernamepolicybtn').popover({animation:true, placement:'bottom', title:'A title', content:$('#usernamepolicy').html()})
 
   });
-</script>
+</asset:script>
 
 <div id="usernamepolicy">  
     <div>

@@ -19,7 +19,7 @@
             <input type="hidden" name="id" value="${user.id}" />
             <input type="hidden" name="version" value="${user.version}" />
          </f:with>
-         <div class="form-actions">
+         <div class="form-actions col-md-offset-2">
             <button type="submit" class="btn btn-primary">
                <i class="icon-ok icon-white"></i>
                <g:message code="nimble.link.updateuser" />

@@ -14,27 +14,21 @@
    <div class="box-generic">
       <n:errors bean="${user}"/>
       <g:form action="save" class="form-horizontal">
-         <div class="control-group">
-            <label class="control-label" for="username">
-               <g:message code="nimble.label.username" />
-               * 
-            </label>
-            <div class="controls">      
-               <input type="text" id="username" name="username" value="${fieldValue(bean: user, field: 'username')}">            
+         <div class="form-group">
+            <label class="control-label col-md-2" for="username"><g:message code="nimble.label.username" />*</label>
+            <div class="col-sm-8">
+               <input type="text" id="username" name="username" value="${fieldValue(bean: user, field: 'username')}" class="form-control"/>
                <span class="help-inline">
-               <a href="#" id="usernamepolicybtn" rel="usernamepolicy" title="${message(code:'nimble.template.usernamepolicy.title')}">
-               <i class="icon-question-sign"></i>
+                  <a href="#" id="usernamepolicybtn" rel="usernamepolicy" title="${message(code:'nimble.template.usernamepolicy.title')}">
+                  <i class="icon-question-sign"></i>
                </a>          
                </span>            
             </div>
          </div>
-         <div class="control-group">
-            <label class="control-label" for="pass">
-               <g:message code="nimble.label.password" />
-               * 
-            </label>
-            <div class="controls">      
-               <input type="password" id="pass" name="pass" class="password" value="${user.pass?.encodeAsHTML()}">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="pass"><g:message code="nimble.label.password" />*</label>
+            <div class="col-sm-8">
+               <input type="password" id="pass" name="pass" class="password form-control" value="${user.pass?.encodeAsHTML()}">
                <span class="help-inline">
                <a href="#" id="passwordpolicybtn" rel="passwordpolicy" title="${message(code:'nimble.template.passwordpolicy.title')}">
                <i class="icon-question-sign"></i>
@@ -42,32 +36,32 @@
                </span>
             </div>
          </div>
-         <div class="control-group">
-            <label class="control-label" for="passConfirm">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="passConfirm">
                <g:message code="nimble.label.password.confirmation" />
                * 
             </label>
-            <div class="controls">      
-               <input type="password" id="passConfirm" name="passConfirm" value="${user.passConfirm?.encodeAsHTML()}">
+            <div class="col-md-8">
+               <input type="password" id="passConfirm" name="passConfirm" value="${user.passConfirm?.encodeAsHTML()}" class="form-control">
             </div>
          </div>
-         <div class="control-group">
-            <label class="control-label" for="fullName">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="fullName">
                <g:message code="nimble.label.fullname" />
             </label>
-            <div class="controls">      
-               <input type="text" id="fullName" name="fullName"  value="${user.profile?.fullName?.encodeAsHTML()}">
+            <div class="col-md-8">
+               <input type="text" id="fullName" name="fullName"  value="${user.profile?.fullName?.encodeAsHTML()}" class="form-control">
             </div>
          </div>
-         <div class="control-group">
-            <label class="control-label" for="email">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="email">
                <g:message code="nimble.label.email" />
             </label>
-            <div class="controls">      
-               <input type="email" id="email" name="email"  value="${user.profile?.email?.encodeAsHTML()}">
+            <div class="col-md-8">
+               <input type="email" id="email" name="email"  value="${user.profile?.email?.encodeAsHTML()}" class="form-control">
             </div>
          </div>
-         <div class="form-actions">
+         <div class="form-actions col-md-offset-2">
             <button type="submit" class="btn btn-primary">
                <i class="icon-ok icon-white"></i>
                <g:message code="nimble.link.createuser" />
@@ -79,6 +73,9 @@
          </div>
       </g:form>
    </div>
+
+   <asset:javascript src="bootstrap-tooltip"/>
+   <asset:javascript src="bootstrap-popover"/>
    <n:usernamepolicy/>
    <n:passwordpolicy/>
 </body>
