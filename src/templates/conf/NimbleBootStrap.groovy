@@ -17,8 +17,12 @@
 
 import grails.plugin.nimble.InstanceGenerator
 import grails.plugin.nimble.core.AdminsService
+import grails.plugin.nimble.core.NimbleService
+import grails.plugin.nimble.core.ProfileBase
 import grails.plugin.nimble.core.Role
 import grails.plugin.nimble.core.UserBase
+import grails.plugin.nimble.core.UserService
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
 /*
  * Allows applications using Nimble to undertake process at BootStrap that are related to Nimbe provided objects
@@ -29,11 +33,11 @@ import grails.plugin.nimble.core.UserBase
  */
 class NimbleBootStrap {
 
-	def grailsApplication
+	GrailsApplication grailsApplication
 
-	def nimbleService
-	def userService
-	def adminsService
+	NimbleService nimbleService
+	UserService userService
+	AdminsService adminsService
 
 	def init = {servletContext ->
 
@@ -44,20 +48,20 @@ class NimbleBootStrap {
 
 		if(!UserBase.findByUsername("user")) {
 			// Create example User account
-			def user = InstanceGenerator.user(grailsApplication)
+			UserBase user = InstanceGenerator.user(grailsApplication)
 			user.username = "user"
 			user.pass = 'useR123!'
 			user.passConfirm = 'useR123!'
 			user.enabled = true
 
-			def userProfile = InstanceGenerator.profile(grailsApplication)
+			ProfileBase userProfile = InstanceGenerator.profile(grailsApplication)
 			userProfile.fullName = "Test User"
 			userProfile.owner = user
 			user.profile = userProfile
 
 			log.info("Creating default user account with username:user")
 
-			def savedUser = userService.createUser(user)
+			UserBase savedUser = userService.createUser(user)
 			if (savedUser.hasErrors()) {
 				savedUser.errors.each { log.error(it) }
 				throw new RuntimeException("Error creating example user")
@@ -66,21 +70,21 @@ class NimbleBootStrap {
 
 		if(!UserBase.findByUsername("admin")) {
 			// Create example Administrative account
-			def admins = Role.findByName(AdminsService.ADMIN_ROLE)
-			def admin = InstanceGenerator.user(grailsApplication)
+			Role admins = Role.findByName(AdminsService.ADMIN_ROLE)
+			UserBase admin = InstanceGenerator.user(grailsApplication)
 			admin.username = "admin"
 			admin.pass = "admiN123!"
 			admin.passConfirm = "admiN123!"
 			admin.enabled = true
 
-			def adminProfile = InstanceGenerator.profile(grailsApplication)
+			ProfileBase adminProfile = InstanceGenerator.profile(grailsApplication)
 			adminProfile.fullName = "Administrator"
 			adminProfile.owner = admin
 			admin.profile = adminProfile
 
 			log.info("Creating default admin account with username:admin")
 
-			def savedAdmin = userService.createUser(admin)
+			UserBase savedAdmin = userService.createUser(admin)
 			if (savedAdmin.hasErrors()) {
 				savedAdmin.errors.each { log.error(it) }
 				throw new RuntimeException("Error creating administrator")

@@ -16,11 +16,14 @@
  */
 package grails.plugin.nimble.auth
 
+import groovy.transform.CompileStatic
+
 /**
  * Provides a generic AllPermission for Nimble applications to utilize so we can provide
  * additional functionality if required.
  *
  * @author Bradley Beddoes
  */
+@CompileStatic
 class AllPermission extends org.apache.shiro.authz.permission.AllPermission {
 }

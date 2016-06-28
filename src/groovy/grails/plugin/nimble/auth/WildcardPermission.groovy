@@ -16,12 +16,15 @@
  */
 package grails.plugin.nimble.auth
 
+import groovy.transform.CompileStatic
+
 /**
  * Provides a generic WildcardPermission for Nimble applications to utilize so we can provide
  * additional functionality if required.
  *
  * @author Bradley Beddoes
  */
+@CompileStatic
 class WildcardPermission extends org.apache.shiro.authz.permission.WildcardPermission {
 
 	WildcardPermission(String wildcardString) {

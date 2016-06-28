@@ -18,6 +18,7 @@ package grails.plugin.nimble
 
 import grails.plugin.nimble.core.ProfileBase
 import grails.plugin.nimble.core.UserBase
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
 /**
  * Determines correct version of class to load for classes commonly overloaded by host applications
@@ -26,7 +27,7 @@ import grails.plugin.nimble.core.UserBase
  */
 class InstanceGenerator {
 
-	static user(grailsApplication) {
+	static user(GrailsApplication grailsApplication) {
 		try {
 			if(grailsApplication.config?.nimble?.implementation?.user)
 				InstanceGenerator.classLoader.loadClass(grailsApplication.config.nimble.implementation.user).newInstance()
@@ -37,7 +38,7 @@ class InstanceGenerator {
 		}
 	}
 
-	static profile(grailsApplication) {
+	static profile(GrailsApplication grailsApplication) {
 		try {
 			if(grailsApplication.config?.nimble?.implementation?.profile)
 				InstanceGenerator.classLoader.loadClass(grailsApplication.config.nimble.implementation.profile).newInstance()

@@ -18,6 +18,7 @@ package grails.plugin.nimble.core
 
 import grails.transaction.Transactional
 import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.springframework.context.ApplicationContext
 
 /**
  * Various Nimble specific pieces of logic, shouldn't need to be called by any
@@ -37,7 +38,7 @@ class NimbleService {
 	void init() {
 
 		// Perform all base Nimble setup
-		def userRole = Role.findByName(UserService.USER_ROLE)
+		Role userRole = Role.findByName(UserService.USER_ROLE)
 		if (!userRole) {
 			userRole = new Role(description: 'Issued to all users',
 			                    name: UserService.USER_ROLE,
@@ -50,7 +51,7 @@ class NimbleService {
 			}
 		}
 
-		def adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
+		Role adminRole = Role.findByName(AdminsService.ADMIN_ROLE)
 		if (!adminRole) {
 			adminRole = new Role(description: 'Assigned to users who are considered to be system wide administrators',
 			                     name: AdminsService.ADMIN_ROLE,
@@ -64,7 +65,7 @@ class NimbleService {
 		}
 
 		// Execute all service init that relies on base Nimble environment
-		def ctx = grailsApplication.mainContext
+		ApplicationContext ctx = grailsApplication.mainContext
 		for (service in grailsApplication.serviceClasses) {
 			if(service.clazz.methods.find{it.name == 'nimbleInit'}) {
 				ctx.getBean(service.propertyName).nimbleInit()

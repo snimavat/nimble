@@ -16,6 +16,7 @@
  */
 package grails.plugin.nimble.auth
 
+import groovy.transform.CompileStatic
 import org.apache.shiro.authc.AuthenticationException
 
 /**
@@ -23,7 +24,7 @@ import org.apache.shiro.authc.AuthenticationException
  *
  * @author Bradley Beddoes
  */
+@CompileStatic
 class AccountCreatedException extends AuthenticationException {
-
 	String newUserId
 }
