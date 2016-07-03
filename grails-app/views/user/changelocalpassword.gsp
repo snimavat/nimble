@@ -16,7 +16,7 @@
 
   <n:errors bean="${user}"/>
 
-  <g:form action="savepassword" class="passwordchange">
+  <g:form action="savepassword" class="passwordchange form-horizontal">
     <g:hiddenField name="id" value="${user.id.encodeAsHTML()}"/>
     <table>
       <tbody>

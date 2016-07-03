@@ -16,13 +16,10 @@
       <n:errors bean="${user}"/>
       <g:form action="savepassword" class="form-horizontal">
          <g:hiddenField name="id" value="${user.id.encodeAsHTML()}"/>
-         <div class="control-group">
-            <label class="control-label" for="pass">
-               <g:message code="nimble.label.password" />
-               * 
-            </label>
-            <div class="controls">      
-               <input type="password" id="pass" name="pass" class="password">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="pass"><g:message code="nimble.label.password" />*</label>
+            <div class="col-md-8">
+               <input type="password" id="pass" name="pass" class="password form-control">
                <span class="help-inline">
                <a href="#" id="passwordpolicybtn" rel="passwordpolicy" class="empty icon icon_help" title="${message(code:'nimble.template.passwordpolicy.title')}">
                <i class="icon-question-sign"></i>
@@ -30,16 +27,13 @@
                </span>
             </div>
          </div>
-         <div class="control-group">
-            <label class="control-label" for="passConfirm">
-               <g:message code="nimble.label.password.confirmation" />
-               * 
-            </label>
-            <div class="controls">      
-               <input type="password" id="passConfirm" name="passConfirm">
+         <div class="form-group">
+            <label class="control-label col-md-2" for="passConfirm"><g:message code="nimble.label.password.confirmation" />*</label>
+            <div class="col-md-8">
+               <input type="password" id="passConfirm" name="passConfirm" class="form-control">
             </div>
          </div>
-         <div class="form-actions">
+         <div class="form-actions col-md-offset-2">
             <button type="submit" class="btn btn-primary">
                <i class="icon-ok icon-white"></i>
                <g:message code="nimble.link.changepassword" />

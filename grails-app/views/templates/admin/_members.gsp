@@ -18,7 +18,7 @@
       </p>
 
             <g:if test="${groupmembers}">
-               <div class="control-group">
+               <div class="form-inline">
                   <label class="radio inline">
                      <g:radio name="memberselect" id="searchmembergroups" value="groups"/>
                      &nbsp; 

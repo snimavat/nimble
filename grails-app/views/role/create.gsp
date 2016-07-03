@@ -20,7 +20,7 @@
                <f:field property="name" label="nimble.label.name" />
                <f:field property="description" label="nimble.label.description" />
             </f:with>
-            <div class="form-actions">
+            <div class="form-actions col-md-offset-2">
                <button type="submit" class="btn btn-primary">
                   <i class="icon-ok icon-white"></i>
                   <g:message code="nimble.link.createrole" />
