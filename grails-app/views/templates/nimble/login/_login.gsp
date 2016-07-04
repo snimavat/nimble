@@ -27,19 +27,17 @@
             </g:if>
             <g:form action="signin" name="login-form" method="post">
                <div class="login-input">
-                  <div class="control-group">
-                     <div class="controls ">
+                  <div class="form-group">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <input type="text" name="username" id="username" placeholder="user@example.com">                           
-                     </div>
+                        <input type="text" name="username" id="username" placeholder="user@example.com">
                   </div>
-                  <div class="control-group">
-                     <div class="controls">
+                  <div class="form-group">
                         <input type="password" name="password" id="password" placeholder="password">
                      </div>
                   </div>
-               </div>
-               <div class="login-actions">
+
+
+               <div class="login-actions form-inline">
                   <label class="checkbox" style="display: inline-block;">
                      <input type="checkbox" name="rememberme">
                      <g:message code="nimble.label.rememberme" />
@@ -50,6 +48,7 @@
                      </button>
                   </span>
                </div>
+
                <div class="login-options border-top">
                   <h4>
                      <g:message code="nimble.label.login.forgottenpassword.heading" />
