@@ -21,10 +21,8 @@
 			</div>               
             <g:form action="forgottenpasswordprocess" method="POST">
                <div class="login-input">
-                  <div class="control-group">
-                     <div class="controls "> 
-                        <input type="text" size="30" name="email" id="email" placeholder="user@example.com">
-                     </div>
+                  <div class="form-group">
+                     <input type="text" size="30" name="email" id="email" placeholder="user@example.com">
                   </div>
                </div>
                <div class="login-actions">
