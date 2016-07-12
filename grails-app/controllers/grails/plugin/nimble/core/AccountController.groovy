@@ -30,8 +30,8 @@ class AccountController {
 
 	static Map allowedMethods = [saveuser: 'POST', validusername: 'POST', forgottenpasswordprocess: 'POST', updatepassword: 'POST']
 
-	def userService
-	def recaptchaService
+	UserService userService
+	RecaptchaService recaptchaService
 
 	def changepassword() {
 		[user:authenticatedUser]
@@ -40,7 +40,7 @@ class AccountController {
 	def changedpassword() {}
 
 	def updatepassword(String currentPassword, String pass, String passConfirm) {
-		def user = authenticatedUser
+		UserBase user = authenticatedUser
 
 		if(!currentPassword) {
 			log.warn("User [$user?.id]$user?.username attempting to change password but has not supplied current password")
@@ -50,11 +50,10 @@ class AccountController {
 		}
 
 		def pwEnc = new Sha256Hash(currentPassword)
-		def crypt = pwEnc.toHex()
+		String crypt = pwEnc.toHex()
 
-		def human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
+		boolean human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
 		if (human) {
-
 			if(!crypt.equals(user.passwordHash)) {
 				log.warn("User [$user.id]$user.username attempting to change password but has supplied invalid current password")
 				user.errors.reject('nimble.user.password.nomatch')
@@ -94,7 +93,7 @@ class AccountController {
 			return
 		}
 
-		def user = InstanceGenerator.user(grailsApplication)
+		UserBase user = InstanceGenerator.user(grailsApplication)
 		user.profile = InstanceGenerator.profile(grailsApplication)
 
 		log.debug("Starting new user creation")
@@ -108,7 +107,7 @@ class AccountController {
 			return
 		}
 
-		def user = InstanceGenerator.user(grailsApplication)
+		UserBase user = InstanceGenerator.user(grailsApplication)
 		user.profile = InstanceGenerator.profile(grailsApplication)
 		user.profile.owner = user
 		user.properties['username', 'pass', 'passConfirm'] = params
@@ -140,8 +139,8 @@ class AccountController {
 			return
 		}
 
-		def savedUser
-		def human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
+		UserBase savedUser
+		boolean human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
 
 		if (human) {
 			savedUser = userService.createUser(user)
@@ -184,7 +183,7 @@ class AccountController {
 	}
 
 	def validateuser(long id, String activation) {
-		def user = UserBase.get(id)
+		UserBase user = UserBase.get(id)
 
 		if (!user) {
 			log.warn("User identified as [$id] was not located")
@@ -287,7 +286,7 @@ class AccountController {
 			return
 		}
 
-		def human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
+		boolean human = recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)
 		if (human) {
 
 			userService.setRandomPassword(user)

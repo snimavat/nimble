@@ -15,24 +15,19 @@
  *  limitations under the License.
  */
 package grails.plugin.nimble.core
-
-import org.apache.shiro.authz.annotation.RequiresRoles
-
 /**
  * Manages Nimble groups including addition/removal of users and permissions
  *
  * @author Bradley Beddoes
  */
 class GroupController {
-
-	def groupService
-	def roleService
-	def permissionService
-
+	static String defaultAction = 'list'
 	static Map allowedMethods = [	save: 'POST', update: 'POST', delete: 'POST', validname: 'POST', addmember: 'POST', removemember: 'POST', searchnewmembers: 'POST',
-		createpermission: 'POST', removepermission: 'POST', searchroles: 'POST', grantrole: 'POST', removerole: 'POST']
+									 createpermission: 'POST', removepermission: 'POST', searchroles: 'POST', grantrole: 'POST', removerole: 'POST']
 
-	static defaultAction = 'list'
+	GroupService groupService
+	RoleService roleService
+	PermissionService permissionService
 
 	def list() {
 		if (!params.max) {
@@ -79,7 +74,7 @@ class GroupController {
 	}
 
 	def edit(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			flash.type = "error"
@@ -92,7 +87,7 @@ class GroupController {
 	}
 
 	def update(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			flash.type = "error"
@@ -118,7 +113,7 @@ class GroupController {
 			return
 		}
 
-		def updatedGroup = groupService.updateGroup(group)
+		Group updatedGroup = groupService.updateGroup(group)
 		log.info("Attempt to update group [$group.id]$group.name succeeded")
 		flash.type = "success"
 		flash.message = message(code: 'nimble.group.update.success', args: [updatedGroup.name])
@@ -126,7 +121,7 @@ class GroupController {
 	}
 
 	def delete(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			flash.type = "error"
@@ -157,7 +152,7 @@ class GroupController {
 			return
 		}
 
-		def groups = Group.findAllByName(val)
+		List<Group> groups = Group.findAllByName(val)
 		if (groups != null && groups.size() > 0) {
 			render message(code: 'nimble.group.name.invalid', args: [val])
 			response.status = 500
@@ -168,7 +163,7 @@ class GroupController {
 	}
 
 	def listmembers(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -181,7 +176,7 @@ class GroupController {
 	}
 
 	def addmember(Long id, Long userID) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -189,7 +184,7 @@ class GroupController {
 			return
 		}
 
-		def user = UserBase.get(userID)
+		UserBase user = UserBase.get(userID)
 		if (!user) {
 			log.warn("User identified by id '$userID' was not located")
 			render message(code: 'nimble.user.nonexistant', args: [id])
@@ -210,7 +205,7 @@ class GroupController {
 	}
 
 	def removemember(Long id, Long userID) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -218,7 +213,7 @@ class GroupController {
 			return
 		}
 
-		def user = UserBase.get(userID)
+		UserBase user = UserBase.get(userID)
 		if (!user) {
 			log.warn("User identified by id '$userID' was not located")
 			render message(code: 'nimble.user.nonexistant', args: [id])
@@ -241,7 +236,7 @@ class GroupController {
 	def searchnewmembers(Long id, String q) {
 		q = "%" + q + "%"
 
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -251,9 +246,9 @@ class GroupController {
 
 		log.debug("Performing search for users matching $q")
 
-		def users = UserBase.findAllByUsernameIlike(q)
-		def profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q)
-		def nonMembers = []
+		List<UserBase> users = UserBase.findAllByUsernameIlike(q)
+		List<ProfileBase> profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q)
+		List<UserBase> nonMembers = []
 
 		users.each {
 			if (!it.groups.contains(group)) {
@@ -272,7 +267,7 @@ class GroupController {
 	}
 
 	def listpermissions(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -284,7 +279,7 @@ class GroupController {
 	}
 
 	def createpermission(Long id, String first, String second, String third, String fourth, String fifth, String sixth) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -316,7 +311,7 @@ class GroupController {
 	}
 
 	def removepermission(Long id, Long permID) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -324,7 +319,7 @@ class GroupController {
 			return
 		}
 
-		def permission = Permission.get(permID)
+		Permission permission = Permission.get(permID)
 		if (!permission) {
 			render message(code: 'nimble.permission.nonexistant', args: [permID])
 			response.status = 500
@@ -337,7 +332,7 @@ class GroupController {
 	}
 
 	def listroles(Long id) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' wass not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -351,7 +346,7 @@ class GroupController {
 	def searchroles(Long id, String q) {
 		q = "%" + q + "%"
 
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -360,8 +355,8 @@ class GroupController {
 		}
 
 		log.debug("Performing search for roles matching $q")
-		def roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q)
-		def respRoles = []
+		List<Role> roles = Role.findAllByNameIlikeOrDescriptionIlike(q, q)
+		List<Role> respRoles = []
 		roles.each {
 			if (!group.roles.contains(it) && !it.protect)
 				respRoles.add(it)    // Eject already assigned roles for this group
@@ -372,7 +367,7 @@ class GroupController {
 	}
 
 	def grantrole(Long id, Long roleID) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -387,7 +382,7 @@ class GroupController {
 			return
 		}
 
-		def role = Role.get(roleID)
+		Role role = Role.get(roleID)
 		if (!role) {
 			log.warn("Role identified by id '$roleID.id' was not located")
 			render message(code: 'nimble.role.nonexistant', args: [roleID])
@@ -408,7 +403,7 @@ class GroupController {
 	}
 
 	def removerole(Long id, Long roleID) {
-		def group = Group.get(id)
+		Group group = Group.get(id)
 		if (!group) {
 			log.warn("Group identified by id '$id' was not located")
 			render message(code: 'nimble.group.nonexistant', args: [id])
@@ -423,7 +418,7 @@ class GroupController {
 			return
 		}
 
-		def role = Role.get(roleID)
+		Role role = Role.get(roleID)
 		if (!role) {
 			log.warn("Role identified by id '$roleID.id' was not located")
 			render message(code: 'nimble.role.nonexistant', args: [roleID])

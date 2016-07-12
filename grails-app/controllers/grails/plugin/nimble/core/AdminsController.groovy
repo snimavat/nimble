@@ -28,13 +28,13 @@ class AdminsController {
 
 	static Map allowedMethods = [list: 'POST', create: 'POST', delete: 'POST', search: 'POST']
 
-	def adminsService
+	AdminsService adminsService
 
 	def index() { }
 
 	def list() {
-		def adminAuthority = Role.findByName(AdminsService.ADMIN_ROLE)
-		def authenticatedUser = UserBase.get(SecurityUtils.getSubject()?.getPrincipal())
+		Role adminAuthority = Role.findByName(AdminsService.ADMIN_ROLE)
+		UserBase authenticatedUser = UserBase.get(SecurityUtils.getSubject()?.getPrincipal())
 
 		if(!authenticatedUser) {
 			log.error("Not able to determine currently authenticated user")
@@ -46,7 +46,7 @@ class AdminsController {
 	}
 
 	def create(Long id) {
-		def user = UserBase.get(id)
+		UserBase user = UserBase.get(id)
 		if (!user) {
 			log.warn("User identified by id $id was not located")
 
@@ -55,7 +55,7 @@ class AdminsController {
 			return
 		}
 
-		def result = adminsService.add(user)
+		boolean result = adminsService.add(user)
 		if (result) {
 			log.debug("User identified as [$user.id]$user.username was added as an administrator")
 			render message(code: 'nimble.admin.grant.success', args: [user.username])
@@ -68,7 +68,7 @@ class AdminsController {
 	}
 
 	def delete(Long id) {
-		def user = UserBase.get(id)
+		UserBase user = UserBase.get(id)
 
 		if (!user) {
 			log.warn("User identified by id $id was not located")
@@ -84,7 +84,7 @@ class AdminsController {
 			return
 		}
 
-		def result = adminsService.remove(user)
+		boolean result = adminsService.remove(user)
 		if (result) {
 			render message(code: 'nimble.admin.revoke.success', args: [user.username])
 			return
@@ -100,9 +100,9 @@ class AdminsController {
 
 		log.debug("Performing search for users matching $q")
 
-		def users = UserBase.findAllByUsernameIlike(q, [max:50])
-		def profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q, [max:50, sort:"fullName"])
-		def nonAdmins = []
+		List<UserBase> users = UserBase.findAllByUsernameIlike(q, [max:50])
+		List<ProfileBase> profiles = ProfileBase.findAllByFullNameIlikeOrEmailIlike(q, q, [max:50, sort:"fullName"])
+		List<UserBase> nonAdmins = []
 
 		users.each {
 			boolean admin = false

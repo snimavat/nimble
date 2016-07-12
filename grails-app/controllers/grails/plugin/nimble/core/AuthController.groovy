@@ -26,15 +26,12 @@ import org.apache.shiro.authc.UsernamePasswordToken
  * @author Bradley Beddoes
  */
 class AuthController {
+	static defaultAction = 'list'
+	static Map allowedMethods = [ signin: 'POST' ]
 
 	private static final String TARGET = 'grails.plugin.nimble.controller.AuthController.TARGET'
 
-	def shiroSecurityManager
-	def userService
-
-	static Map allowedMethods = [ signin: 'POST' ]
-
-	static defaultAction = 'list'
+	UserService userService
 
 	def login(String targetUri, String username, String rememberMe) {
 		def local = nimbleConfig.localusers.authentication.enabled
