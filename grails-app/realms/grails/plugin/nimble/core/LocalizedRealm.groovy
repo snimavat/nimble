@@ -16,6 +16,7 @@
  */
 package grails.plugin.nimble.core
 
+import org.apache.shiro.authc.Account
 import org.apache.shiro.authc.AccountException
 import org.apache.shiro.authc.DisabledAccountException
 import org.apache.shiro.authc.IncorrectCredentialsException
@@ -32,7 +33,7 @@ import org.apache.shiro.authz.permission.WildcardPermission
  * @author Bradley Beddoes
  */
 class LocalizedRealm {
-	static authTokenClass = UsernamePasswordToken
+	static Class authTokenClass = UsernamePasswordToken
 
 	def credentialMatcher
 	def sessionFactory
@@ -46,13 +47,13 @@ class LocalizedRealm {
 		}
 
 		log.info "Attempting to authenticate ${authToken.username} from local repository"
-		def username = authToken.username
+		String username = authToken.username
 
 		if (!username) {
 			throw new AccountException('Null usernames are not supported by this realm.')
 		}
 
-		def user = UserBase.findByUsername(username)
+		UserBase user = UserBase.findByUsername(username)
 		if (!user) {
 			throw new UnknownAccountException("No account found for user [${username}]")
 		}
@@ -64,7 +65,7 @@ class LocalizedRealm {
 			throw new DisabledAccountException("This account is currently disabled")
 		}
 
-		def account = new SimpleAccount(user.id, user.passwordHash, "grails.plugin.nimble.realms.LocalizedRealm")
+		Account account = new SimpleAccount(user.id, user.passwordHash, "grails.plugin.nimble.realms.LocalizedRealm")
 		if (!credentialMatcher.doCredentialsMatch(authToken, account)) {
 			log.warn "Supplied password for user [$user.id]:$user.username is incorrect"
 			throw new IncorrectCredentialsException("Invalid password for user '${username}'")
@@ -74,13 +75,13 @@ class LocalizedRealm {
 		return account
 	}
 
-	boolean hasRole(principal, roleName) {
+	boolean hasRole(def principal, String roleName) {
 		def session
 		boolean result = false
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase, Long.valueOf(principal))
+			UserBase user = session.get(UserBase, Long.valueOf(principal))
 
 			if (user) {
 				log.debug("Determining if user [$user.id]:$user.username is assigned role $roleName")
@@ -129,7 +130,7 @@ class LocalizedRealm {
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase, Long.valueOf(principal))
+			UserBase user = session.get(UserBase, Long.valueOf(principal))
 
 			log.debug("Determining if user [$user.id]:$user.username is assigned multiple roles")
 
@@ -197,7 +198,7 @@ class LocalizedRealm {
 
 		try {
 			session = sessionFactory.openSession()
-			def user = session.get(UserBase, Long.valueOf(principal))
+			UserBase user = session.get(UserBase, Long.valueOf(principal))
 
 			log.debug("Determining if permissions assigned to user [$user.id]:$user.username contain a permission that implies $requiredPermission")
 			// Try all directly assigned permissions

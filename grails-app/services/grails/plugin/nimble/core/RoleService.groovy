@@ -16,11 +16,14 @@
  */
 package grails.plugin.nimble.core
 
+import grails.transaction.Transactional
+
 /**
  * Provides methods for interacting with Nimble roles.
  *
  * @author Bradley Beddoes
  */
+@Transactional
 class RoleService {
 
 	/**

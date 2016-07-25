@@ -19,6 +19,7 @@
  */
 package grails.plugin.nimble.core
 
+import grails.transaction.NotTransactional
 import net.tanesha.recaptcha.ReCaptcha
 import net.tanesha.recaptcha.ReCaptchaFactory
 
@@ -31,8 +32,8 @@ class RecaptchaService implements InitializingBean {
 	public static final String SESSION_KEY = "grails.plugin.nimble.service.recaptcha"
 	public static final String SESSION_ERROR_KEY = "grails.plugin.nimble.service.recaptcha.error"
 
-	def publicKey
-	def privateKey
+	String publicKey
+	String privateKey
 	def includeNoScript
 	def secureAPI
 	boolean enabled

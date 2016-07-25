@@ -17,7 +17,6 @@
 package grails.plugin.nimble.core
 
 import grails.plugin.nimble.InstanceGenerator
-import sun.rmi.runtime.Log
 
 /**
  * Manages Nimble user accounts

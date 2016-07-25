@@ -18,7 +18,6 @@
 package grails.plugin.nimble.core
 
 import grails.plugin.nimble.InstanceGenerator
-
 import org.apache.shiro.crypto.hash.Sha256Hash
 
 /**

@@ -16,15 +16,19 @@
  */
 package grails.plugin.nimble.core
 
+import grails.transaction.Transactional
+import org.codehaus.groovy.grails.commons.GrailsApplication
+
 /**
  * Various Nimble specific pieces of logic, shouldn't need to be called by any
  * host application.
  *
  * @author Bradley Beddoes
  */
+@Transactional
 class NimbleService {
 
-	def grailsApplication
+	GrailsApplication grailsApplication
 
 	/**
 	 * Integrates with extended Nimble bootstrap process, sets up basic Nimble environment

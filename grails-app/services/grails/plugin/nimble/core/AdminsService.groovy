@@ -16,6 +16,7 @@
  */
 package grails.plugin.nimble.core
 
+import grails.transaction.Transactional
 import org.apache.shiro.authz.permission.AllPermission
 
 /**
@@ -23,11 +24,12 @@ import org.apache.shiro.authz.permission.AllPermission
  *
  * @author Bradley Beddoes
  */
+@Transactional
 class AdminsService {
 
 	public static final String ADMIN_ROLE = "SYSTEM ADMINISTRATOR"
 
-	def permissionService
+	PermissionService permissionService
 
 	/**
 	 * Provides administrator capability to a user account.

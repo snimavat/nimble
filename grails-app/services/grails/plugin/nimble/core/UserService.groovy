@@ -17,6 +17,8 @@
 package grails.plugin.nimble.core
 
 import grails.plugin.nimble.auth.CorePermissions
+import grails.transaction.Transactional
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
 import javax.servlet.http.HttpServletRequest
 
@@ -28,13 +30,14 @@ import org.apache.shiro.crypto.hash.Sha256Hash
  *
  * @author Bradley Beddoes
  */
+@Transactional
 class UserService {
 
 	public static final String USER_ROLE = "USER"
 
-	def permissionService
-	def grailsApplication
-	def events = [:]
+	PermissionService permissionService
+	GrailsApplication grailsApplication
+	Map events = [:]
 
 	/**
 	 * Activates a disabled user account
