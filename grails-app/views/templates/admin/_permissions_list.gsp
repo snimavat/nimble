@@ -31,7 +31,7 @@
                </td>
                <td>
                   <g:if test="${!perm.managed}">
-                     <a href="javascript:" onClick="removePermission('${parent.id.encodeAsHTML()}', '${g.fieldValue(bean:perm, field:'id')}');" class="btn btn-danger btn-mini">
+                     <a href="javascript:" onClick="removePermission('${parent.id.encodeAsHTML()}', '${perm.id}');" class="btn btn-danger btn-mini">
                         <i class="icon-remove icon-white"></i>
                         <g:message code="nimble.link.remove" />
                      </a>
