@@ -17,6 +17,7 @@
 
 nimble {
 
+	admin.header.title = "Nimble"
 	tablenames {
 		user =  "_user"
 		role =  "_role"
