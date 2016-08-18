@@ -22,7 +22,7 @@ package grails.plugin.nimble.core
 import grails.transaction.NotTransactional
 import net.tanesha.recaptcha.ReCaptcha
 import net.tanesha.recaptcha.ReCaptchaFactory
-
+import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.springframework.beans.factory.InitializingBean
 
 class RecaptchaService implements InitializingBean {
@@ -38,7 +38,7 @@ class RecaptchaService implements InitializingBean {
 	def secureAPI
 	boolean enabled
 
-	def grailsApplication
+	GrailsApplication grailsApplication
 
 	void afterPropertiesSet() {
 		publicKey = grailsApplication.config.nimble.recaptcha.publickey

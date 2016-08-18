@@ -16,11 +16,14 @@
  */
 package grails.plugin.nimble.auth
 
+import groovy.transform.CompileStatic
+
 /**
  * Provides a set of permission strings that multiple piece of Nimble functionality reference
  *
  * @author Bradley Beddoes
  */
+@CompileStatic
 class CorePermissions {
 
 	public static final String editPermission = "profile:edit"

@@ -31,8 +31,8 @@ class NimbleFilterBase {
 		}
 
 		// Default behaviour is to redirect to the login page.
-		def targetUri = request.forwardURI - request.contextPath
-		def query = request.queryString
+		String targetUri = request.forwardURI - request.contextPath
+		String query = request.queryString
 		if (query) {
 			if (!query.startsWith('?')) {
 				query = '?' + query
