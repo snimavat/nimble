@@ -7,7 +7,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.springframework.mail.javamail.JavaMailSenderImpl
 
 class NimbleGrailsPlugin {
-	def version = "1.0"
+	def version = "1.0.1"
 	def grailsVersion = "2.5 > *"
 	def title = "Nimble"
 	def author = "Sudhir Nimavat"
@@ -40,14 +40,10 @@ class NimbleGrailsPlugin {
 		mailSender(JavaMailSenderImpl) {
 			host = mailConfig.host ?: "localhost"
 			defaultEncoding = mailConfig.encoding ?: "utf-8"
-			if(mailConfig.port)
-				port = mailConfig.port
-			if(mailConfig.username)
-				username = mailConfig.username
-			if(mailConfig.password)
-				password = mailConfig.password
-			if(mailConfig.protocol)
-				protocol = mailConfig.protocol
+			if(mailConfig.port) port = mailConfig.port
+			if(mailConfig.username) username = mailConfig.username
+			if(mailConfig.password) password = mailConfig.password
+			if(mailConfig.protocol) protocol = mailConfig.protocol
 			if(mailConfig.props instanceof Map && mailConfig.props)
 				javaMailProperties = mailConfig.props
 		}
@@ -88,7 +84,7 @@ class NimbleGrailsPlugin {
 
 		clazz.metaClass.getAuthenticatedUser = { ->
 			def principal = SecurityUtils.getSubject()?.getPrincipal()
-			def authUser
+			UserBase authUser
 
 			if(principal != null) {
 
