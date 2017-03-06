@@ -32,5 +32,6 @@ Documentation:
 - Add support for impersonating users
 
 
-Thanks to JetBrains for Awesome  
-[![IntelliJ idea](https://cdn.rawgit.com/snimavat/repo-bin/master/assets/jetbrains/icon_IntelliJIDEA.svg | width=80)](Intellij Idea)
+Thanks to JetBrains for Awesome IntelliJ Idea
+
+<img src="https://cdn.rawgit.com/snimavat/repo-bin/master/assets/jetbrains/icon_IntelliJIDEA.svg" width="48">
