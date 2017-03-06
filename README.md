@@ -33,4 +33,4 @@ Documentation:
 
 
 Thanks to JetBrains for Awesome  
-[![IntelliJ idea](https://cdn.rawgit.com/snimavat/repo-bin/master/assets/jetbrains/icon_IntelliJIDEA.svg)](Intellij Idea)
+[![IntelliJ idea](https://cdn.rawgit.com/snimavat/repo-bin/master/assets/jetbrains/icon_IntelliJIDEA.svg | width=80)](Intellij Idea)
