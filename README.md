@@ -30,3 +30,7 @@ Documentation:
 ## Roadmap
 - Improve test coverage
 - Add support for impersonating users
+
+
+Thanks to JetBrains for Awesome  
+[![IntelliJ idea](https://cdn.rawgit.com/snimavat/repo-bin/master/assets/jetbrains/icon_IntelliJIDEA.svg)](Intellij Idea)
