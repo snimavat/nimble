@@ -53,8 +53,9 @@ class UserBase implements Serializable {
 	}
 
 	static constraints = {
-		username(blank: false, unique: true, minSize: 4, maxSize: 255)
-		passwordHash(nullable: true, blank: false)
+		username(blank: false, unique: true, maxSize: 255, 
+			minSize: ConfigurationHolder.config.nimble.localusers.usernames.minlength)
+		passwordHash(nullable: true, blank: false
 		actionHash(nullable: true, blank: false)
 		realm(nullable: true, blank: false)
 		expiration(nullable: true)
